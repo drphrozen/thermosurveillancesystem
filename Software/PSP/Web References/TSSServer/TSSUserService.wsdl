@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="urn:BeanService" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns2="http://server.group1.onk.iha.dk" xmlns:impl="http://172.21.185.177:8080/axis/services/TSSUserService" xmlns:intf="http://172.21.185.177:8080/axis/services/TSSUserService" targetNamespace="http://172.21.185.177:8080/axis/services/TSSUserService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:BeanService">
+      <xsd:import namespace="http://172.21.185.177:8080/axis/services/TSSUserService" />
+      <xsd:import namespace="http://server.group1.onk.iha.dk" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="UserDTO">
+        <xsd:sequence>
+          <xsd:element name="accountTypeId" type="xsd:int" />
+          <xsd:element name="password" nillable="true" type="soapenc:string" />
+          <xsd:element name="username" nillable="true" type="soapenc:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ProbeDTO">
+        <xsd:sequence>
+          <xsd:element name="data" type="xsd:double" />
+          <xsd:element name="id" type="xsd:int" />
+          <xsd:element name="lowerAlarm" type="xsd:double" />
+          <xsd:element name="units" nillable="true" type="soapenc:string" />
+          <xsd:element name="upperAlarm" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ReadingStationDTO">
+        <xsd:sequence>
+          <xsd:element name="enabled" type="xsd:boolean" />
+          <xsd:element name="name" nillable="true" type="soapenc:string" />
+          <xsd:element name="probes" nillable="true" type="intf:ArrayOf_tns1_ProbeDTO" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://172.21.185.177:8080/axis/services/TSSUserService">
+      <xsd:import namespace="urn:BeanService" />
+      <xsd:import namespace="http://server.group1.onk.iha.dk" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns1_ProbeDTO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ProbeDTO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ReadingStationDTO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ReadingStationDTO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_soapenc_string">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="soapenc:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://server.group1.onk.iha.dk">
+      <xsd:import namespace="urn:BeanService" />
+      <xsd:import namespace="http://172.21.185.177:8080/axis/services/TSSUserService" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="SummaryDTO">
+        <xsd:sequence>
+          <xsd:element name="alarms" nillable="true" type="intf:ArrayOf_soapenc_string" />
+          <xsd:element name="periodHighestPressure" type="xsd:double" />
+          <xsd:element name="periodHighestTemp" type="xsd:double" />
+          <xsd:element name="periodLowestPressure" type="xsd:double" />
+          <xsd:element name="periodLowestTemp" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getReadingsRequest">
+    <wsdl:part name="in0" type="xsd:dateTime" />
+    <wsdl:part name="in1" type="xsd:dateTime" />
+  </wsdl:message>
+  <wsdl:message name="getLastHourOfReadingsResponse">
+    <wsdl:part name="getLastHourOfReadingsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="loginReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getNewestReadingsResponse">
+    <wsdl:part name="getNewestReadingsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
+  </wsdl:message>
+  <wsdl:message name="getNewestReadingsRequest" />
+  <wsdl:message name="getHistoricalDataResponse">
+    <wsdl:part name="getHistoricalDataReturn" type="tns2:SummaryDTO" />
+  </wsdl:message>
+  <wsdl:message name="getLastHourOfReadingsRequest" />
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="in0" type="tns1:UserDTO" />
+  </wsdl:message>
+  <wsdl:message name="getReadingsResponse">
+    <wsdl:part name="getReadingsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
+  </wsdl:message>
+  <wsdl:message name="getHistoricalDataRequest">
+    <wsdl:part name="in0" type="xsd:dateTime" />
+    <wsdl:part name="in1" type="xsd:dateTime" />
+  </wsdl:message>
+  <wsdl:portType name="UserFacade">
+    <wsdl:operation name="login" parameterOrder="in0">
+      <wsdl:input name="loginRequest" message="intf:loginRequest" />
+      <wsdl:output name="loginResponse" message="intf:loginResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getLastHourOfReadings">
+      <wsdl:input name="getLastHourOfReadingsRequest" message="intf:getLastHourOfReadingsRequest" />
+      <wsdl:output name="getLastHourOfReadingsResponse" message="intf:getLastHourOfReadingsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getHistoricalData" parameterOrder="in0 in1">
+      <wsdl:input name="getHistoricalDataRequest" message="intf:getHistoricalDataRequest" />
+      <wsdl:output name="getHistoricalDataResponse" message="intf:getHistoricalDataResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getReadings" parameterOrder="in0 in1">
+      <wsdl:input name="getReadingsRequest" message="intf:getReadingsRequest" />
+      <wsdl:output name="getReadingsResponse" message="intf:getReadingsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getNewestReadings">
+      <wsdl:input name="getNewestReadingsRequest" message="intf:getNewestReadingsRequest" />
+      <wsdl:output name="getNewestReadingsResponse" message="intf:getNewestReadingsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TSSUserServiceSoapBinding" type="intf:UserFacade">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="login">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="loginRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLastHourOfReadings">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getLastHourOfReadingsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getLastHourOfReadingsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getHistoricalData">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getHistoricalDataRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getHistoricalDataResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReadings">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getReadingsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getReadingsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNewestReadings">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getNewestReadingsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getNewestReadingsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserFacadeService">
+    <wsdl:port name="TSSUserService" binding="intf:TSSUserServiceSoapBinding">
+      <wsdlsoap:address location="http://172.21.185.177:8080/axis/services/TSSUserService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

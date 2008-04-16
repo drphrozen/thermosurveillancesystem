@@ -8,6 +8,7 @@ namespace ReadingStation.PICO
 	{
 		bool Connect();
 		void Disconnect();
-		double GetTemperatur(int channel);
+		double GetCelcius(int channel);
+		double GetFahrenheit(int channel);
 	}
 }

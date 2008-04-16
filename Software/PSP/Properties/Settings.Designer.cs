@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReadingStation.Properties {
+namespace PSP.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,10 +26,10 @@ namespace ReadingStation.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
-        public string ReadingStation_WebReference_RSFacadeService {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://172.21.185.177:8080/axis/services/TSSUserService")]
+        public string PSP_TSSServer_UserFacadeService {
             get {
-                return ((string)(this["ReadingStation_WebReference_RSFacadeService"]));
+                return ((string)(this["PSP_TSSServer_UserFacadeService"]));
             }
         }
     }

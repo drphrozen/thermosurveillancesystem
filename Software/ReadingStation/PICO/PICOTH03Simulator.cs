@@ -15,13 +15,16 @@ namespace ReadingStation.PICO
 		}
 
 		public void Disconnect()
-		{
+		{ }
 
-		}
-
-		public double GetTemperatur(int channel)
+		public double GetCelcius(int channel)
 		{
 			return DateTime.Now.Second;
+		}
+
+		public double GetFahrenheit(int channel)
+		{
+			return DateTime.Now.Second * 2.0;
 		}
 	}
 }
