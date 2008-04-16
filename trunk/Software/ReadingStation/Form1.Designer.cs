@@ -39,11 +39,13 @@ namespace ReadingStation
 			this.buttonSetSampleInterval = new System.Windows.Forms.Button();
 			this.labelTemperatur = new System.Windows.Forms.Label();
 			this.buttonDisconnect = new System.Windows.Forms.Button();
+			this.radioButtonCelcius = new System.Windows.Forms.RadioButton();
+			this.radioButtonFahrenheit = new System.Windows.Forms.RadioButton();
 			this.SuspendLayout();
 			// 
 			// buttonSetStationName
 			// 
-			this.buttonSetStationName.Location = new System.Drawing.Point(118, 109);
+			this.buttonSetStationName.Location = new System.Drawing.Point(118, 150);
 			this.buttonSetStationName.Name = "buttonSetStationName";
 			this.buttonSetStationName.Size = new System.Drawing.Size(75, 23);
 			this.buttonSetStationName.TabIndex = 1;
@@ -53,7 +55,7 @@ namespace ReadingStation
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 95);
+			this.label1.Location = new System.Drawing.Point(12, 136);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(72, 13);
 			this.label1.TabIndex = 6;
@@ -61,7 +63,7 @@ namespace ReadingStation
 			// 
 			// textBoxStationName
 			// 
-			this.textBoxStationName.Location = new System.Drawing.Point(12, 111);
+			this.textBoxStationName.Location = new System.Drawing.Point(12, 152);
 			this.textBoxStationName.Name = "textBoxStationName";
 			this.textBoxStationName.Size = new System.Drawing.Size(100, 20);
 			this.textBoxStationName.TabIndex = 0;
@@ -69,7 +71,7 @@ namespace ReadingStation
 			// 
 			// textBoxConnectionString
 			// 
-			this.textBoxConnectionString.Location = new System.Drawing.Point(12, 163);
+			this.textBoxConnectionString.Location = new System.Drawing.Point(12, 204);
 			this.textBoxConnectionString.Name = "textBoxConnectionString";
 			this.textBoxConnectionString.Size = new System.Drawing.Size(100, 20);
 			this.textBoxConnectionString.TabIndex = 2;
@@ -77,7 +79,7 @@ namespace ReadingStation
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(12, 147);
+			this.label2.Location = new System.Drawing.Point(12, 188);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(92, 13);
 			this.label2.TabIndex = 9;
@@ -85,7 +87,7 @@ namespace ReadingStation
 			// 
 			// buttonConnect
 			// 
-			this.buttonConnect.Location = new System.Drawing.Point(118, 161);
+			this.buttonConnect.Location = new System.Drawing.Point(118, 202);
 			this.buttonConnect.Name = "buttonConnect";
 			this.buttonConnect.Size = new System.Drawing.Size(75, 23);
 			this.buttonConnect.TabIndex = 3;
@@ -95,7 +97,7 @@ namespace ReadingStation
 			// 
 			// textBoxSampleInterval
 			// 
-			this.textBoxSampleInterval.Location = new System.Drawing.Point(12, 215);
+			this.textBoxSampleInterval.Location = new System.Drawing.Point(12, 256);
 			this.textBoxSampleInterval.Name = "textBoxSampleInterval";
 			this.textBoxSampleInterval.Size = new System.Drawing.Size(100, 20);
 			this.textBoxSampleInterval.TabIndex = 4;
@@ -104,7 +106,7 @@ namespace ReadingStation
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(12, 199);
+			this.label4.Location = new System.Drawing.Point(12, 240);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(82, 13);
 			this.label4.TabIndex = 12;
@@ -112,7 +114,7 @@ namespace ReadingStation
 			// 
 			// buttonSetSampleInterval
 			// 
-			this.buttonSetSampleInterval.Location = new System.Drawing.Point(118, 213);
+			this.buttonSetSampleInterval.Location = new System.Drawing.Point(118, 254);
 			this.buttonSetSampleInterval.Name = "buttonSetSampleInterval";
 			this.buttonSetSampleInterval.Size = new System.Drawing.Size(75, 23);
 			this.buttonSetSampleInterval.TabIndex = 5;
@@ -132,7 +134,7 @@ namespace ReadingStation
 			// 
 			// buttonDisconnect
 			// 
-			this.buttonDisconnect.Location = new System.Drawing.Point(118, 160);
+			this.buttonDisconnect.Location = new System.Drawing.Point(118, 201);
 			this.buttonDisconnect.Name = "buttonDisconnect";
 			this.buttonDisconnect.Size = new System.Drawing.Size(75, 23);
 			this.buttonDisconnect.TabIndex = 16;
@@ -140,11 +142,38 @@ namespace ReadingStation
 			this.buttonDisconnect.UseVisualStyleBackColor = true;
 			this.buttonDisconnect.Click += new System.EventHandler(this.buttonDisconnect_Click);
 			// 
+			// radioButtonCelcius
+			// 
+			this.radioButtonCelcius.AutoSize = true;
+			this.radioButtonCelcius.Checked = true;
+			this.radioButtonCelcius.Location = new System.Drawing.Point(25, 100);
+			this.radioButtonCelcius.Name = "radioButtonCelcius";
+			this.radioButtonCelcius.Size = new System.Drawing.Size(59, 17);
+			this.radioButtonCelcius.TabIndex = 17;
+			this.radioButtonCelcius.TabStop = true;
+			this.radioButtonCelcius.Text = "Celcius";
+			this.radioButtonCelcius.UseVisualStyleBackColor = true;
+			this.radioButtonCelcius.CheckedChanged += new System.EventHandler(this.radioButtonCelcius_CheckedChanged);
+			// 
+			// radioButtonFahrenheit
+			// 
+			this.radioButtonFahrenheit.AutoSize = true;
+			this.radioButtonFahrenheit.Location = new System.Drawing.Point(108, 100);
+			this.radioButtonFahrenheit.Name = "radioButtonFahrenheit";
+			this.radioButtonFahrenheit.Size = new System.Drawing.Size(75, 17);
+			this.radioButtonFahrenheit.TabIndex = 18;
+			this.radioButtonFahrenheit.TabStop = true;
+			this.radioButtonFahrenheit.Text = "Fahrenheit";
+			this.radioButtonFahrenheit.UseVisualStyleBackColor = true;
+			this.radioButtonFahrenheit.CheckedChanged += new System.EventHandler(this.radioButtonFahrenheit_CheckedChanged);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(205, 248);
+			this.ClientSize = new System.Drawing.Size(205, 291);
+			this.Controls.Add(this.radioButtonFahrenheit);
+			this.Controls.Add(this.radioButtonCelcius);
 			this.Controls.Add(this.labelTemperatur);
 			this.Controls.Add(this.textBoxSampleInterval);
 			this.Controls.Add(this.label4);
@@ -180,6 +209,8 @@ namespace ReadingStation
 		private System.Windows.Forms.Button buttonSetSampleInterval;
 		private System.Windows.Forms.Label labelTemperatur;
 		private System.Windows.Forms.Button buttonDisconnect;
+		private System.Windows.Forms.RadioButton radioButtonCelcius;
+		private System.Windows.Forms.RadioButton radioButtonFahrenheit;
 	}
 }
 

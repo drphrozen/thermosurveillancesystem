@@ -13,11 +13,14 @@ namespace ReadingStation
 	{
 		IPICOTH03 pico;
 		Timer SampleTimer = new Timer();
+		WebReference.ReadingStationFacadeService service = new ReadingStation.WebReference.ReadingStationFacadeService();
+		bool useCelcius = true;
 
 		public Form1()
 		{
 			InitializeComponent();
-			SampleTimer.Tick += UpdateDisplay;
+			SampleTimer.Tick += PerformSample;
+
 		}
 
 		private void buttonConnect_Click(object sender, EventArgs e)
@@ -39,9 +42,31 @@ namespace ReadingStation
 			}
 		}
 
-		private void UpdateDisplay(object sender, EventArgs e)
+		private void PerformSample(object sender, EventArgs e)
 		{
-			labelTemperatur.Text = pico.GetTemperatur(0).ToString() + " C";
+			double temperatur;
+			if (useCelcius)
+			{
+				temperatur = pico.GetCelcius(1);
+				labelTemperatur.Text = temperatur.ToString() + " C";
+			}
+			else
+			{
+				temperatur = pico.GetFahrenheit(1);
+				labelTemperatur.Text = temperatur.ToString() + " F";
+			}
+
+			try
+			{
+				WebReference.TemperatureDTO dto = new ReadingStation.WebReference.TemperatureDTO();
+				dto.probeId = 1;
+				dto.readingStationName = textBoxStationName.Text;
+				dto.timestamp = DateTime.Now;
+				dto.data = (int)(temperatur * 1000);
+				service.deliverReading(dto);
+			}
+			catch (Exception)
+			{ }
 		}
 
 		private void buttonSetSampleInterval_Click(object sender, EventArgs e)
@@ -58,7 +83,7 @@ namespace ReadingStation
 				SampleTimer.Start();
 				buttonConnect.Visible = false;
 				buttonDisconnect.Visible = true;
-				UpdateDisplay(null, null);
+				PerformSample(null, null);
 			}
 		}
 
@@ -67,6 +92,16 @@ namespace ReadingStation
 			SampleTimer.Stop();
 			buttonConnect.Visible = true;
 			buttonDisconnect.Visible = false;
+		}
+
+		private void radioButtonCelcius_CheckedChanged(object sender, EventArgs e)
+		{
+			useCelcius = true;
+		}
+
+		private void radioButtonFahrenheit_CheckedChanged(object sender, EventArgs e)
+		{
+			useCelcius = false;
 		}
 	}
 }
