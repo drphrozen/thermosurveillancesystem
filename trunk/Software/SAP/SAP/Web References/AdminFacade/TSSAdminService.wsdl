@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:tns1="urn:BeanService" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://172.21.185.177:8080/axis/services/TSSAdminService" xmlns:intf="http://172.21.185.177:8080/axis/services/TSSAdminService" targetNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:BeanService">
+      <xsd:import namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="UserDTO">
+        <xsd:sequence>
+          <xsd:element name="accountTypeId" type="xsd:int" />
+          <xsd:element name="password" nillable="true" type="soapenc:string" />
+          <xsd:element name="username" nillable="true" type="soapenc:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ProbeDTO">
+        <xsd:sequence>
+          <xsd:element name="data" type="xsd:double" />
+          <xsd:element name="id" type="xsd:int" />
+          <xsd:element name="lowerAlarm" type="xsd:double" />
+          <xsd:element name="units" nillable="true" type="soapenc:string" />
+          <xsd:element name="upperAlarm" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ReadingStationDTO">
+        <xsd:sequence>
+          <xsd:element name="enabled" type="xsd:boolean" />
+          <xsd:element name="id" type="xsd:int" />
+          <xsd:element name="name" nillable="true" type="soapenc:string" />
+          <xsd:element name="probes" nillable="true" type="intf:ArrayOf_tns1_ProbeDTO" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService">
+      <xsd:import namespace="urn:BeanService" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns1_UserDTO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:UserDTO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ProbeDTO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ProbeDTO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ReadingStationDTO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ReadingStationDTO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getReadingStationsResponse">
+    <wsdl:part name="getReadingStationsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
+  </wsdl:message>
+  <wsdl:message name="enableRSResponse">
+    <wsdl:part name="enableRSReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="updateUserInfoRequest">
+    <wsdl:part name="in0" type="tns1:UserDTO" />
+    <wsdl:part name="in1" type="tns1:UserDTO" />
+  </wsdl:message>
+  <wsdl:message name="updateUserInfoResponse">
+    <wsdl:part name="updateUserInfoReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="enableRSRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="addUserResponse1">
+    <wsdl:part name="addUserReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setRSAlarmLevelResponse">
+    <wsdl:part name="setRSAlarmLevelReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="in0" type="tns1:UserDTO" />
+  </wsdl:message>
+  <wsdl:message name="addUserRequest1">
+    <wsdl:part name="in0" type="soapenc:string" />
+    <wsdl:part name="in1" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="getUsersResponse">
+    <wsdl:part name="getUsersReturn" type="intf:ArrayOf_tns1_UserDTO" />
+  </wsdl:message>
+  <wsdl:message name="removeUserRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="removeUserResponse">
+    <wsdl:part name="removeUserReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="disableRSRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="loginReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getReadingStationsRequest" />
+  <wsdl:message name="setRSNameRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+    <wsdl:part name="in1" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="setRSNameResponse">
+    <wsdl:part name="setRSNameReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getUsersRequest" />
+  <wsdl:message name="addUserRequest">
+    <wsdl:part name="in0" type="tns1:UserDTO" />
+  </wsdl:message>
+  <wsdl:message name="setRSAlarmLevelRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+    <wsdl:part name="in1" type="xsd:int" />
+    <wsdl:part name="in2" type="xsd:double" />
+    <wsdl:part name="in3" type="xsd:double" />
+  </wsdl:message>
+  <wsdl:message name="addUserResponse">
+    <wsdl:part name="addUserReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="disableRSResponse">
+    <wsdl:part name="disableRSReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="AdminFacade">
+    <wsdl:operation name="getUsers">
+      <wsdl:input name="getUsersRequest" message="intf:getUsersRequest" />
+      <wsdl:output name="getUsersResponse" message="intf:getUsersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="removeUser" parameterOrder="in0">
+      <wsdl:input name="removeUserRequest" message="intf:removeUserRequest" />
+      <wsdl:output name="removeUserResponse" message="intf:removeUserResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="login" parameterOrder="in0">
+      <wsdl:input name="loginRequest" message="intf:loginRequest" />
+      <wsdl:output name="loginResponse" message="intf:loginResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getReadingStations">
+      <wsdl:input name="getReadingStationsRequest" message="intf:getReadingStationsRequest" />
+      <wsdl:output name="getReadingStationsResponse" message="intf:getReadingStationsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setRSName" parameterOrder="in0 in1">
+      <wsdl:input name="setRSNameRequest" message="intf:setRSNameRequest" />
+      <wsdl:output name="setRSNameResponse" message="intf:setRSNameResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="addUser" parameterOrder="in0">
+      <wsdl:input name="addUserRequest" message="intf:addUserRequest" />
+      <wsdl:output name="addUserResponse" message="intf:addUserResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="addUser" parameterOrder="in0 in1">
+      <wsdl:input name="addUserRequest1" message="intf:addUserRequest1" />
+      <wsdl:output name="addUserResponse1" message="intf:addUserResponse1" />
+    </wsdl:operation>
+    <wsdl:operation name="updateUserInfo" parameterOrder="in0 in1">
+      <wsdl:input name="updateUserInfoRequest" message="intf:updateUserInfoRequest" />
+      <wsdl:output name="updateUserInfoResponse" message="intf:updateUserInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setRSAlarmLevel" parameterOrder="in0 in1 in2 in3">
+      <wsdl:input name="setRSAlarmLevelRequest" message="intf:setRSAlarmLevelRequest" />
+      <wsdl:output name="setRSAlarmLevelResponse" message="intf:setRSAlarmLevelResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="enableRS" parameterOrder="in0">
+      <wsdl:input name="enableRSRequest" message="intf:enableRSRequest" />
+      <wsdl:output name="enableRSResponse" message="intf:enableRSResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="disableRS" parameterOrder="in0">
+      <wsdl:input name="disableRSRequest" message="intf:disableRSRequest" />
+      <wsdl:output name="disableRSResponse" message="intf:disableRSResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TSSAdminServiceSoapBinding" type="intf:AdminFacade">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getUsers">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getUsersRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getUsersResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeUser">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="removeUserRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="removeUserResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="loginRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReadingStations">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getReadingStationsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getReadingStationsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setRSName">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="setRSNameRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setRSNameResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addUserRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addUserResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addUserRequest1">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addUserResponse1">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUserInfo">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="updateUserInfoRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="updateUserInfoResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setRSAlarmLevel">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="setRSAlarmLevelRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setRSAlarmLevelResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="enableRS">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="enableRSRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="enableRSResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="disableRS">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="disableRSRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="disableRSResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdminFacadeService">
+    <wsdl:port name="TSSAdminService" binding="intf:TSSAdminServiceSoapBinding">
+      <wsdlsoap:address location="http://172.21.185.177:8080/axis/services/TSSAdminService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
