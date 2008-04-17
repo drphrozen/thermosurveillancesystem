@@ -78,7 +78,6 @@ namespace ReadingStation
 			{
 				stationService.deliverAlarmAsync(dto);
 				//stationService.deliverReading(dto);
-				System.Diagnostics.Debug.WriteLine("Delivered");
 			}
 			catch
 			{
