@@ -69,7 +69,7 @@ namespace ReadingStation
 			foreach (IProbe probe in probes)
 			{
 				probeDtos.Add(probe.GetAsProbeDTO());
-				labelDisplay.Text += probe.GetValue() + probe.GetUnits() + " ";
+				labelDisplay.Text += string.Format("{0:0.0}", probe.GetValue()) + probe.GetUnits() + "\n";
 			}
 
 			dto.probes = probeDtos.ToArray();
