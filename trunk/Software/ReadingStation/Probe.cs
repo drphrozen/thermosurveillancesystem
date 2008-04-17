@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using PSP.TSSServer;
+using ReadingStation.TSSServer;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace PSP
+namespace ReadingStation
 {
 	class Probe
 	{
@@ -43,6 +43,9 @@ namespace PSP
 			get { return units; }
 			set { units = value; }
 		}
+
+		public Probe()
+		{ }
 
 		public Probe(ProbeDTO probe)
 		{
