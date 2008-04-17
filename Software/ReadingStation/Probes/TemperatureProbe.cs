@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using PSP.TSSServer;
+using ReadingStation.TSSServer;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace PSP
+namespace ReadingStation.Probes
 {
-	class Probe
+	class TemperatureProbe : IProbe
 	{
 		private int id;
 		public int Id
@@ -44,14 +44,8 @@ namespace PSP
 			set { units = value; }
 		}
 
-		public Probe(ProbeDTO probe)
-		{
-			id = probe.id;
-			data = probe.data;
-			lowerAlarm = probe.lowerAlarm;
-			upperAlarm = probe.upperAlarm;
-			units = probe.units;
-		}
+		public TemperatureProbe()
+		{ }
 
 		public bool AlarmRaised()
 		{
@@ -68,17 +62,32 @@ namespace PSP
 			return (lowerAlarm > data);
 		}
 
-		public TreeNode GetAsTreeNode()
+		public void TakeSample()
 		{
-			TreeNode node = new TreeNode();
-			node.Name = id.ToString();
-			node.Text = id.ToString() + " - " + data.ToString() + " " + units;
-			node.Tag = this;
-			if (AlarmRaised())
-			{
-				node.ForeColor = Color.Red;
-			}
-			return node;
+			data = DateTime.Now.Millisecond % 23;
+		}
+
+		public double GetValue()
+		{
+			return data;
+		}
+
+		public string GetUnits()
+		{
+			return units;
+		}
+
+		public ProbeDTO GetAsProbeDTO()
+		{
+			ProbeDTO dto = new ProbeDTO();
+
+			dto.data = Data;
+			dto.id = id;
+			dto.lowerAlarm = lowerAlarm;
+			dto.upperAlarm = upperAlarm;
+			dto.units = units;
+
+			return dto;
 		}
 	}
 }
