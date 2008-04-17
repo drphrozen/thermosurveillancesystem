@@ -64,7 +64,8 @@ namespace ReadingStation.Probes
 
 		public void TakeSample()
 		{
-			data = DateTime.Now.Millisecond % 23;
+			data += DateTime.Now.Millisecond % 23;
+			data /= 2;
 		}
 
 		public double GetValue()
