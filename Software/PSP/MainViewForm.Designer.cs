@@ -178,7 +178,6 @@ namespace PSP
 			this.labelSummaryHighestTemperature.Name = "labelSummaryHighestTemperature";
 			this.labelSummaryHighestTemperature.Size = new System.Drawing.Size(97, 23);
 			this.labelSummaryHighestTemperature.TabIndex = 12;
-			this.labelSummaryHighestTemperature.Text = "12 *C";
 			this.labelSummaryHighestTemperature.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			// 
 			// labelSummaryLowestTemperature
@@ -188,7 +187,6 @@ namespace PSP
 			this.labelSummaryLowestTemperature.Name = "labelSummaryLowestTemperature";
 			this.labelSummaryLowestTemperature.Size = new System.Drawing.Size(97, 23);
 			this.labelSummaryLowestTemperature.TabIndex = 11;
-			this.labelSummaryLowestTemperature.Text = "12 *C";
 			this.labelSummaryLowestTemperature.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			// 
 			// labelSummaryLowestPressure
@@ -198,7 +196,6 @@ namespace PSP
 			this.labelSummaryLowestPressure.Name = "labelSummaryLowestPressure";
 			this.labelSummaryLowestPressure.Size = new System.Drawing.Size(97, 23);
 			this.labelSummaryLowestPressure.TabIndex = 10;
-			this.labelSummaryLowestPressure.Text = "12 *C";
 			this.labelSummaryLowestPressure.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			// 
 			// labelSummaryHighestPressure
@@ -208,7 +205,6 @@ namespace PSP
 			this.labelSummaryHighestPressure.Name = "labelSummaryHighestPressure";
 			this.labelSummaryHighestPressure.Size = new System.Drawing.Size(97, 23);
 			this.labelSummaryHighestPressure.TabIndex = 9;
-			this.labelSummaryHighestPressure.Text = "12 *C";
 			this.labelSummaryHighestPressure.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
 			// 
 			// label4
@@ -302,7 +298,7 @@ namespace PSP
 			// 
 			// zedGraphLastHour
 			// 
-			this.zedGraphLastHour.Location = new System.Drawing.Point(2, -22);
+			this.zedGraphLastHour.Location = new System.Drawing.Point(2, 226);
 			this.zedGraphLastHour.Name = "zedGraphLastHour";
 			this.zedGraphLastHour.ScrollGrace = 0;
 			this.zedGraphLastHour.ScrollMaxX = 0;
@@ -311,8 +307,9 @@ namespace PSP
 			this.zedGraphLastHour.ScrollMinX = 0;
 			this.zedGraphLastHour.ScrollMinY = 0;
 			this.zedGraphLastHour.ScrollMinY2 = 0;
-			this.zedGraphLastHour.Size = new System.Drawing.Size(272, 318);
+			this.zedGraphLastHour.Size = new System.Drawing.Size(260, 92);
 			this.zedGraphLastHour.TabIndex = 9;
+			this.zedGraphLastHour.Visible = false;
 			// 
 			// labelLowerAlarm
 			// 
