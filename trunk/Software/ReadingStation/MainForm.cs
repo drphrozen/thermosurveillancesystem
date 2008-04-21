@@ -20,34 +20,40 @@ namespace ReadingStation
 		public MainForm()
 		{
 			InitializeComponent();
-			stationService = new ReadingStationFacadeService();
-			sampleTimer.Tick += TakeSample;
-
-			PressureProbe pres = new PressureProbe();
-			pres.Id = 3;
-			pres.LowerAlarm = 0;
-			pres.UpperAlarm = 5;
-			pres.Units = "bar";
-			probes.Add(pres);
-
-			TemperatureProbe temp = new TemperatureProbe();
-			temp.Id = 1;
-			temp.LowerAlarm = 14;
-			temp.UpperAlarm = 37;
-			temp.Units = "C";
-			probes.Add(temp);
-
-			sampleTimer.Interval = 345;
-			sampleTimer.Tick += TakeSample;
-			sampleTimer.Enabled = true;
-
-			deliverTimer.Tick += DeliverSamples;
 
 			stationService = new ReadingStationFacadeService();
 			stationService.CookieContainer = new System.Net.CookieContainer();
 			ReadingStationDTO dto = new ReadingStationDTO();
 			dto.name = "abc";
-			stationService.login(dto);
+			if (stationService.login(dto))
+			{
+				stationService = new ReadingStationFacadeService();
+				sampleTimer.Tick += TakeSample;
+
+				PressureProbe pres = new PressureProbe();
+				pres.Id = 3;
+				pres.LowerAlarm = 0;
+				pres.UpperAlarm = 5;
+				pres.Units = "bar";
+				probes.Add(pres);
+
+				TemperatureProbe temp = new TemperatureProbe();
+				temp.Id = 1;
+				temp.LowerAlarm = 14;
+				temp.UpperAlarm = 37;
+				temp.Units = "C";
+				probes.Add(temp);
+
+				sampleTimer.Interval = 345;
+				sampleTimer.Tick += TakeSample;
+				sampleTimer.Enabled = true;
+
+				deliverTimer.Tick += DeliverSamples;
+			}
+			else
+			{
+				MessageBox.Show("Unable to connect");
+			}
 		}
 
 		private void TakeSample(object sender, EventArgs e)
@@ -76,8 +82,7 @@ namespace ReadingStation
 
 			try
 			{
-				stationService.deliverAlarmAsync(dto);
-				//stationService.deliverReading(dto);
+				stationService.deliverReading(dto);
 			}
 			catch
 			{

@@ -27,20 +27,20 @@ namespace PSP.TSSServer {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="TSSUserServiceSoapBinding", Namespace="http://172.21.185.177:8080/axis/services/TSSUserService")]
-    [System.Xml.Serialization.SoapIncludeAttribute(typeof(MeasurementDTO))]
     [System.Xml.Serialization.SoapIncludeAttribute(typeof(ProbeDTO))]
     [System.Xml.Serialization.SoapIncludeAttribute(typeof(ReadingStationDTO))]
+    [System.Xml.Serialization.SoapIncludeAttribute(typeof(MeasurementDTO))]
     public partial class UserFacadeService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback loginOperationCompleted;
         
-        private System.Threading.SendOrPostCallback getNewestReadingsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback getReadingsOperationCompleted;
-        
         private System.Threading.SendOrPostCallback getLastHourOfReadingsOperationCompleted;
         
         private System.Threading.SendOrPostCallback getHistoricalDataOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback getReadingsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback getNewestReadingsOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -84,16 +84,16 @@ namespace PSP.TSSServer {
         public event loginCompletedEventHandler loginCompleted;
         
         /// <remarks/>
-        public event getNewestReadingsCompletedEventHandler getNewestReadingsCompleted;
+        public event getLastHourOfReadingsCompletedEventHandler getLastHourOfReadingsCompleted;
+        
+        /// <remarks/>
+        public event getHistoricalDataCompletedEventHandler getHistoricalDataCompleted;
         
         /// <remarks/>
         public event getReadingsCompletedEventHandler getReadingsCompleted;
         
         /// <remarks/>
-        public event getLastHourOfReadingsCompletedEventHandler getLastHourOfReadingsCompleted;
-        
-        /// <remarks/>
-        public event getHistoricalDataCompletedEventHandler getHistoricalDataCompleted;
+        public event getNewestReadingsCompletedEventHandler getNewestReadingsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSUserService")]
@@ -122,66 +122,6 @@ namespace PSP.TSSServer {
             if ((this.loginCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.loginCompleted(this, new loginCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSUserService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("getNewestReadingsReturn")]
-        public ReadingStationDTO[] getNewestReadings() {
-            object[] results = this.Invoke("getNewestReadings", new object[0]);
-            return ((ReadingStationDTO[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void getNewestReadingsAsync() {
-            this.getNewestReadingsAsync(null);
-        }
-        
-        /// <remarks/>
-        public void getNewestReadingsAsync(object userState) {
-            if ((this.getNewestReadingsOperationCompleted == null)) {
-                this.getNewestReadingsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetNewestReadingsOperationCompleted);
-            }
-            this.InvokeAsync("getNewestReadings", new object[0], this.getNewestReadingsOperationCompleted, userState);
-        }
-        
-        private void OngetNewestReadingsOperationCompleted(object arg) {
-            if ((this.getNewestReadingsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.getNewestReadingsCompleted(this, new getNewestReadingsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSUserService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("getReadingsReturn")]
-        public ReadingStationDTO[] getReadings(System.DateTime in0, System.DateTime in1) {
-            object[] results = this.Invoke("getReadings", new object[] {
-                        in0,
-                        in1});
-            return ((ReadingStationDTO[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void getReadingsAsync(System.DateTime in0, System.DateTime in1) {
-            this.getReadingsAsync(in0, in1, null);
-        }
-        
-        /// <remarks/>
-        public void getReadingsAsync(System.DateTime in0, System.DateTime in1, object userState) {
-            if ((this.getReadingsOperationCompleted == null)) {
-                this.getReadingsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetReadingsOperationCompleted);
-            }
-            this.InvokeAsync("getReadings", new object[] {
-                        in0,
-                        in1}, this.getReadingsOperationCompleted, userState);
-        }
-        
-        private void OngetReadingsOperationCompleted(object arg) {
-            if ((this.getReadingsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.getReadingsCompleted(this, new getReadingsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -250,6 +190,66 @@ namespace PSP.TSSServer {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSUserService")]
+        [return: System.Xml.Serialization.SoapElementAttribute("getReadingsReturn")]
+        public ReadingStationDTO[] getReadings(System.DateTime in0, System.DateTime in1) {
+            object[] results = this.Invoke("getReadings", new object[] {
+                        in0,
+                        in1});
+            return ((ReadingStationDTO[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void getReadingsAsync(System.DateTime in0, System.DateTime in1) {
+            this.getReadingsAsync(in0, in1, null);
+        }
+        
+        /// <remarks/>
+        public void getReadingsAsync(System.DateTime in0, System.DateTime in1, object userState) {
+            if ((this.getReadingsOperationCompleted == null)) {
+                this.getReadingsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetReadingsOperationCompleted);
+            }
+            this.InvokeAsync("getReadings", new object[] {
+                        in0,
+                        in1}, this.getReadingsOperationCompleted, userState);
+        }
+        
+        private void OngetReadingsOperationCompleted(object arg) {
+            if ((this.getReadingsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.getReadingsCompleted(this, new getReadingsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSUserService")]
+        [return: System.Xml.Serialization.SoapElementAttribute("getNewestReadingsReturn")]
+        public ReadingStationDTO[] getNewestReadings() {
+            object[] results = this.Invoke("getNewestReadings", new object[0]);
+            return ((ReadingStationDTO[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void getNewestReadingsAsync() {
+            this.getNewestReadingsAsync(null);
+        }
+        
+        /// <remarks/>
+        public void getNewestReadingsAsync(object userState) {
+            if ((this.getNewestReadingsOperationCompleted == null)) {
+                this.getNewestReadingsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetNewestReadingsOperationCompleted);
+            }
+            this.InvokeAsync("getNewestReadings", new object[0], this.getNewestReadingsOperationCompleted, userState);
+        }
+        
+        private void OngetNewestReadingsOperationCompleted(object arg) {
+            if ((this.getNewestReadingsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.getNewestReadingsCompleted(this, new getNewestReadingsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -311,6 +311,135 @@ namespace PSP.TSSServer {
             }
             set {
                 this.usernameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.1433")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:BeanService")]
+    public partial class ProbeDTO {
+        
+        private double dataField;
+        
+        private int idField;
+        
+        private double lowerAlarmField;
+        
+        private string unitsField;
+        
+        private double upperAlarmField;
+        
+        /// <remarks/>
+        public double data {
+            get {
+                return this.dataField;
+            }
+            set {
+                this.dataField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public double lowerAlarm {
+            get {
+                return this.lowerAlarmField;
+            }
+            set {
+                this.lowerAlarmField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
+        public string units {
+            get {
+                return this.unitsField;
+            }
+            set {
+                this.unitsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public double upperAlarm {
+            get {
+                return this.upperAlarmField;
+            }
+            set {
+                this.upperAlarmField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.1433")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:BeanService")]
+    public partial class ReadingStationDTO {
+        
+        private bool enabledField;
+        
+        private int idField;
+        
+        private string nameField;
+        
+        private ProbeDTO[] probesField;
+        
+        /// <remarks/>
+        public bool enabled {
+            get {
+                return this.enabledField;
+            }
+            set {
+                this.enabledField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
+        public ProbeDTO[] probes {
+            get {
+                return this.probesField;
+            }
+            set {
+                this.probesField = value;
             }
         }
     }
@@ -469,135 +598,6 @@ namespace PSP.TSSServer {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.1433")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:BeanService")]
-    public partial class ProbeDTO {
-        
-        private double dataField;
-        
-        private int idField;
-        
-        private double lowerAlarmField;
-        
-        private string unitsField;
-        
-        private double upperAlarmField;
-        
-        /// <remarks/>
-        public double data {
-            get {
-                return this.dataField;
-            }
-            set {
-                this.dataField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int id {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double lowerAlarm {
-            get {
-                return this.lowerAlarmField;
-            }
-            set {
-                this.lowerAlarmField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
-        public string units {
-            get {
-                return this.unitsField;
-            }
-            set {
-                this.unitsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public double upperAlarm {
-            get {
-                return this.upperAlarmField;
-            }
-            set {
-                this.upperAlarmField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.1433")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:BeanService")]
-    public partial class ReadingStationDTO {
-        
-        private bool enabledField;
-        
-        private int idField;
-        
-        private string nameField;
-        
-        private ProbeDTO[] probesField;
-        
-        /// <remarks/>
-        public bool enabled {
-            get {
-                return this.enabledField;
-            }
-            set {
-                this.enabledField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int id {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
-        public string name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
-        public ProbeDTO[] probes {
-            get {
-                return this.probesField;
-            }
-            set {
-                this.probesField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     public delegate void loginCompletedEventHandler(object sender, loginCompletedEventArgs e);
     
@@ -619,58 +619,6 @@ namespace PSP.TSSServer {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void getNewestReadingsCompletedEventHandler(object sender, getNewestReadingsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class getNewestReadingsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal getNewestReadingsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public ReadingStationDTO[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((ReadingStationDTO[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void getReadingsCompletedEventHandler(object sender, getReadingsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class getReadingsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal getReadingsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public ReadingStationDTO[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((ReadingStationDTO[])(this.results[0]));
             }
         }
     }
@@ -723,6 +671,58 @@ namespace PSP.TSSServer {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((SummaryDTO)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void getReadingsCompletedEventHandler(object sender, getReadingsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class getReadingsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal getReadingsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReadingStationDTO[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReadingStationDTO[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void getNewestReadingsCompletedEventHandler(object sender, getNewestReadingsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class getNewestReadingsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal getNewestReadingsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReadingStationDTO[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReadingStationDTO[])(this.results[0]));
             }
         }
     }
