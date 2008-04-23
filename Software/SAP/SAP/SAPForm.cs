@@ -44,15 +44,16 @@ namespace SAP
                     service = new AdminFacadeService();
                     log("Setting up cookies..");
                     service.CookieContainer = new CookieContainer();
-                    
-                    UserDTO user = new UserDTO();
-                    user.username = textBoxLoginUsername.Text;
-                    user.password = textBoxLoginPassword.Text;
 
+                    User user = new User();
+                    user.Username = textBoxLoginUsername.Text;
+                    user.Password = textBoxLoginPassword.Text;
+                    user.AccountTypeID = User.AccountType.ADMIN;
+                    UserDTO userdto = user.GetUserDTO();
 
                     log("Logging in..");
                     service.loginCompleted += new loginCompletedEventHandler(service_loginCompleted);
-                    service.loginAsync(user);
+                    service.loginAsync(userdto);
                 }
                 catch (Exception ex)
                 {
@@ -147,7 +148,7 @@ namespace SAP
                         try
                         {
                             log(String.Format("Changing \"{0}\" to \"{1}\"", (String)e.OldValue, (String)e.ChangedItem.Value));
-                            if (service.setRSName((String)e.OldValue, (String)e.ChangedItem.Value))
+                            if (service.setRSName(rs.ID, (String)e.ChangedItem.Value))
                             {
                                 log(String.Format("Reading station renamed from \"{0}\" to \"{1}\"", (String)e.OldValue, (String)e.ChangedItem.Value));
                                 int index = listBoxReadingStations.Items.IndexOf(rs);
@@ -191,7 +192,7 @@ namespace SAP
                         try
                         {
                             log("Setting probe #" + probe.ID + "'s alarm limits to " + probe.LowerAlarm + " - " + probe.UpperAlarm);
-                            if(service.setRSAlarmLevel(rs.Name, probe.ID, probe.LowerAlarm, probe.UpperAlarm))
+                            if(service.setProbeAlarmLevel(probe.ID, probe.LowerAlarm, probe.UpperAlarm))
                             {
                                 log("Changed probe #" + probe.ID + "'s alarm limits to " + probe.LowerAlarm + " - " + probe.UpperAlarm + ".");
                             }
@@ -211,7 +212,7 @@ namespace SAP
                         try
                         {
                             log("Setting probe #" + probe.ID + "'s alarm limits to " + probe.LowerAlarm + " - " + probe.UpperAlarm);
-                            if (service.setRSAlarmLevel(rs.Name, probe.ID, probe.LowerAlarm, probe.UpperAlarm))
+                            if (service.setProbeAlarmLevel(probe.ID, probe.LowerAlarm, probe.UpperAlarm))
                             {
                                 log("Changed probe #" + probe.ID + "'s alarm limits to " + probe.LowerAlarm + " - " + probe.UpperAlarm + ".");
                             }
@@ -324,9 +325,9 @@ namespace SAP
 
         private void propertyGridUsers_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            if (propertyGridReadingStation.SelectedObject is User)
+            if (propertyGridUsers.SelectedObject is User)
             {
-                User user = (User)propertyGridReadingStation.SelectedObject;
+                User user = (User)propertyGridUsers.SelectedObject;
                 User oldUser = new User(user);
                 try
                 {
@@ -345,7 +346,7 @@ namespace SAP
                             throw new Exception("Wrong value change implementation of " + e.ChangedItem.Label + " in " + e.ChangedItem.Parent.Value.GetType().Name);
                     }
                     log("Updating " + user.Username);
-                    if (service.updateUserInfo(oldUser.GetUserDTO(), user.GetUserDTO()))
+                    if (service.updateUserInfo(oldUser.ID, user.GetUserDTO()))
                     {
                         int index = listBoxUsers.Items.IndexOf(user);
                         listBoxUsers.Items[index] = user;
