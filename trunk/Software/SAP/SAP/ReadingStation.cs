@@ -11,6 +11,14 @@ namespace SAP
         private string name;
         private ProbeCollection probes;
         private bool enabled;
+        private int id;
+
+        [ReadOnly(true)]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
 
         public ReadingStation()
         {
@@ -24,6 +32,7 @@ namespace SAP
             name = rs.name;
             enabled = rs.enabled;
             probes = Probe.GetProbes(rs.probes);
+            id = rs.id;
         }
 
         public bool Enabled
@@ -31,6 +40,7 @@ namespace SAP
             get { return enabled; }
             set { enabled = value; }
         }
+
         [TypeConverter(typeof(ProbeCollectionConverter))]
         public ProbeCollection Probes
         {
