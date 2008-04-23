@@ -12,14 +12,6 @@ namespace SAP
         private string name;
         private ProbeCollection probes;
         private bool enabled;
-        private int id;
-
-        [ReadOnly(true)]
-        public int ID
-        {
-            get { return id; }
-            set { id = value; }
-        }
 
         public ReadingStation()
         {
