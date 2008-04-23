@@ -12,7 +12,6 @@ namespace SAP
         {
             ADMIN = 1,
             USER = 2,
-            READINGSTATION = 3,
         }
 
         private AccountType accountTypeID;
@@ -25,6 +24,7 @@ namespace SAP
 
         private string password;
 
+        [Browsable(false)]
         [PasswordPropertyText(true)]
         public string Password
         {
@@ -40,6 +40,15 @@ namespace SAP
             set { username = value; }
         }
 
+        private int id;
+
+        [ReadOnly(true)]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
         public User()
         {
             accountTypeID = AccountType.USER;
@@ -49,7 +58,18 @@ namespace SAP
 
         public User(UserDTO user)
         {
-            accountTypeID = (AccountType)user.accountTypeId;
+            id = user.id;
+            switch (user.accountType)
+            {
+                case "admin":
+                    accountTypeID = AccountType.ADMIN;
+                    break;
+                case "user":
+                    accountTypeID = AccountType.USER;
+                    break;
+                default:
+                    throw new Exception(user.accountType + " accounttype error!");
+            }
             password = user.password;
             username = user.username;
         }
@@ -60,8 +80,9 @@ namespace SAP
         /// <param name="user"></param>
         public User(User user)
         {
+            id = user.ID;
             accountTypeID = user.AccountTypeID;
-            password = String.Copy(user.Password);
+            password = (user.Password == null ? null : String.Copy(user.Password));
             username = String.Copy(user.Username);
         }
 
@@ -82,9 +103,10 @@ namespace SAP
         public UserDTO GetUserDTO()
         {
             UserDTO user = new UserDTO();
+            user.id = ID;
             user.username = Username;
             user.password = Password;
-            user.accountTypeId = (int)AccountTypeID;
+            user.accountType = Enum.GetName(typeof(AccountType), AccountTypeID).ToLower();
             return user;
         }
     }

@@ -8,6 +8,7 @@ namespace SAP
 {
     class ReadingStation
     {
+        private int id;
         private string name;
         private ProbeCollection probes;
         private bool enabled;
@@ -29,6 +30,7 @@ namespace SAP
 
         public ReadingStation(ReadingStationDTO rs)
         {
+            id = rs.id;
             name = rs.name;
             enabled = rs.enabled;
             probes = Probe.GetProbes(rs.probes);
@@ -52,6 +54,13 @@ namespace SAP
         {
             get { return name; }
             set { name = value; }
+        }
+
+        [ReadOnly(true)]
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public static ReadingStation[] GetReadingStations(ReadingStationDTO[] readingStations)

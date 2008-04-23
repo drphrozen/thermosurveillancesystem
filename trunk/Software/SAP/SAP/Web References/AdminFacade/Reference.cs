@@ -37,21 +37,19 @@ namespace SAP.AdminFacade {
         
         private System.Threading.SendOrPostCallback loginOperationCompleted;
         
-        private System.Threading.SendOrPostCallback getReadingStationsOperationCompleted;
+        private System.Threading.SendOrPostCallback addUserOperationCompleted;
         
-        private System.Threading.SendOrPostCallback setRSAlarmLevelOperationCompleted;
+        private System.Threading.SendOrPostCallback updateUserInfoOperationCompleted;
         
         private System.Threading.SendOrPostCallback setRSNameOperationCompleted;
         
-        private System.Threading.SendOrPostCallback addUserOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback addUser1OperationCompleted;
-        
-        private System.Threading.SendOrPostCallback updateUserInfoOperationCompleted;
+        private System.Threading.SendOrPostCallback setProbeAlarmLevelOperationCompleted;
         
         private System.Threading.SendOrPostCallback enableRSOperationCompleted;
         
         private System.Threading.SendOrPostCallback disableRSOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback getReadingStationsOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -101,22 +99,16 @@ namespace SAP.AdminFacade {
         public event loginCompletedEventHandler loginCompleted;
         
         /// <remarks/>
-        public event getReadingStationsCompletedEventHandler getReadingStationsCompleted;
+        public event addUserCompletedEventHandler addUserCompleted;
         
         /// <remarks/>
-        public event setRSAlarmLevelCompletedEventHandler setRSAlarmLevelCompleted;
+        public event updateUserInfoCompletedEventHandler updateUserInfoCompleted;
         
         /// <remarks/>
         public event setRSNameCompletedEventHandler setRSNameCompleted;
         
         /// <remarks/>
-        public event addUserCompletedEventHandler addUserCompleted;
-        
-        /// <remarks/>
-        public event addUser1CompletedEventHandler addUser1Completed;
-        
-        /// <remarks/>
-        public event updateUserInfoCompletedEventHandler updateUserInfoCompleted;
+        public event setProbeAlarmLevelCompletedEventHandler setProbeAlarmLevelCompleted;
         
         /// <remarks/>
         public event enableRSCompletedEventHandler enableRSCompleted;
@@ -125,7 +117,10 @@ namespace SAP.AdminFacade {
         public event disableRSCompletedEventHandler disableRSCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        public event getReadingStationsCompletedEventHandler getReadingStationsCompleted;
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("getUsersReturn")]
         public UserDTO[] getUsers() {
             object[] results = this.Invoke("getUsers", new object[0]);
@@ -153,7 +148,7 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("removeUserReturn")]
         public bool removeUser(string in0) {
             object[] results = this.Invoke("removeUser", new object[] {
@@ -183,7 +178,7 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("loginReturn")]
         public bool login(UserDTO in0) {
             object[] results = this.Invoke("login", new object[] {
@@ -213,124 +208,26 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("getReadingStationsReturn")]
-        public ReadingStationDTO[] getReadingStations() {
-            object[] results = this.Invoke("getReadingStations", new object[0]);
-            return ((ReadingStationDTO[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void getReadingStationsAsync() {
-            this.getReadingStationsAsync(null);
-        }
-        
-        /// <remarks/>
-        public void getReadingStationsAsync(object userState) {
-            if ((this.getReadingStationsOperationCompleted == null)) {
-                this.getReadingStationsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetReadingStationsOperationCompleted);
-            }
-            this.InvokeAsync("getReadingStations", new object[0], this.getReadingStationsOperationCompleted, userState);
-        }
-        
-        private void OngetReadingStationsOperationCompleted(object arg) {
-            if ((this.getReadingStationsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.getReadingStationsCompleted(this, new getReadingStationsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("setRSAlarmLevelReturn")]
-        public bool setRSAlarmLevel(string in0, int in1, double in2, double in3) {
-            object[] results = this.Invoke("setRSAlarmLevel", new object[] {
-                        in0,
-                        in1,
-                        in2,
-                        in3});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void setRSAlarmLevelAsync(string in0, int in1, double in2, double in3) {
-            this.setRSAlarmLevelAsync(in0, in1, in2, in3, null);
-        }
-        
-        /// <remarks/>
-        public void setRSAlarmLevelAsync(string in0, int in1, double in2, double in3, object userState) {
-            if ((this.setRSAlarmLevelOperationCompleted == null)) {
-                this.setRSAlarmLevelOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetRSAlarmLevelOperationCompleted);
-            }
-            this.InvokeAsync("setRSAlarmLevel", new object[] {
-                        in0,
-                        in1,
-                        in2,
-                        in3}, this.setRSAlarmLevelOperationCompleted, userState);
-        }
-        
-        private void OnsetRSAlarmLevelOperationCompleted(object arg) {
-            if ((this.setRSAlarmLevelCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.setRSAlarmLevelCompleted(this, new setRSAlarmLevelCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("setRSNameReturn")]
-        public bool setRSName(string in0, string in1) {
-            object[] results = this.Invoke("setRSName", new object[] {
-                        in0,
-                        in1});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void setRSNameAsync(string in0, string in1) {
-            this.setRSNameAsync(in0, in1, null);
-        }
-        
-        /// <remarks/>
-        public void setRSNameAsync(string in0, string in1, object userState) {
-            if ((this.setRSNameOperationCompleted == null)) {
-                this.setRSNameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetRSNameOperationCompleted);
-            }
-            this.InvokeAsync("setRSName", new object[] {
-                        in0,
-                        in1}, this.setRSNameOperationCompleted, userState);
-        }
-        
-        private void OnsetRSNameOperationCompleted(object arg) {
-            if ((this.setRSNameCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.setRSNameCompleted(this, new setRSNameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("addUserReturn")]
-        public bool addUser(string in0, string in1) {
+        public bool addUser(UserDTO in0) {
             object[] results = this.Invoke("addUser", new object[] {
-                        in0,
-                        in1});
+                        in0});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void addUserAsync(string in0, string in1) {
-            this.addUserAsync(in0, in1, null);
+        public void addUserAsync(UserDTO in0) {
+            this.addUserAsync(in0, null);
         }
         
         /// <remarks/>
-        public void addUserAsync(string in0, string in1, object userState) {
+        public void addUserAsync(UserDTO in0, object userState) {
             if ((this.addUserOperationCompleted == null)) {
                 this.addUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnaddUserOperationCompleted);
             }
             this.InvokeAsync("addUser", new object[] {
-                        in0,
-                        in1}, this.addUserOperationCompleted, userState);
+                        in0}, this.addUserOperationCompleted, userState);
         }
         
         private void OnaddUserOperationCompleted(object arg) {
@@ -341,40 +238,9 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        [System.Web.Services.WebMethodAttribute(MessageName="addUser1")]
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("addUserReturn")]
-        public bool addUser(UserDTO in0) {
-            object[] results = this.Invoke("addUser1", new object[] {
-                        in0});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void addUser1Async(UserDTO in0) {
-            this.addUser1Async(in0, null);
-        }
-        
-        /// <remarks/>
-        public void addUser1Async(UserDTO in0, object userState) {
-            if ((this.addUser1OperationCompleted == null)) {
-                this.addUser1OperationCompleted = new System.Threading.SendOrPostCallback(this.OnaddUser1OperationCompleted);
-            }
-            this.InvokeAsync("addUser1", new object[] {
-                        in0}, this.addUser1OperationCompleted, userState);
-        }
-        
-        private void OnaddUser1OperationCompleted(object arg) {
-            if ((this.addUser1Completed != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.addUser1Completed(this, new addUser1CompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("updateUserInfoReturn")]
-        public bool updateUserInfo(UserDTO in0, UserDTO in1) {
+        public bool updateUserInfo(int in0, UserDTO in1) {
             object[] results = this.Invoke("updateUserInfo", new object[] {
                         in0,
                         in1});
@@ -382,12 +248,12 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        public void updateUserInfoAsync(UserDTO in0, UserDTO in1) {
+        public void updateUserInfoAsync(int in0, UserDTO in1) {
             this.updateUserInfoAsync(in0, in1, null);
         }
         
         /// <remarks/>
-        public void updateUserInfoAsync(UserDTO in0, UserDTO in1, object userState) {
+        public void updateUserInfoAsync(int in0, UserDTO in1, object userState) {
             if ((this.updateUserInfoOperationCompleted == null)) {
                 this.updateUserInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnupdateUserInfoOperationCompleted);
             }
@@ -404,7 +270,73 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [return: System.Xml.Serialization.SoapElementAttribute("setRSNameReturn")]
+        public bool setRSName(int in0, string in1) {
+            object[] results = this.Invoke("setRSName", new object[] {
+                        in0,
+                        in1});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void setRSNameAsync(int in0, string in1) {
+            this.setRSNameAsync(in0, in1, null);
+        }
+        
+        /// <remarks/>
+        public void setRSNameAsync(int in0, string in1, object userState) {
+            if ((this.setRSNameOperationCompleted == null)) {
+                this.setRSNameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetRSNameOperationCompleted);
+            }
+            this.InvokeAsync("setRSName", new object[] {
+                        in0,
+                        in1}, this.setRSNameOperationCompleted, userState);
+        }
+        
+        private void OnsetRSNameOperationCompleted(object arg) {
+            if ((this.setRSNameCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.setRSNameCompleted(this, new setRSNameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [return: System.Xml.Serialization.SoapElementAttribute("setProbeAlarmLevelReturn")]
+        public bool setProbeAlarmLevel(int in0, double in1, double in2) {
+            object[] results = this.Invoke("setProbeAlarmLevel", new object[] {
+                        in0,
+                        in1,
+                        in2});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void setProbeAlarmLevelAsync(int in0, double in1, double in2) {
+            this.setProbeAlarmLevelAsync(in0, in1, in2, null);
+        }
+        
+        /// <remarks/>
+        public void setProbeAlarmLevelAsync(int in0, double in1, double in2, object userState) {
+            if ((this.setProbeAlarmLevelOperationCompleted == null)) {
+                this.setProbeAlarmLevelOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetProbeAlarmLevelOperationCompleted);
+            }
+            this.InvokeAsync("setProbeAlarmLevel", new object[] {
+                        in0,
+                        in1,
+                        in2}, this.setProbeAlarmLevelOperationCompleted, userState);
+        }
+        
+        private void OnsetProbeAlarmLevelOperationCompleted(object arg) {
+            if ((this.setProbeAlarmLevelCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.setProbeAlarmLevelCompleted(this, new setProbeAlarmLevelCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("enableRSReturn")]
         public bool enableRS(string in0) {
             object[] results = this.Invoke("enableRS", new object[] {
@@ -434,7 +366,7 @@ namespace SAP.AdminFacade {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("disableRSReturn")]
         public bool disableRS(string in0) {
             object[] results = this.Invoke("disableRS", new object[] {
@@ -460,6 +392,34 @@ namespace SAP.AdminFacade {
             if ((this.disableRSCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.disableRSCompleted(this, new disableRSCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [return: System.Xml.Serialization.SoapElementAttribute("getReadingStationsReturn")]
+        public ReadingStationDTO[] getReadingStations() {
+            object[] results = this.Invoke("getReadingStations", new object[0]);
+            return ((ReadingStationDTO[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void getReadingStationsAsync() {
+            this.getReadingStationsAsync(null);
+        }
+        
+        /// <remarks/>
+        public void getReadingStationsAsync(object userState) {
+            if ((this.getReadingStationsOperationCompleted == null)) {
+                this.getReadingStationsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetReadingStationsOperationCompleted);
+            }
+            this.InvokeAsync("getReadingStations", new object[0], this.getReadingStationsOperationCompleted, userState);
+        }
+        
+        private void OngetReadingStationsOperationCompleted(object arg) {
+            if ((this.getReadingStationsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.getReadingStationsCompleted(this, new getReadingStationsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -490,19 +450,32 @@ namespace SAP.AdminFacade {
     [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:BeanService")]
     public partial class UserDTO {
         
-        private int accountTypeIdField;
+        private string accountTypeField;
+        
+        private int idField;
         
         private string passwordField;
         
         private string usernameField;
         
         /// <remarks/>
-        public int accountTypeId {
+        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
+        public string accountType {
             get {
-                return this.accountTypeIdField;
+                return this.accountTypeField;
             }
             set {
-                this.accountTypeIdField = value;
+                this.accountTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
             }
         }
         
@@ -738,43 +711,43 @@ namespace SAP.AdminFacade {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void getReadingStationsCompletedEventHandler(object sender, getReadingStationsCompletedEventArgs e);
+    public delegate void addUserCompletedEventHandler(object sender, addUserCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class getReadingStationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class addUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal getReadingStationsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal addUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
         /// <remarks/>
-        public ReadingStationDTO[] Result {
+        public bool Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((ReadingStationDTO[])(this.results[0]));
+                return ((bool)(this.results[0]));
             }
         }
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void setRSAlarmLevelCompletedEventHandler(object sender, setRSAlarmLevelCompletedEventArgs e);
+    public delegate void updateUserInfoCompletedEventHandler(object sender, updateUserInfoCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class setRSAlarmLevelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class updateUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal setRSAlarmLevelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal updateUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -816,69 +789,17 @@ namespace SAP.AdminFacade {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void addUserCompletedEventHandler(object sender, addUserCompletedEventArgs e);
+    public delegate void setProbeAlarmLevelCompletedEventHandler(object sender, setProbeAlarmLevelCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class addUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class setProbeAlarmLevelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal addUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void addUser1CompletedEventHandler(object sender, addUser1CompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class addUser1CompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal addUser1CompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void updateUserInfoCompletedEventHandler(object sender, updateUserInfoCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class updateUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal updateUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal setProbeAlarmLevelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -940,6 +861,32 @@ namespace SAP.AdminFacade {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void getReadingStationsCompletedEventHandler(object sender, getReadingStationsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class getReadingStationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal getReadingStationsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReadingStationDTO[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReadingStationDTO[])(this.results[0]));
             }
         }
     }

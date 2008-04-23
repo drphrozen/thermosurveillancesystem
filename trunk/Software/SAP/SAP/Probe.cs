@@ -41,6 +41,8 @@ namespace SAP
             set { upperAlarm = value; }
         }
 
+        private string units = "";
+
         public Probe()
         {
 
@@ -52,6 +54,7 @@ namespace SAP
             id = probe.id;
             lowerAlarm = probe.lowerAlarm;
             upperAlarm = probe.upperAlarm;
+            units = probe.units;
         }
 
         public static ProbeCollection GetProbes(ProbeDTO[] probes)
