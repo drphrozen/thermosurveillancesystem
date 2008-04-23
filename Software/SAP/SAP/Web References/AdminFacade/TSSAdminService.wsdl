@@ -81,8 +81,7 @@
     <wsdl:part name="in0" type="tns1:UserDTO" />
   </wsdl:message>
   <wsdl:message name="addUserRequest1">
-    <wsdl:part name="in0" type="soapenc:string" />
-    <wsdl:part name="in1" type="soapenc:string" />
+    <wsdl:part name="in0" type="tns1:UserDTO" />
   </wsdl:message>
   <wsdl:message name="getUsersResponse">
     <wsdl:part name="getUsersReturn" type="intf:ArrayOf_tns1_UserDTO" />
@@ -109,16 +108,17 @@
   </wsdl:message>
   <wsdl:message name="getUsersRequest" />
   <wsdl:message name="addUserRequest">
-    <wsdl:part name="in0" type="tns1:UserDTO" />
+    <wsdl:part name="in0" type="soapenc:string" />
+    <wsdl:part name="in1" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="addUserResponse">
+    <wsdl:part name="addUserReturn" type="xsd:boolean" />
   </wsdl:message>
   <wsdl:message name="setRSAlarmLevelRequest">
     <wsdl:part name="in0" type="soapenc:string" />
     <wsdl:part name="in1" type="xsd:int" />
     <wsdl:part name="in2" type="xsd:double" />
     <wsdl:part name="in3" type="xsd:double" />
-  </wsdl:message>
-  <wsdl:message name="addUserResponse">
-    <wsdl:part name="addUserReturn" type="xsd:boolean" />
   </wsdl:message>
   <wsdl:message name="disableRSResponse">
     <wsdl:part name="disableRSReturn" type="xsd:boolean" />
@@ -140,25 +140,25 @@
       <wsdl:input name="getReadingStationsRequest" message="intf:getReadingStationsRequest" />
       <wsdl:output name="getReadingStationsResponse" message="intf:getReadingStationsResponse" />
     </wsdl:operation>
+    <wsdl:operation name="setRSAlarmLevel" parameterOrder="in0 in1 in2 in3">
+      <wsdl:input name="setRSAlarmLevelRequest" message="intf:setRSAlarmLevelRequest" />
+      <wsdl:output name="setRSAlarmLevelResponse" message="intf:setRSAlarmLevelResponse" />
+    </wsdl:operation>
     <wsdl:operation name="setRSName" parameterOrder="in0 in1">
       <wsdl:input name="setRSNameRequest" message="intf:setRSNameRequest" />
       <wsdl:output name="setRSNameResponse" message="intf:setRSNameResponse" />
     </wsdl:operation>
-    <wsdl:operation name="addUser" parameterOrder="in0">
+    <wsdl:operation name="addUser" parameterOrder="in0 in1">
       <wsdl:input name="addUserRequest" message="intf:addUserRequest" />
       <wsdl:output name="addUserResponse" message="intf:addUserResponse" />
     </wsdl:operation>
-    <wsdl:operation name="addUser" parameterOrder="in0 in1">
+    <wsdl:operation name="addUser" parameterOrder="in0">
       <wsdl:input name="addUserRequest1" message="intf:addUserRequest1" />
       <wsdl:output name="addUserResponse1" message="intf:addUserResponse1" />
     </wsdl:operation>
     <wsdl:operation name="updateUserInfo" parameterOrder="in0 in1">
       <wsdl:input name="updateUserInfoRequest" message="intf:updateUserInfoRequest" />
       <wsdl:output name="updateUserInfoResponse" message="intf:updateUserInfoResponse" />
-    </wsdl:operation>
-    <wsdl:operation name="setRSAlarmLevel" parameterOrder="in0 in1 in2 in3">
-      <wsdl:input name="setRSAlarmLevelRequest" message="intf:setRSAlarmLevelRequest" />
-      <wsdl:output name="setRSAlarmLevelResponse" message="intf:setRSAlarmLevelResponse" />
     </wsdl:operation>
     <wsdl:operation name="enableRS" parameterOrder="in0">
       <wsdl:input name="enableRSRequest" message="intf:enableRSRequest" />
@@ -207,6 +207,15 @@
         <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="setRSAlarmLevel">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="setRSAlarmLevelRequest">
+        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setRSAlarmLevelResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="setRSName">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="setRSNameRequest">
@@ -240,15 +249,6 @@
         <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:input>
       <wsdl:output name="updateUserInfoResponse">
-        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="setRSAlarmLevel">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="setRSAlarmLevelRequest">
-        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:input>
-      <wsdl:output name="setRSAlarmLevelResponse">
         <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSAdminService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>

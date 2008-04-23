@@ -39,6 +39,8 @@ namespace SAP.AdminFacade {
         
         private System.Threading.SendOrPostCallback getReadingStationsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback setRSAlarmLevelOperationCompleted;
+        
         private System.Threading.SendOrPostCallback setRSNameOperationCompleted;
         
         private System.Threading.SendOrPostCallback addUserOperationCompleted;
@@ -46,8 +48,6 @@ namespace SAP.AdminFacade {
         private System.Threading.SendOrPostCallback addUser1OperationCompleted;
         
         private System.Threading.SendOrPostCallback updateUserInfoOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback setRSAlarmLevelOperationCompleted;
         
         private System.Threading.SendOrPostCallback enableRSOperationCompleted;
         
@@ -104,6 +104,9 @@ namespace SAP.AdminFacade {
         public event getReadingStationsCompletedEventHandler getReadingStationsCompleted;
         
         /// <remarks/>
+        public event setRSAlarmLevelCompletedEventHandler setRSAlarmLevelCompleted;
+        
+        /// <remarks/>
         public event setRSNameCompletedEventHandler setRSNameCompleted;
         
         /// <remarks/>
@@ -114,9 +117,6 @@ namespace SAP.AdminFacade {
         
         /// <remarks/>
         public event updateUserInfoCompletedEventHandler updateUserInfoCompleted;
-        
-        /// <remarks/>
-        public event setRSAlarmLevelCompletedEventHandler setRSAlarmLevelCompleted;
         
         /// <remarks/>
         public event enableRSCompletedEventHandler enableRSCompleted;
@@ -242,6 +242,42 @@ namespace SAP.AdminFacade {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
+        [return: System.Xml.Serialization.SoapElementAttribute("setRSAlarmLevelReturn")]
+        public bool setRSAlarmLevel(string in0, int in1, double in2, double in3) {
+            object[] results = this.Invoke("setRSAlarmLevel", new object[] {
+                        in0,
+                        in1,
+                        in2,
+                        in3});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void setRSAlarmLevelAsync(string in0, int in1, double in2, double in3) {
+            this.setRSAlarmLevelAsync(in0, in1, in2, in3, null);
+        }
+        
+        /// <remarks/>
+        public void setRSAlarmLevelAsync(string in0, int in1, double in2, double in3, object userState) {
+            if ((this.setRSAlarmLevelOperationCompleted == null)) {
+                this.setRSAlarmLevelOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetRSAlarmLevelOperationCompleted);
+            }
+            this.InvokeAsync("setRSAlarmLevel", new object[] {
+                        in0,
+                        in1,
+                        in2,
+                        in3}, this.setRSAlarmLevelOperationCompleted, userState);
+        }
+        
+        private void OnsetRSAlarmLevelOperationCompleted(object arg) {
+            if ((this.setRSAlarmLevelCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.setRSAlarmLevelCompleted(this, new setRSAlarmLevelCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("setRSNameReturn")]
         public bool setRSName(string in0, string in1) {
             object[] results = this.Invoke("setRSName", new object[] {
@@ -275,24 +311,26 @@ namespace SAP.AdminFacade {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("addUserReturn")]
-        public bool addUser(UserDTO in0) {
+        public bool addUser(string in0, string in1) {
             object[] results = this.Invoke("addUser", new object[] {
-                        in0});
+                        in0,
+                        in1});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void addUserAsync(UserDTO in0) {
-            this.addUserAsync(in0, null);
+        public void addUserAsync(string in0, string in1) {
+            this.addUserAsync(in0, in1, null);
         }
         
         /// <remarks/>
-        public void addUserAsync(UserDTO in0, object userState) {
+        public void addUserAsync(string in0, string in1, object userState) {
             if ((this.addUserOperationCompleted == null)) {
                 this.addUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnaddUserOperationCompleted);
             }
             this.InvokeAsync("addUser", new object[] {
-                        in0}, this.addUserOperationCompleted, userState);
+                        in0,
+                        in1}, this.addUserOperationCompleted, userState);
         }
         
         private void OnaddUserOperationCompleted(object arg) {
@@ -306,26 +344,24 @@ namespace SAP.AdminFacade {
         [System.Web.Services.WebMethodAttribute(MessageName="addUser1")]
         [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
         [return: System.Xml.Serialization.SoapElementAttribute("addUserReturn")]
-        public bool addUser(string in0, string in1) {
+        public bool addUser(UserDTO in0) {
             object[] results = this.Invoke("addUser1", new object[] {
-                        in0,
-                        in1});
+                        in0});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void addUser1Async(string in0, string in1) {
-            this.addUser1Async(in0, in1, null);
+        public void addUser1Async(UserDTO in0) {
+            this.addUser1Async(in0, null);
         }
         
         /// <remarks/>
-        public void addUser1Async(string in0, string in1, object userState) {
+        public void addUser1Async(UserDTO in0, object userState) {
             if ((this.addUser1OperationCompleted == null)) {
                 this.addUser1OperationCompleted = new System.Threading.SendOrPostCallback(this.OnaddUser1OperationCompleted);
             }
             this.InvokeAsync("addUser1", new object[] {
-                        in0,
-                        in1}, this.addUser1OperationCompleted, userState);
+                        in0}, this.addUser1OperationCompleted, userState);
         }
         
         private void OnaddUser1OperationCompleted(object arg) {
@@ -364,42 +400,6 @@ namespace SAP.AdminFacade {
             if ((this.updateUserInfoCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.updateUserInfoCompleted(this, new updateUserInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSAdminService")]
-        [return: System.Xml.Serialization.SoapElementAttribute("setRSAlarmLevelReturn")]
-        public bool setRSAlarmLevel(string in0, int in1, double in2, double in3) {
-            object[] results = this.Invoke("setRSAlarmLevel", new object[] {
-                        in0,
-                        in1,
-                        in2,
-                        in3});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void setRSAlarmLevelAsync(string in0, int in1, double in2, double in3) {
-            this.setRSAlarmLevelAsync(in0, in1, in2, in3, null);
-        }
-        
-        /// <remarks/>
-        public void setRSAlarmLevelAsync(string in0, int in1, double in2, double in3, object userState) {
-            if ((this.setRSAlarmLevelOperationCompleted == null)) {
-                this.setRSAlarmLevelOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetRSAlarmLevelOperationCompleted);
-            }
-            this.InvokeAsync("setRSAlarmLevel", new object[] {
-                        in0,
-                        in1,
-                        in2,
-                        in3}, this.setRSAlarmLevelOperationCompleted, userState);
-        }
-        
-        private void OnsetRSAlarmLevelOperationCompleted(object arg) {
-            if ((this.setRSAlarmLevelCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.setRSAlarmLevelCompleted(this, new setRSAlarmLevelCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -764,6 +764,32 @@ namespace SAP.AdminFacade {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void setRSAlarmLevelCompletedEventHandler(object sender, setRSAlarmLevelCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class setRSAlarmLevelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal setRSAlarmLevelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     public delegate void setRSNameCompletedEventHandler(object sender, setRSNameCompletedEventArgs e);
     
     /// <remarks/>
@@ -853,32 +879,6 @@ namespace SAP.AdminFacade {
         private object[] results;
         
         internal updateUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void setRSAlarmLevelCompletedEventHandler(object sender, setRSAlarmLevelCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class setRSAlarmLevelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal setRSAlarmLevelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
