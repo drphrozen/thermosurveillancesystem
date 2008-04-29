@@ -7,6 +7,7 @@ namespace ReadingStation.Probes
 {
 	interface IProbe
 	{
+		int Id { get;set;}
 		bool AlarmRaised();
 		bool UpperAlarmRaised();
 		bool LowerAlarmRaised();
@@ -14,5 +15,6 @@ namespace ReadingStation.Probes
 		double GetValue();
 		string GetUnits();
 		ProbeDTO GetAsProbeDTO();
+		MeasurementDTO GetAsMeasurementDTO();
 	}
 }

@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Probes\IProbe.cs" />
+    <Compile Include="Probes\ProbeFactory.cs" />
     <Compile Include="Probes\TemperatureProbe.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

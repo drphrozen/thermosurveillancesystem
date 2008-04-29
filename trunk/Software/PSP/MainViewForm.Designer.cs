@@ -33,6 +33,7 @@ namespace PSP
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControlDisplay = new System.Windows.Forms.TabControl();
 			this.tabPageSummary = new System.Windows.Forms.TabPage();
 			this.label6 = new System.Windows.Forms.Label();
@@ -74,7 +75,8 @@ namespace PSP
 			this.menuStripMainViewFormMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem,
             this.loginToolStripMenuItem,
-            this.logoutToolStripMenuItem});
+            this.logoutToolStripMenuItem,
+            this.refreshToolStripMenuItem});
 			this.menuStripMainViewFormMenu.Location = new System.Drawing.Point(0, 0);
 			this.menuStripMainViewFormMenu.Name = "menuStripMainViewFormMenu";
 			this.menuStripMainViewFormMenu.Size = new System.Drawing.Size(532, 24);
@@ -101,6 +103,13 @@ namespace PSP
 			this.logoutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
 			this.logoutToolStripMenuItem.Text = "&Logout";
 			this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+			// 
+			// refreshToolStripMenuItem
+			// 
+			this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+			this.refreshToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+			this.refreshToolStripMenuItem.Text = "&Refresh";
+			this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
 			// 
 			// tabControlDisplay
 			// 
@@ -140,7 +149,7 @@ namespace PSP
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(281, 296);
+			this.label6.Location = new System.Drawing.Point(264, 296);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(23, 13);
 			this.label6.TabIndex = 18;
@@ -149,7 +158,7 @@ namespace PSP
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(31, 296);
+			this.label5.Location = new System.Drawing.Point(8, 296);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(33, 13);
 			this.label5.TabIndex = 17;
@@ -157,17 +166,21 @@ namespace PSP
 			// 
 			// dateTimePickerSummaryTo
 			// 
-			this.dateTimePickerSummaryTo.Location = new System.Drawing.Point(310, 292);
+			this.dateTimePickerSummaryTo.CustomFormat = "hh:mm:ss dddd MMMM dd, yyyy";
+			this.dateTimePickerSummaryTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.dateTimePickerSummaryTo.Location = new System.Drawing.Point(296, 292);
 			this.dateTimePickerSummaryTo.Name = "dateTimePickerSummaryTo";
-			this.dateTimePickerSummaryTo.Size = new System.Drawing.Size(124, 20);
+			this.dateTimePickerSummaryTo.Size = new System.Drawing.Size(211, 20);
 			this.dateTimePickerSummaryTo.TabIndex = 16;
 			this.dateTimePickerSummaryTo.ValueChanged += new System.EventHandler(this.dateTimePickerSummaryTo_ValueChanged);
 			// 
 			// dateTimePickerSummaryFrom
 			// 
-			this.dateTimePickerSummaryFrom.Location = new System.Drawing.Point(70, 292);
+			this.dateTimePickerSummaryFrom.CustomFormat = "hh:mm:ss dddd MMMM dd, yyyy";
+			this.dateTimePickerSummaryFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.dateTimePickerSummaryFrom.Location = new System.Drawing.Point(47, 292);
 			this.dateTimePickerSummaryFrom.Name = "dateTimePickerSummaryFrom";
-			this.dateTimePickerSummaryFrom.Size = new System.Drawing.Size(124, 20);
+			this.dateTimePickerSummaryFrom.Size = new System.Drawing.Size(211, 20);
 			this.dateTimePickerSummaryFrom.TabIndex = 15;
 			this.dateTimePickerSummaryFrom.ValueChanged += new System.EventHandler(this.dateTimePickerSummaryFrom_ValueChanged);
 			// 
@@ -284,7 +297,7 @@ namespace PSP
 			this.splitContainer1.Panel2.Controls.Add(this.labelProbeId);
 			this.splitContainer1.Panel2.Controls.Add(this.labelStationName);
 			this.splitContainer1.Size = new System.Drawing.Size(518, 323);
-			this.splitContainer1.SplitterDistance = 247;
+			this.splitContainer1.SplitterDistance = 158;
 			this.splitContainer1.TabIndex = 0;
 			// 
 			// treeViewStations
@@ -292,13 +305,13 @@ namespace PSP
 			this.treeViewStations.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewStations.Location = new System.Drawing.Point(0, 0);
 			this.treeViewStations.Name = "treeViewStations";
-			this.treeViewStations.Size = new System.Drawing.Size(247, 323);
+			this.treeViewStations.Size = new System.Drawing.Size(158, 323);
 			this.treeViewStations.TabIndex = 0;
 			this.treeViewStations.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewStations_AfterSelect);
 			// 
 			// zedGraphLastHour
 			// 
-			this.zedGraphLastHour.Location = new System.Drawing.Point(2, 226);
+			this.zedGraphLastHour.Location = new System.Drawing.Point(2, 179);
 			this.zedGraphLastHour.Name = "zedGraphLastHour";
 			this.zedGraphLastHour.ScrollGrace = 0;
 			this.zedGraphLastHour.ScrollMaxX = 0;
@@ -307,18 +320,17 @@ namespace PSP
 			this.zedGraphLastHour.ScrollMinX = 0;
 			this.zedGraphLastHour.ScrollMinY = 0;
 			this.zedGraphLastHour.ScrollMinY2 = 0;
-			this.zedGraphLastHour.Size = new System.Drawing.Size(260, 92);
+			this.zedGraphLastHour.Size = new System.Drawing.Size(351, 139);
 			this.zedGraphLastHour.TabIndex = 9;
-			this.zedGraphLastHour.Visible = false;
 			// 
 			// labelLowerAlarm
 			// 
 			this.labelLowerAlarm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.labelLowerAlarm.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelLowerAlarm.Location = new System.Drawing.Point(129, 190);
+			this.labelLowerAlarm.Location = new System.Drawing.Point(146, 151);
 			this.labelLowerAlarm.Name = "labelLowerAlarm";
-			this.labelLowerAlarm.Size = new System.Drawing.Size(118, 33);
+			this.labelLowerAlarm.Size = new System.Drawing.Size(205, 33);
 			this.labelLowerAlarm.TabIndex = 7;
 			this.labelLowerAlarm.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
@@ -327,9 +339,9 @@ namespace PSP
 			this.labelUpperAlarm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.labelUpperAlarm.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelUpperAlarm.Location = new System.Drawing.Point(129, 145);
+			this.labelUpperAlarm.Location = new System.Drawing.Point(146, 118);
 			this.labelUpperAlarm.Name = "labelUpperAlarm";
-			this.labelUpperAlarm.Size = new System.Drawing.Size(118, 33);
+			this.labelUpperAlarm.Size = new System.Drawing.Size(205, 33);
 			this.labelUpperAlarm.TabIndex = 6;
 			this.labelUpperAlarm.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
@@ -338,9 +350,9 @@ namespace PSP
 			this.labelCurrentTemperatur.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.labelCurrentTemperatur.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelCurrentTemperatur.Location = new System.Drawing.Point(129, 100);
+			this.labelCurrentTemperatur.Location = new System.Drawing.Point(146, 85);
 			this.labelCurrentTemperatur.Name = "labelCurrentTemperatur";
-			this.labelCurrentTemperatur.Size = new System.Drawing.Size(118, 33);
+			this.labelCurrentTemperatur.Size = new System.Drawing.Size(205, 33);
 			this.labelCurrentTemperatur.TabIndex = 5;
 			this.labelCurrentTemperatur.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
@@ -349,9 +361,9 @@ namespace PSP
 			this.labelLowerAlarmText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.labelLowerAlarmText.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelLowerAlarmText.Location = new System.Drawing.Point(5, 190);
+			this.labelLowerAlarmText.Location = new System.Drawing.Point(5, 151);
 			this.labelLowerAlarmText.Name = "labelLowerAlarmText";
-			this.labelLowerAlarmText.Size = new System.Drawing.Size(118, 33);
+			this.labelLowerAlarmText.Size = new System.Drawing.Size(205, 33);
 			this.labelLowerAlarmText.TabIndex = 4;
 			this.labelLowerAlarmText.Text = "Lower alarm:";
 			// 
@@ -360,9 +372,9 @@ namespace PSP
 			this.labelUpperAlarmText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.labelUpperAlarmText.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelUpperAlarmText.Location = new System.Drawing.Point(5, 145);
+			this.labelUpperAlarmText.Location = new System.Drawing.Point(8, 118);
 			this.labelUpperAlarmText.Name = "labelUpperAlarmText";
-			this.labelUpperAlarmText.Size = new System.Drawing.Size(118, 33);
+			this.labelUpperAlarmText.Size = new System.Drawing.Size(205, 33);
 			this.labelUpperAlarmText.TabIndex = 3;
 			this.labelUpperAlarmText.Text = "Upper alarm:";
 			// 
@@ -371,9 +383,9 @@ namespace PSP
 			this.labelCurrentText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.labelCurrentText.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelCurrentText.Location = new System.Drawing.Point(5, 100);
+			this.labelCurrentText.Location = new System.Drawing.Point(5, 85);
 			this.labelCurrentText.Name = "labelCurrentText";
-			this.labelCurrentText.Size = new System.Drawing.Size(118, 33);
+			this.labelCurrentText.Size = new System.Drawing.Size(205, 33);
 			this.labelCurrentText.TabIndex = 2;
 			this.labelCurrentText.Text = "Current:";
 			// 
@@ -384,7 +396,7 @@ namespace PSP
 			this.labelProbeId.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelProbeId.Location = new System.Drawing.Point(43, 52);
 			this.labelProbeId.Name = "labelProbeId";
-			this.labelProbeId.Size = new System.Drawing.Size(221, 33);
+			this.labelProbeId.Size = new System.Drawing.Size(308, 33);
 			this.labelProbeId.TabIndex = 1;
 			// 
 			// labelStationName
@@ -394,7 +406,7 @@ namespace PSP
 			this.labelStationName.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelStationName.Location = new System.Drawing.Point(5, 9);
 			this.labelStationName.Name = "labelStationName";
-			this.labelStationName.Size = new System.Drawing.Size(259, 43);
+			this.labelStationName.Size = new System.Drawing.Size(346, 43);
 			this.labelStationName.TabIndex = 0;
 			// 
 			// MainViewForm
@@ -458,6 +470,7 @@ namespace PSP
 		private System.Windows.Forms.DateTimePicker dateTimePickerSummaryTo;
 		private System.Windows.Forms.DateTimePicker dateTimePickerSummaryFrom;
 		private ZedGraph.ZedGraphControl zedGraphLastHour;
+		private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
 	}
 }
 

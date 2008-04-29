@@ -33,6 +33,7 @@ namespace PSP
 			UserDTO user = new UserDTO();
 			user.username = textBoxUsername.Text;
 			user.password = textBoxPassword.Text;
+			user.accountType = "user";
 			try
 			{
 				if (userService.login(user))
@@ -46,8 +47,9 @@ namespace PSP
 					textBoxUsername.Focus();
 				}
 			}
-			catch
+			catch(Exception ex)
 			{
+				MessageBox.Show(ex.Message);
 				MessageBox.Show("Unable to communicate with server", "Oh ohh", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}

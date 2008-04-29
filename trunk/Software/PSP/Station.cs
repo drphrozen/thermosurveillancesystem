@@ -9,8 +9,6 @@ namespace PSP
 {
 	class Station
 	{
-		List<Probe> probes = null;
-
 		private string name;
 		public string Name
 		{
@@ -18,10 +16,25 @@ namespace PSP
 			set { name = value; }
 		}
 
+		private int id;
+		public int Id
+		{
+			get { return id; }
+			set { id = value; }
+		}
+
+		private List<Probe> probes = null;
+		public List<Probe> Probes
+		{
+			get { return probes; }
+			set { probes = value; }
+		}
+
 		public Station(ReadingStationDTO station)
 		{
+			id = station.id;
 			name = station.name;
-			probes=new List<Probe>();
+			probes = new List<Probe>();
 			foreach (ProbeDTO probe in station.probes)
 			{
 				probes.Add(new Probe(probe));
