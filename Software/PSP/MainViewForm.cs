@@ -65,6 +65,7 @@ namespace PSP
 			tabControlDisplay.SelectTab(0);
 			loginToolStripMenuItem.Visible = false;
 			logoutToolStripMenuItem.Visible = true;
+			refreshToolStripMenuItem.Visible = true;
 			tabControlDisplay.Visible = true;
 			refreshTimer = new Timer();
 			refreshTimer.Interval = 30 * 1000;
@@ -77,40 +78,38 @@ namespace PSP
 			this.Text = "PSP";
 			loginToolStripMenuItem.Visible = true;
 			logoutToolStripMenuItem.Visible = false;
+			refreshToolStripMenuItem.Visible = false;
 			tabControlDisplay.Visible = false;
 			refreshTimer = null;
 		}
 		#endregion
 
-		#region Get readings
-		private void GetReadings()
+		#region Get data from server
+		private void GetStations()
 		{
-			List<ReadingStationDTO> dtos = new List<ReadingStationDTO>();
-			dtos.AddRange(userService.getNewestReadings());
 			stations = new List<Station>();
-			foreach (ReadingStationDTO dto in dtos)
+			foreach (ReadingStationDTO dto in userService.getReadingStations())
 			{
 				stations.Add(new Station(dto));
 			}
 		}
-		private void GetReadings(TimeSpan time)
+		private void GetNewestMeasurements()
 		{
-			List<ReadingStationDTO> dtos = new List<ReadingStationDTO>();
-			dtos.AddRange(userService.getReadings(DateTime.Now, DateTime.Now.Subtract(time)));
-			stations = new List<Station>();
-			foreach (ReadingStationDTO dto in dtos)
+			bool found;
+			foreach (MeasurementDTO dto in userService.getNewestMeasurements())
 			{
-				stations.Add(new Station(dto));
-			}
-		}
-		private void GetReadings(DateTime from, DateTime to)
-		{
-			List<ReadingStationDTO> dtos = new List<ReadingStationDTO>();
-			dtos.AddRange(userService.getReadings(from, to));
-			stations = new List<Station>();
-			foreach (ReadingStationDTO dto in dtos)
-			{
-				stations.Add(new Station(dto));
+				found = false;
+				for (int i = 0; i < stations.Count && found == false; i++)
+				{
+					for (int j = 0; j < stations[i].Probes.Count && found == false; j++)
+					{
+						if (dto.probeId == stations[i].Probes[j].Id)
+						{
+							stations[i].Probes[j].Data = dto.value;
+							found = true;
+						}
+					}
+				}
 			}
 		}
 		#endregion
@@ -145,7 +144,8 @@ namespace PSP
 		}
 		private void RefreshStationsView()
 		{
-			GetReadings();
+			GetStations();
+			GetNewestMeasurements();
 			treeViewStations.SuspendLayout();
 			treeViewStations.Nodes.Clear();
 			foreach (Station s in stations)
@@ -161,6 +161,7 @@ namespace PSP
 			labelCurrentText.Visible = false;
 			labelUpperAlarmText.Visible = false;
 			labelLowerAlarmText.Visible = false;
+			zedGraphLastHour.Visible = false;
 		}
 		private void RefreshStationsDetailViewFromStationNode(TreeNode node)
 		{
@@ -174,6 +175,7 @@ namespace PSP
 			labelCurrentText.Visible = false;
 			labelUpperAlarmText.Visible = false;
 			labelLowerAlarmText.Visible = false;
+			zedGraphLastHour.Visible = false;
 		}
 		private void RefreshStationsDetailViewFromProbeNode(TreeNode node)
 		{
@@ -210,96 +212,40 @@ namespace PSP
 			labelLowerAlarmText.Visible = true;
 
 			RefreshGraph(station, probe);
+			zedGraphLastHour.Visible = true;
 		}
 		private void RefreshGraph(Station station, Probe probe)
 		{
 			GraphPane myPane = zedGraphLastHour.GraphPane;
 
 			List<MeasurementDTO> measurements = new List<MeasurementDTO>();
-			MeasurementDTO[] mandms = userService.getLastHourOfReadings(station.Name, probe.Id);
-			if (mandms != null)
-			{
-				measurements.AddRange(mandms);
-			}
-			else
-			{
-				MeasurementDTO bla;
-				bla = new MeasurementDTO();
-				bla.timestamp = new DateTime(1990, 1, 1);
-				bla.value = 5;
-				measurements.Add(bla);
-				bla = new MeasurementDTO();
-				bla.timestamp = new DateTime(1990, 1, 2);
-				bla.value = 6;
-				measurements.Add(bla);
-				bla = new MeasurementDTO();
-				bla.timestamp = new DateTime(1990, 1, 3);
-				bla.value = 7;
-				measurements.Add(bla);
-				bla = new MeasurementDTO();
-				bla.timestamp = new DateTime(1990, 1, 4);
-				bla.value = 8;
-				measurements.Add(bla);
-				bla = new MeasurementDTO();
-				bla.timestamp = new DateTime(1990, 1, 5);
-				bla.value = 9;
-				measurements.Add(bla);
-			}
+			MeasurementDTO[] mandms = userService.getLastHourOfReadings(probe.Id);
 
 			myPane.Title.IsVisible = false;
 			myPane.XAxis.Title.IsVisible = false;
+			myPane.XAxis.Type = AxisType.Date;
 			myPane.YAxis.Title.IsVisible = false;
+			myPane.CurveList.Clear();
 
 			// Build a PointPairList with points based on Sine wave
 			PointPairList list = new PointPairList();
-			foreach (MeasurementDTO m in measurements)
+			foreach (MeasurementDTO m in mandms)
 			{
 				list.Add(m.timestamp.Value.ToOADate(), m.value);
 			}
 
-			// Hide the legend
-			myPane.Legend.IsVisible = false;
-
 			// Add a curve
-			LineItem curve = myPane.AddCurve("label", list, Color.Red, SymbolType.Circle);
-			curve.Line.Width = 2.0F;
+			LineItem curve = myPane.AddCurve("label", list, Color.Blue, SymbolType.Circle);
+			curve.Line.Width = 1.5F;
 			curve.Line.IsAntiAlias = true;
 			curve.Symbol.Fill = new Fill(Color.White);
 			curve.Symbol.Size = 7;
 
-			// Fill the axis background with a gradient
-			//myPane.Chart.Fill = new Fill(Color.White, Color.FromArgb(255, Color.ForestGreen), 45.0F);
+			myPane.XAxis.Title.IsVisible = false;
+			myPane.YAxis.Title.IsVisible = false;
+			myPane.Title.IsVisible = false;
+			myPane.Legend.IsVisible = false;
 
-			// Offset Y space between point and label
-			// NOTE:  This offset is in Y scale units, so it depends on your actual data
-			//const double offset = 1.0;
-
-			// Loop to add text labels to the points
-			/*
-			for (int i = 0; i < count; i++)
-			{
-				// Get the pointpair
-				PointPair pt = curve.Points[i];
-
-				// Create a text label from the Y data value
-				TextObj text = new TextObj(pt.Y.ToString("f2"), pt.X, pt.Y + offset, CoordType.AxisXYScale, AlignH.Left, AlignV.Center);
-				text.ZOrder = ZOrder.A_InFront;
-				// Hide the border and the fill
-				text.FontSpec.Border.IsVisible = false;
-				text.FontSpec.Fill.IsVisible = false;
-				//text.FontSpec.Fill = new Fill( Color.FromArgb( 100, Color.White ) );
-				// Rotate the text to 90 degrees
-				text.FontSpec.Angle = 90;
-
-				myPane.GraphObjList.Add(text);
-			}
-			*/
-
-			// Leave some extra space on top for the labels to fit within the chart rect
-			//myPane.YAxis.Scale.MaxGrace = 0.2;
-			myPane.XAxis.Type = AxisType.Date;
-
-			// Calculate the Axis Scale Ranges
 			zedGraphLastHour.AxisChange();
 			zedGraphLastHour.Refresh();
 		}
@@ -308,18 +254,22 @@ namespace PSP
 		#region Summary
 		private void RefreshSummaryView()
 		{
-
-
-
-
-			return;
-
-
-
-
-
-
-			SummaryDTO dto = userService.getHistoricalData(dateTimePickerSummaryFrom.Value, dateTimePickerSummaryTo.Value);
+			SummaryDTO dto;
+			if (dateTimePickerSummaryFrom.Value > dateTimePickerSummaryTo.Value)
+			{
+				System.Diagnostics.Debug.WriteLine("invalid time");
+				return;
+			}
+			else if (dateTimePickerSummaryFrom.Value == dateTimePickerSummaryTo.Value)
+			{
+				dto = userService.getHistoricalData(dateTimePickerSummaryFrom.Value.Subtract(new TimeSpan(1, 0, 0)), dateTimePickerSummaryTo.Value);
+				System.Diagnostics.Debug.WriteLine("hour");
+			}
+			else
+			{
+				dto = userService.getHistoricalData(dateTimePickerSummaryFrom.Value, dateTimePickerSummaryTo.Value);
+				System.Diagnostics.Debug.WriteLine("more than an hour");
+			}
 
 			labelSummaryLowestTemperature.Text = dto.periodLowestTemp.ToString();
 			labelSummaryHighestTemperature.Text = dto.periodHighestTemp.ToString();
@@ -340,6 +290,11 @@ namespace PSP
 			RefreshSummaryView();
 		}
 		#endregion
+
+		private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RefreshCurrentView(null, null);
+		}
 		#endregion
 	}
 }

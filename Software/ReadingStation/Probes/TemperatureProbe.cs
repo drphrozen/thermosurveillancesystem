@@ -9,6 +9,8 @@ namespace ReadingStation.Probes
 {
 	class TemperatureProbe : IProbe
 	{
+		Random randy = new Random();
+
 		private int id;
 		public int Id
 		{
@@ -37,16 +39,23 @@ namespace ReadingStation.Probes
 			set { upperAlarm = value; }
 		}
 
-		private string units;
+		private string units = "celsius";
 		public string Units
 		{
 			get { return units; }
-			set { units = value; }
+			//set { units = value; }
 		}
 
 		public TemperatureProbe()
 		{ }
 
+		public TemperatureProbe(int id, double data, double lowerAlarm, double upperAlarm)
+		{
+			this.id = id;
+			this.data = data;
+			this.lowerAlarm = lowerAlarm;
+			this.upperAlarm = upperAlarm;
+		}
 		public bool AlarmRaised()
 		{
 			return (LowerAlarmRaised() || UpperAlarmRaised());
@@ -64,8 +73,8 @@ namespace ReadingStation.Probes
 
 		public void TakeSample()
 		{
-			data += DateTime.Now.Millisecond % 23;
-			data /= 2;
+			data += (randy.NextDouble() - 0.5) * 2.0;
+			data = data % 40.0;
 		}
 
 		public double GetValue()
@@ -82,11 +91,24 @@ namespace ReadingStation.Probes
 		{
 			ProbeDTO dto = new ProbeDTO();
 
-			dto.data = Data;
+			dto.data = data;
 			dto.id = id;
 			dto.lowerAlarm = lowerAlarm;
 			dto.upperAlarm = upperAlarm;
 			dto.units = units;
+
+			return dto;
+		}
+
+		public MeasurementDTO GetAsMeasurementDTO()
+		{
+			MeasurementDTO dto = new MeasurementDTO();
+
+			dto.probeId = id;
+			dto.value = data;
+			dto.timestamp = DateTime.Now;
+			dto.upperAlarm = upperAlarm;
+			dto.lowerAlarm = lowerAlarm;
 
 			return dto;
 		}

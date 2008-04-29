@@ -35,6 +35,7 @@ namespace ReadingStation
 			this.label4 = new System.Windows.Forms.Label();
 			this.buttonSetSampleInterval = new System.Windows.Forms.Button();
 			this.labelDisplay = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.SuspendLayout();
 			// 
 			// buttonSetStationName
@@ -69,7 +70,7 @@ namespace ReadingStation
 			this.textBoxSampleInterval.Name = "textBoxSampleInterval";
 			this.textBoxSampleInterval.Size = new System.Drawing.Size(100, 20);
 			this.textBoxSampleInterval.TabIndex = 4;
-			this.textBoxSampleInterval.Text = "1";
+			this.textBoxSampleInterval.Text = "3";
 			// 
 			// label4
 			// 
@@ -100,11 +101,19 @@ namespace ReadingStation
 			this.labelDisplay.Text = "?";
 			this.labelDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// panel1
+			// 
+			this.panel1.Location = new System.Drawing.Point(1, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(16, 16);
+			this.panel1.TabIndex = 16;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(205, 202);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.labelDisplay);
 			this.Controls.Add(this.textBoxSampleInterval);
 			this.Controls.Add(this.label4);
@@ -132,6 +141,7 @@ namespace ReadingStation
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button buttonSetSampleInterval;
 		private System.Windows.Forms.Label labelDisplay;
+		private System.Windows.Forms.Panel panel1;
 	}
 }
 

@@ -6,28 +6,10 @@
       <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
       <xsd:complexType name="UserDTO">
         <xsd:sequence>
-          <xsd:element name="accountTypeId" type="xsd:int" />
+          <xsd:element name="accountType" nillable="true" type="soapenc:string" />
+          <xsd:element name="id" type="xsd:int" />
           <xsd:element name="password" nillable="true" type="soapenc:string" />
           <xsd:element name="username" nillable="true" type="soapenc:string" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="MeasurementDTO">
-        <xsd:sequence>
-          <xsd:element name="lowerAlarm" type="xsd:double" />
-          <xsd:element name="probeId" type="xsd:int" />
-          <xsd:element name="readingStationName" nillable="true" type="soapenc:string" />
-          <xsd:element name="timestamp" nillable="true" type="xsd:dateTime" />
-          <xsd:element name="upperAlarm" type="xsd:double" />
-          <xsd:element name="value" type="xsd:double" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="SummaryDTO">
-        <xsd:sequence>
-          <xsd:element name="alarms" nillable="true" type="intf:ArrayOf_soapenc_string" />
-          <xsd:element name="periodHighestPressure" type="xsd:double" />
-          <xsd:element name="periodHighestTemp" type="xsd:double" />
-          <xsd:element name="periodLowestPressure" type="xsd:double" />
-          <xsd:element name="periodLowestTemp" type="xsd:double" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="ProbeDTO">
@@ -47,24 +29,29 @@
           <xsd:element name="probes" nillable="true" type="intf:ArrayOf_tns1_ProbeDTO" />
         </xsd:sequence>
       </xsd:complexType>
+      <xsd:complexType name="MeasurementDTO">
+        <xsd:sequence>
+          <xsd:element name="lowerAlarm" type="xsd:double" />
+          <xsd:element name="probeId" type="xsd:int" />
+          <xsd:element name="readingStationId" type="xsd:int" />
+          <xsd:element name="timestamp" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="upperAlarm" type="xsd:double" />
+          <xsd:element name="value" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SummaryDTO">
+        <xsd:sequence>
+          <xsd:element name="alarms" nillable="true" type="intf:ArrayOf_soapenc_string" />
+          <xsd:element name="periodHighestPressure" type="xsd:double" />
+          <xsd:element name="periodHighestTemp" type="xsd:double" />
+          <xsd:element name="periodLowestPressure" type="xsd:double" />
+          <xsd:element name="periodLowestTemp" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
     </xsd:schema>
     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://172.21.185.177:8080/axis/services/TSSUserService">
       <xsd:import namespace="urn:BeanService" />
       <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
-      <xsd:complexType name="ArrayOf_tns1_MeasurementDTO">
-        <xsd:complexContent mixed="false">
-          <xsd:restriction base="soapenc:Array">
-            <xsd:attribute wsdl:arrayType="tns1:MeasurementDTO[]" ref="soapenc:arrayType" />
-          </xsd:restriction>
-        </xsd:complexContent>
-      </xsd:complexType>
-      <xsd:complexType name="ArrayOf_soapenc_string">
-        <xsd:complexContent mixed="false">
-          <xsd:restriction base="soapenc:Array">
-            <xsd:attribute wsdl:arrayType="soapenc:string[]" ref="soapenc:arrayType" />
-          </xsd:restriction>
-        </xsd:complexContent>
-      </xsd:complexType>
       <xsd:complexType name="ArrayOf_tns1_ProbeDTO">
         <xsd:complexContent mixed="false">
           <xsd:restriction base="soapenc:Array">
@@ -79,11 +66,24 @@
           </xsd:restriction>
         </xsd:complexContent>
       </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_MeasurementDTO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:MeasurementDTO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_soapenc_string">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="soapenc:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="getReadingsRequest">
-    <wsdl:part name="in0" type="xsd:dateTime" />
-    <wsdl:part name="in1" type="xsd:dateTime" />
+  <wsdl:message name="getReadingStationsResponse">
+    <wsdl:part name="getReadingStationsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
   </wsdl:message>
   <wsdl:message name="getLastHourOfReadingsResponse">
     <wsdl:part name="getLastHourOfReadingsReturn" type="intf:ArrayOf_tns1_MeasurementDTO" />
@@ -91,24 +91,28 @@
   <wsdl:message name="loginResponse">
     <wsdl:part name="loginReturn" type="xsd:boolean" />
   </wsdl:message>
-  <wsdl:message name="getNewestReadingsResponse">
-    <wsdl:part name="getNewestReadingsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
+  <wsdl:message name="getNewestMeasurementsResponse">
+    <wsdl:part name="getNewestMeasurementsReturn" type="intf:ArrayOf_tns1_MeasurementDTO" />
   </wsdl:message>
-  <wsdl:message name="getNewestReadingsRequest" />
+  <wsdl:message name="getMeasurementsResponse">
+    <wsdl:part name="getMeasurementsReturn" type="intf:ArrayOf_tns1_MeasurementDTO" />
+  </wsdl:message>
   <wsdl:message name="getHistoricalDataResponse">
     <wsdl:part name="getHistoricalDataReturn" type="tns1:SummaryDTO" />
   </wsdl:message>
   <wsdl:message name="getLastHourOfReadingsRequest">
-    <wsdl:part name="in0" type="soapenc:string" />
-    <wsdl:part name="in1" type="xsd:int" />
+    <wsdl:part name="in0" type="xsd:int" />
   </wsdl:message>
+  <wsdl:message name="getNewestMeasurementsRequest" />
   <wsdl:message name="loginRequest">
     <wsdl:part name="in0" type="tns1:UserDTO" />
   </wsdl:message>
-  <wsdl:message name="getReadingsResponse">
-    <wsdl:part name="getReadingsReturn" type="intf:ArrayOf_tns1_ReadingStationDTO" />
-  </wsdl:message>
+  <wsdl:message name="getReadingStationsRequest" />
   <wsdl:message name="getHistoricalDataRequest">
+    <wsdl:part name="in0" type="xsd:dateTime" />
+    <wsdl:part name="in1" type="xsd:dateTime" />
+  </wsdl:message>
+  <wsdl:message name="getMeasurementsRequest">
     <wsdl:part name="in0" type="xsd:dateTime" />
     <wsdl:part name="in1" type="xsd:dateTime" />
   </wsdl:message>
@@ -117,7 +121,19 @@
       <wsdl:input name="loginRequest" message="intf:loginRequest" />
       <wsdl:output name="loginResponse" message="intf:loginResponse" />
     </wsdl:operation>
-    <wsdl:operation name="getLastHourOfReadings" parameterOrder="in0 in1">
+    <wsdl:operation name="getReadingStations">
+      <wsdl:input name="getReadingStationsRequest" message="intf:getReadingStationsRequest" />
+      <wsdl:output name="getReadingStationsResponse" message="intf:getReadingStationsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMeasurements" parameterOrder="in0 in1">
+      <wsdl:input name="getMeasurementsRequest" message="intf:getMeasurementsRequest" />
+      <wsdl:output name="getMeasurementsResponse" message="intf:getMeasurementsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getNewestMeasurements">
+      <wsdl:input name="getNewestMeasurementsRequest" message="intf:getNewestMeasurementsRequest" />
+      <wsdl:output name="getNewestMeasurementsResponse" message="intf:getNewestMeasurementsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getLastHourOfReadings" parameterOrder="in0">
       <wsdl:input name="getLastHourOfReadingsRequest" message="intf:getLastHourOfReadingsRequest" />
       <wsdl:output name="getLastHourOfReadingsResponse" message="intf:getLastHourOfReadingsResponse" />
     </wsdl:operation>
@@ -125,30 +141,49 @@
       <wsdl:input name="getHistoricalDataRequest" message="intf:getHistoricalDataRequest" />
       <wsdl:output name="getHistoricalDataResponse" message="intf:getHistoricalDataResponse" />
     </wsdl:operation>
-    <wsdl:operation name="getReadings" parameterOrder="in0 in1">
-      <wsdl:input name="getReadingsRequest" message="intf:getReadingsRequest" />
-      <wsdl:output name="getReadingsResponse" message="intf:getReadingsResponse" />
-    </wsdl:operation>
-    <wsdl:operation name="getNewestReadings">
-      <wsdl:input name="getNewestReadingsRequest" message="intf:getNewestReadingsRequest" />
-      <wsdl:output name="getNewestReadingsResponse" message="intf:getNewestReadingsResponse" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="TSSUserServiceSoapBinding" type="intf:UserFacade">
     <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
     <wsdl:operation name="login">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="loginRequest">
-        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <wsdlsoap:body use="encoded" namespace="http://facades.server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:input>
       <wsdl:output name="loginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReadingStations">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getReadingStationsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://facades.server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getReadingStationsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMeasurements">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getMeasurementsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://facades.server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getMeasurementsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNewestMeasurements">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getNewestMeasurementsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://facades.server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getNewestMeasurementsResponse">
         <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getLastHourOfReadings">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getLastHourOfReadingsRequest">
-        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <wsdlsoap:body use="encoded" namespace="http://facades.server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:input>
       <wsdl:output name="getLastHourOfReadingsResponse">
         <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -157,27 +192,9 @@
     <wsdl:operation name="getHistoricalData">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getHistoricalDataRequest">
-        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <wsdlsoap:body use="encoded" namespace="http://facades.server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:input>
       <wsdl:output name="getHistoricalDataResponse">
-        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getReadings">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="getReadingsRequest">
-        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:input>
-      <wsdl:output name="getReadingsResponse">
-        <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getNewestReadings">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="getNewestReadingsRequest">
-        <wsdlsoap:body use="encoded" namespace="http://server.group1.onk.iha.dk" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:input>
-      <wsdl:output name="getNewestReadingsResponse">
         <wsdlsoap:body use="encoded" namespace="http://172.21.185.177:8080/axis/services/TSSUserService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>

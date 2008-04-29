@@ -34,7 +34,7 @@ namespace ReadingStation.TSSServer {
         
         private System.Threading.SendOrPostCallback loginOperationCompleted;
         
-        private System.Threading.SendOrPostCallback deliverReadingOperationCompleted;
+        private System.Threading.SendOrPostCallback deliverMeasurementsOperationCompleted;
         
         private System.Threading.SendOrPostCallback deliverAlarmOperationCompleted;
         
@@ -83,13 +83,13 @@ namespace ReadingStation.TSSServer {
         public event loginCompletedEventHandler loginCompleted;
         
         /// <remarks/>
-        public event deliverReadingCompletedEventHandler deliverReadingCompleted;
+        public event deliverMeasurementsCompletedEventHandler deliverMeasurementsCompleted;
         
         /// <remarks/>
         public event deliverAlarmCompletedEventHandler deliverAlarmCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
         [return: System.Xml.Serialization.SoapElementAttribute("getStatusReturn")]
         public ReadingStationDTO getStatus(ReadingStationDTO in0) {
             object[] results = this.Invoke("getStatus", new object[] {
@@ -119,12 +119,12 @@ namespace ReadingStation.TSSServer {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
         [return: System.Xml.Serialization.SoapElementAttribute("loginReturn")]
-        public bool login(ReadingStationDTO in0) {
+        public ReadingStationDTO login(ReadingStationDTO in0) {
             object[] results = this.Invoke("login", new object[] {
                         in0});
-            return ((bool)(results[0]));
+            return ((ReadingStationDTO)(results[0]));
         }
         
         /// <remarks/>
@@ -149,47 +149,47 @@ namespace ReadingStation.TSSServer {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
-        public void deliverReading(ReadingStationDTO in0) {
-            this.Invoke("deliverReading", new object[] {
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
+        public void deliverMeasurements(MeasurementDTO[] in0) {
+            this.Invoke("deliverMeasurements", new object[] {
                         in0});
         }
         
         /// <remarks/>
-        public void deliverReadingAsync(ReadingStationDTO in0) {
-            this.deliverReadingAsync(in0, null);
+        public void deliverMeasurementsAsync(MeasurementDTO[] in0) {
+            this.deliverMeasurementsAsync(in0, null);
         }
         
         /// <remarks/>
-        public void deliverReadingAsync(ReadingStationDTO in0, object userState) {
-            if ((this.deliverReadingOperationCompleted == null)) {
-                this.deliverReadingOperationCompleted = new System.Threading.SendOrPostCallback(this.OndeliverReadingOperationCompleted);
+        public void deliverMeasurementsAsync(MeasurementDTO[] in0, object userState) {
+            if ((this.deliverMeasurementsOperationCompleted == null)) {
+                this.deliverMeasurementsOperationCompleted = new System.Threading.SendOrPostCallback(this.OndeliverMeasurementsOperationCompleted);
             }
-            this.InvokeAsync("deliverReading", new object[] {
-                        in0}, this.deliverReadingOperationCompleted, userState);
+            this.InvokeAsync("deliverMeasurements", new object[] {
+                        in0}, this.deliverMeasurementsOperationCompleted, userState);
         }
         
-        private void OndeliverReadingOperationCompleted(object arg) {
-            if ((this.deliverReadingCompleted != null)) {
+        private void OndeliverMeasurementsOperationCompleted(object arg) {
+            if ((this.deliverMeasurementsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.deliverReadingCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.deliverMeasurementsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
-        public void deliverAlarm(ReadingStationDTO in0) {
+        [System.Web.Services.Protocols.SoapRpcMethodAttribute("", RequestNamespace="http://facades.server.group1.onk.iha.dk", ResponseNamespace="http://172.21.185.177:8080/axis/services/TSSReadingStationService")]
+        public void deliverAlarm(MeasurementDTO in0) {
             this.Invoke("deliverAlarm", new object[] {
                         in0});
         }
         
         /// <remarks/>
-        public void deliverAlarmAsync(ReadingStationDTO in0) {
+        public void deliverAlarmAsync(MeasurementDTO in0) {
             this.deliverAlarmAsync(in0, null);
         }
         
         /// <remarks/>
-        public void deliverAlarmAsync(ReadingStationDTO in0, object userState) {
+        public void deliverAlarmAsync(MeasurementDTO in0, object userState) {
             if ((this.deliverAlarmOperationCompleted == null)) {
                 this.deliverAlarmOperationCompleted = new System.Threading.SendOrPostCallback(this.OndeliverAlarmOperationCompleted);
             }
@@ -353,6 +353,88 @@ namespace ReadingStation.TSSServer {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.1433")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:BeanService")]
+    public partial class MeasurementDTO {
+        
+        private double lowerAlarmField;
+        
+        private int probeIdField;
+        
+        private int readingStationIdField;
+        
+        private System.Nullable<System.DateTime> timestampField;
+        
+        private double upperAlarmField;
+        
+        private double valueField;
+        
+        /// <remarks/>
+        public double lowerAlarm {
+            get {
+                return this.lowerAlarmField;
+            }
+            set {
+                this.lowerAlarmField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int probeId {
+            get {
+                return this.probeIdField;
+            }
+            set {
+                this.probeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int readingStationId {
+            get {
+                return this.readingStationIdField;
+            }
+            set {
+                this.readingStationIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.SoapElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> timestamp {
+            get {
+                return this.timestampField;
+            }
+            set {
+                this.timestampField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public double upperAlarm {
+            get {
+                return this.upperAlarmField;
+            }
+            set {
+                this.upperAlarmField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public double value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     public delegate void getStatusCompletedEventHandler(object sender, getStatusCompletedEventArgs e);
     
@@ -396,17 +478,17 @@ namespace ReadingStation.TSSServer {
         }
         
         /// <remarks/>
-        public bool Result {
+        public ReadingStationDTO Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((ReadingStationDTO)(this.results[0]));
             }
         }
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
-    public delegate void deliverReadingCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void deliverMeasurementsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
