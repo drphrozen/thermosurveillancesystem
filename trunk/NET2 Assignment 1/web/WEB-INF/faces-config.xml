@@ -12,8 +12,8 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>Page1</managed-bean-name>
-        <managed-bean-class>net2assignment1.Page1</managed-bean-class>
+        <managed-bean-name>Login</managed-bean-name>
+        <managed-bean-class>net2assignment1.Login</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
@@ -24,6 +24,28 @@
     <managed-bean>
         <managed-bean-name>RequestBean1</managed-bean-name>
         <managed-bean-class>net2assignment1.RequestBean1</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>sap$SAPFrontpage</managed-bean-name>
+        <managed-bean-class>net2assignment1.sap.SAPFrontpage</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/Login.jsp</from-view-id>
+        <navigation-case>
+            <from-outcome>caseLogin</from-outcome>
+            <to-view-id>/sap/SAPFrontpage.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>NewJSFManagedBean</managed-bean-name>
+        <managed-bean-class>net2assignment1.NewJSFManagedBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>LoginError</managed-bean-name>
+        <managed-bean-class>net2assignment1.LoginError</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 </faces-config>

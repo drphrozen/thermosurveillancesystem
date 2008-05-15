@@ -7,6 +7,7 @@
 package net2assignment1;
 
 import com.sun.rave.web.ui.appbase.AbstractSessionBean;
+import dk.iha.onk.group1.server.facades.AdminFacade;
 import javax.faces.FacesException;
 
 /**
@@ -32,11 +33,13 @@ public class SessionBean1 extends AbstractSessionBean {
     private void _init() throws Exception {
     }
     // </editor-fold>
-
+    private AdminFacade adminFacade;
+    
     /**
      * <p>Construct a new session data bean instance.</p>
      */
     public SessionBean1() {
+        adminFacade = new AdminFacade();
     }
 
     /**
@@ -120,6 +123,12 @@ public class SessionBean1 extends AbstractSessionBean {
      */
     protected ApplicationBean1 getApplicationBean1() {
         return (ApplicationBean1) getBean("ApplicationBean1");
+    }
+
+    public // </editor-fold>
+    
+    AdminFacade getAdminFacade() {
+        return adminFacade;
     }
 
 }

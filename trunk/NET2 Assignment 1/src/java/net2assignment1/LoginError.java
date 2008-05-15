@@ -1,7 +1,7 @@
 /*
- * Page1.java
+ * LoginError.java
  *
- * Created on 13-05-2008, 17:46:32
+ * Created on 14-05-2008, 17:29:30
  */
  
 package net2assignment1;
@@ -18,7 +18,7 @@ import javax.faces.FacesException;
  *
  * @author ESRA
  */
-public class Page1 extends AbstractPageBean {
+public class LoginError extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
 
     /**
@@ -34,7 +34,7 @@ public class Page1 extends AbstractPageBean {
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public Page1() {
+    public LoginError() {
     }
 
     /**
@@ -63,7 +63,7 @@ public class Page1 extends AbstractPageBean {
         try {
             _init();
         } catch (Exception e) {
-            log("Page1 Initialization Failure", e);
+            log("LoginError Initialization Failure", e);
             throw e instanceof FacesException ? (FacesException) e: new FacesException(e);
         }
         
@@ -107,14 +107,14 @@ public class Page1 extends AbstractPageBean {
     @Override
     public void destroy() {
     }
-    
+
     /**
      * <p>Return a reference to the scoped data bean.</p>
      *
      * @return reference to the scoped data bean
      */
-    protected SessionBean1 getSessionBean1() {
-        return (SessionBean1) getBean("SessionBean1");
+    protected ApplicationBean1 getApplicationBean1() {
+        return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
     /**
@@ -131,9 +131,9 @@ public class Page1 extends AbstractPageBean {
      *
      * @return reference to the scoped data bean
      */
-    protected ApplicationBean1 getApplicationBean1() {
-        return (ApplicationBean1) getBean("ApplicationBean1");
+    protected SessionBean1 getSessionBean1() {
+        return (SessionBean1) getBean("SessionBean1");
     }
-
+    
 }
 
