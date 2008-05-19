@@ -68,6 +68,8 @@ public class Rs {
         try {
 
             ResultSet stationsResult = connection.executeQuery(query);
+            if(stationsResult == null)
+                return stations;
             while (stationsResult.next()) {
                 query = "SELECT * FROM probe WHERE Readingstation_idReadingStation = " + stationsResult.getInt("idReadingStation") + ";";
                 ResultSet probesResult = connection.executeQuery(query);

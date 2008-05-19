@@ -175,7 +175,10 @@ public class Login extends AbstractPageBean {
         // case name where null will return to the same page.
         
         if(passwordFieldLogin.getText() == null || textFieldUsername.getText() == null)
+        {
+            labelResult.setText("Login failed!");
             return null;
+        }
         UserDTO user = new UserDTO();
         user.setUsername(textFieldUsername.getText().toString());
         user.setPassword(passwordFieldLogin.getText().toString());
@@ -187,7 +190,7 @@ public class Login extends AbstractPageBean {
             if(isSuccess)
             {
                 getSessionBean1().setUsername(user.getUsername());
-                return "caseLogin";
+                return "caseFrontpage";
             }
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

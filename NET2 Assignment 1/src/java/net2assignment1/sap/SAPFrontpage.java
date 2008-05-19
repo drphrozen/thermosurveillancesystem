@@ -64,6 +64,8 @@ public class SAPFrontpage extends AbstractPageBean {
 
     // </editor-fold>
 
+    private ReadingStationDTO[] rss = null;
+    
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -128,10 +130,10 @@ public class SAPFrontpage extends AbstractPageBean {
      */
     @Override
     public void prerender() {
-        ReadingStationDTO[] readingStations = getApplicationBean1().getAdminFacade().getReadingStations();
-        Option[] options = new Option[readingStations.length];
-        for(int i=0; i<readingStations.length; i++)
-            options[i] = new Option(readingStations[i], readingStations[i].getName() + " [" + readingStations[i].getId() + "]");
+        rss = getApplicationBean1().getAdminFacade().getReadingStations();
+        Option[] options = new Option[rss.length];
+        for(int i=0; i<rss.length; i++)
+            options[i] = new Option(rss[i].getId(), rss[i].getName() + " [" + rss[i].getId() + "]");
         listboxReadingStations.setItems(options);
     }
 
@@ -177,11 +179,21 @@ public class SAPFrontpage extends AbstractPageBean {
     public String buttonEdit_action() {
         // TODO: Process the action. Return value is a navigation
         // case name where null will return to the same page.
+        ReadingStationDTO rs = null;
+        int id = Integer.parseInt(listboxReadingStations.getValue().toString());
         try {
-            ReadingStationDTO rs = (ReadingStationDTO)listboxReadingStations.getValue();
-            getRequestBean1().setReadingStation(rs);
+            rss = getApplicationBean1().getAdminFacade().getReadingStations();
+            for (ReadingStationDTO readingStationDTO : rss) {
+                if(readingStationDTO.getId() == id)
+                {
+                    rs = readingStationDTO;
+                    break;
+                }
+            }
+            getSessionBean1().setReadingStation(rs);
             return "caseEdit";
         } catch(Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
