@@ -11,9 +11,11 @@ import com.sun.webui.jsf.component.Button;
 import com.sun.webui.jsf.component.Checkbox;
 import com.sun.webui.jsf.component.Label;
 import com.sun.webui.jsf.component.Table;
+import com.sun.webui.jsf.component.TableColumn;
+import com.sun.webui.jsf.component.TableRowGroup;
 import com.sun.webui.jsf.component.TextField;
-import dk.iha.onk.group1.server.dataTransferObjects.ProbeDTO;
-import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
+import dk.iha.onk.group1.server.domainObjects.Probe;
+import dk.iha.onk.group1.server.domainObjects.ReadingStation;
 import javax.faces.FacesException;
 import net2assignment1.ApplicationBean1;
 import net2assignment1.SessionBean1;
@@ -47,35 +49,26 @@ public class SAPReadingStation extends AbstractPageBean {
     public void setLabelID(Label l) {
         this.labelID = l;
     }
-    private Table tableProbes = new Table();
-
-    public Table getTableProbes() {
-        return tableProbes;
-    }
-
-    public void setTableProbes(Table t) {
-        this.tableProbes = t;
-    }
 
     // </editor-fold>
     
-    private ProbeDTO[] probes = null;
+    private Probe[] probes = null;
+    private ReadingStation readingStation = null;
 
-    public ProbeDTO[] getProbes() {
+    public ReadingStation getReadingStation() {
+        return readingStation;
+    }
+
+    public void setReadingStation(ReadingStation readingStation) {
+        this.readingStation = readingStation;
+    }
+    
+    public Probe[] getProbes() {
         return probes;
     }
 
-    public void setProbes(ProbeDTO[] probes) {
+    public void setProbes(Probe[] probes) {
         this.probes = probes;
-    }
-    private TextField textFieldName = new TextField();
-
-    public TextField getTextFieldName() {
-        return textFieldName;
-    }
-
-    public void setTextFieldName(TextField tf) {
-        this.textFieldName = tf;
     }
     private Button buttonUpdate = new Button();
 
@@ -94,6 +87,51 @@ public class SAPReadingStation extends AbstractPageBean {
 
     public void setCheckboxEnabled(Checkbox c) {
         this.checkboxEnabled = c;
+    }
+    private Table tableProbes = new Table();
+
+    public Table getTableProbes() {
+        return tableProbes;
+    }
+
+    public void setTableProbes(Table t) {
+        this.tableProbes = t;
+    }
+    private TableRowGroup tableRowGroupProbes = new TableRowGroup();
+
+    public TableRowGroup getTableRowGroupProbes() {
+        return tableRowGroupProbes;
+    }
+
+    public void setTableRowGroupProbes(TableRowGroup trg) {
+        this.tableRowGroupProbes = trg;
+    }
+    private Checkbox tableRowGroupProbesSelectionChild = new Checkbox();
+
+    public Checkbox getTableRowGroupProbesSelectionChild() {
+        return tableRowGroupProbesSelectionChild;
+    }
+
+    public void setTableRowGroupProbesSelectionChild(Checkbox c) {
+        this.tableRowGroupProbesSelectionChild = c;
+    }
+    private TableColumn tableRowGroupProbesSelectionColumn = new TableColumn();
+
+    public TableColumn getTableRowGroupProbesSelectionColumn() {
+        return tableRowGroupProbesSelectionColumn;
+    }
+
+    public void setTableRowGroupProbesSelectionColumn(TableColumn tc) {
+        this.tableRowGroupProbesSelectionColumn = tc;
+    }
+    private TextField textFieldName = new TextField();
+
+    public TextField getTextFieldName() {
+        return textFieldName;
+    }
+
+    public void setTextFieldName(TextField tf) {
+        this.textFieldName = tf;
     }
     
     /**
@@ -121,7 +159,9 @@ public class SAPReadingStation extends AbstractPageBean {
         // Perform application initialization that must complete
         // *before* managed components are initialized
         // TODO - add your own initialiation code here
-        probes = getSessionBean1().getReadingStation().getProbes();
+        SessionBean1 sessionBean1 = getSessionBean1();
+        readingStation = (ReadingStation)sessionBean1.getObjectToEdit();
+        probes = readingStation.getProbes().toArray(new Probe[0]);
         
         // <editor-fold defaultstate="collapsed" desc="Managed Component Initialization">
         // Initialize automatically managed components
@@ -160,9 +200,9 @@ public class SAPReadingStation extends AbstractPageBean {
      */
     @Override
     public void prerender() {
-        if(getSessionBean1().getReadingStation() != null)
+        if(getSessionBean1().getObjectToEdit() != null)
         {
-            ReadingStationDTO rs = getSessionBean1().getReadingStation();
+            ReadingStation rs = (ReadingStation)getSessionBean1().getObjectToEdit();
             labelID.setText(rs.getId());
             textFieldName.setText(rs.getName());
             System.out.println("isEnabled: " + rs.isEnabled());
@@ -218,22 +258,16 @@ public class SAPReadingStation extends AbstractPageBean {
     public String buttonUpdate_action() {
         // TODO: Process the action. Return value is a navigation
         // case name where null will return to the same page.
-        int id = getSessionBean1().getReadingStation().getId();
+        int id = ((ReadingStation)getSessionBean1().getObjectToEdit()).getId();
         String name = textFieldName.getText().toString();
-        getApplicationBean1().getAdminFacade().setRSName(id, name);
-        System.out.println("isChecked: " + checkboxEnabled.isChecked());
+        getApplicationBean1().getDataSourceFacade().getReadingStationDSL().setReadingStationName(id, name);        System.out.println("isChecked: " + checkboxEnabled.isChecked());
         if(checkboxEnabled.isChecked())
-            getApplicationBean1().getAdminFacade().enableRS(name);
+            getApplicationBean1().getDataSourceFacade().getReadingStationDSL().enableReadingStation(name);
         else
-            getApplicationBean1().getAdminFacade().disableRS(name);
-        ReadingStationDTO[] rss = getApplicationBean1().getAdminFacade().getReadingStations();
-        for (ReadingStationDTO readingStationDTO : rss) {
-            if(readingStationDTO.getId() == id)
-            {
-                getSessionBean1().setReadingStation(readingStationDTO);
-                break;
-            }
-        }
+            getApplicationBean1().getDataSourceFacade().getReadingStationDSL().disableReadingStation(name);
+        ReadingStation rs = getApplicationBean1().getDataSourceFacade().getReadingStationDSL().getReadingStationById(id);
+        if(rs != null)
+            getSessionBean1().setObjectToEdit(rs);
         return null;
     }
     

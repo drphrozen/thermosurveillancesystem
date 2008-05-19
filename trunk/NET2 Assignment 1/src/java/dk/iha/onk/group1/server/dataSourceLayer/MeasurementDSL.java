@@ -18,11 +18,11 @@ import java.util.logging.Logger;
  *
  * @author dk021998
  */
-public class Ms {
+public class MeasurementDSL {
 
     private MySQLConnector connection;
 
-    public Ms() {
+    public MeasurementDSL() {
         connection = MySQLConnector.getInstance();
     }
 
@@ -85,7 +85,7 @@ public class Ms {
                 measurements.add(new Measurement(result.getInt("Probe_idProbe"), getCalendarFromTimestamp(result.getTimestamp("timeStamp")), result.getDouble("value"), result.getDouble("upperAlarm"), result.getDouble("lowerAlarm")));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Ms.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MeasurementDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return measurements;
     }

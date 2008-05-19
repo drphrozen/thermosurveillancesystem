@@ -7,7 +7,7 @@
 package net2assignment1;
 
 import com.sun.rave.web.ui.appbase.AbstractApplicationBean;
-import dk.iha.onk.group1.server.facades.AdminFacade;
+import dk.iha.onk.group1.server.dataSourceLayer.DataSourceFacade;
 import javax.faces.FacesException;
 
 /**
@@ -34,7 +34,7 @@ public class ApplicationBean1 extends AbstractApplicationBean {
     }
     // </editor-fold>
 
-    private transient AdminFacade adminFacade = new AdminFacade();;
+    private transient DataSourceFacade dataSourceFacade = new DataSourceFacade();
     
     /**
      * <p>Construct a new application data bean instance.</p>
@@ -105,7 +105,8 @@ public class ApplicationBean1 extends AbstractApplicationBean {
         return super.getLocaleCharacterEncoding();
     }
 
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
+    public DataSourceFacade getDataSourceFacade() {
+        return dataSourceFacade;
     }
+    
 }

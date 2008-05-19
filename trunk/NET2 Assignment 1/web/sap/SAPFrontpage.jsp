@@ -14,15 +14,39 @@
                 </webuijsf:head>
                 <webuijsf:body id="body1" style="-rave-layout: grid">
                     <webuijsf:form id="form1">
-                        <webuijsf:label id="labelWelcome" style="left: 24px; top: 48px; position: absolute" text="Welcome, "/>
-                        <webuijsf:label binding="#{sap$SAPFrontpage.labelUsername}" id="labelUsername" style="left: 96px; top: 48px; position: absolute"/>
-                        <webuijsf:listbox binding="#{sap$SAPFrontpage.listboxReadingStations}" id="listboxReadingStations"
-                            items="#{sap$SAPFrontpage.listboxReadingStationsDefaultOptions.options}" style="left: 24px; top: 72px; position: absolute"/>
-                        <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonEdit_action}" id="buttonEdit"
-                            style="left: 23px; top: 288px; position: absolute" text="Edit"/>
                         <div style="left: 24px; top: 0px; position: absolute">
                             <jsp:directive.include file="Menu.jspf"/>
                         </div>
+                        <webuijsf:panelGroup id="groupPanel1" style="left: 24px; top: 48px; position: absolute; width: 238px">
+                            <webuijsf:label id="labelWelcome" text="Welcome, "/>
+                            <webuijsf:label id="labelUsername" text="#{SessionBean1.username}"/>
+                        </webuijsf:panelGroup>
+                        <webuijsf:tabSet id="tabSet" selected="tabUsers" style="height: 286px; left: 24px; top: 72px; position: absolute; width: 622px">
+                            <webuijsf:tab id="tabReadingStations" text="Reading Stations">
+                                <webuijsf:panelLayout id="layoutPanel1" panelLayout="flow" style="height: 251px; position: relative; width: 623px; -rave-layout: grid">
+                                    <webuijsf:listbox binding="#{sap$SAPFrontpage.listboxReadingStations}" id="listboxReadingStations"
+                                        items="#{sap$SAPFrontpage.listboxReadingStationsDefaultOptions.options}" style=" left: 0px; top: 0px; position: absolute"/>
+                                    <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonEditReadingStation_action}" id="buttonEditReadingStation"
+                                        style="left: -1px; top: 216px; position: absolute" text="Edit"/>
+                                </webuijsf:panelLayout>
+                            </webuijsf:tab>
+                            <webuijsf:tab actionExpression="#{sap$SAPFrontpage.tabUsers_action}" id="tabUsers" text="Users">
+                                <webuijsf:panelLayout id="layoutPanel2" style="height: 249px; position: relative; width: 621px; -rave-layout: grid">
+                                    <webuijsf:listbox binding="#{sap$SAPFrontpage.listboxUsers}" id="listboxUsers"
+                                        items="#{sap$SAPFrontpage.listboxUsersDefaultOptions.options}" style="position: absolute; left: 0px; top: 0px"/>
+                                    <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonEditUsers_action}" id="buttonEditUsers"
+                                        style="left: -1px; top: 216px; position: absolute" text="Edit"/>
+                                    <webuijsf:textField binding="#{sap$SAPFrontpage.textFieldUsername}" id="textFieldUsername" style="left: 192px; top: 168px; position: absolute"/>
+                                    <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonAdd_action}" id="buttonAdd"
+                                        style="left: 191px; top: 216px; position: absolute" text="Add"/>
+                                    <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonRemove_action}" id="buttonRemove"
+                                        style="left: 47px; top: 216px; position: absolute" text="Remove"/>
+                                    <webuijsf:passwordField binding="#{sap$SAPFrontpage.passwordFieldPassword}" id="passwordFieldPassword" style="left: 192px; top: 192px; position: absolute"/>
+                                    <webuijsf:dropDown binding="#{sap$SAPFrontpage.dropDownAccountType}" id="dropDownAccountType"
+                                        items="#{sap$SAPFrontpage.dropDownAccountTypeDefaultOptions.options}" style="left: 192px; top: 144px; position: absolute"/>
+                                </webuijsf:panelLayout>
+                            </webuijsf:tab>
+                        </webuijsf:tabSet>
                     </webuijsf:form>
                 </webuijsf:body>
             </webuijsf:html>

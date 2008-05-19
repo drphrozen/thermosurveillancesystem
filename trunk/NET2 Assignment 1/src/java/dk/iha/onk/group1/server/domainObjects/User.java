@@ -10,7 +10,6 @@ public class User implements Comparable<User> {
     private String password;
     private String accountType;
     private int id;
-    private String units;
 
     public User() {
         this(null, null, null, -1);
@@ -61,13 +60,5 @@ public class User implements Comparable<User> {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getUnits() {
-        return units;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
     }
 }

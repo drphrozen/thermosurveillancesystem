@@ -56,12 +56,16 @@
     <navigation-rule>
         <from-view-id>/sap/SAPFrontpage.jsp</from-view-id>
         <navigation-case>
-            <from-outcome>caseEdit</from-outcome>
+            <from-outcome>caseEditReadingStation</from-outcome>
             <to-view-id>/sap/SAPReadingStation.jsp</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>caseLogout</from-outcome>
             <to-view-id>/Login.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>caseEditUser</from-outcome>
+            <to-view-id>/sap/SAPUsers.jsp</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -80,4 +84,20 @@
         <managed-bean-class>net2assignment1.sap.Menu</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>sap$SAPUsers</managed-bean-name>
+        <managed-bean-class>net2assignment1.sap.SAPUsers</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/sap/SAPUsers.jsp</from-view-id>
+        <navigation-case>
+            <from-outcome>caseFrontpage</from-outcome>
+            <to-view-id>/sap/SAPFrontpage.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>caseLogout</from-outcome>
+            <to-view-id>/Login.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

@@ -1,16 +1,18 @@
 /*
- * Page1.java
+ * SAPUsers.java
  *
- * Created on 13-05-2008, 17:46:32
+ * Created on 19-05-2008, 21:26:57
  */
  
-package net2assignment1;
+package net2assignment1.sap;
 
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-import com.sun.webui.jsf.component.Label;
-import com.sun.webui.jsf.component.PasswordField;
-import com.sun.webui.jsf.component.TextField;
+import dk.iha.onk.group1.server.domainObjects.User;
 import javax.faces.FacesException;
+import net2assignment1.ApplicationBean1;
+import net2assignment1.LoginError;
+import net2assignment1.SessionBean1;
+import net2assignment1.RequestBean1;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -19,9 +21,9 @@ import javax.faces.FacesException;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  *
- * @author ESRA
+ * @author Esben
  */
-public class Login extends AbstractPageBean {
+public class SAPUsers extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
 
     /**
@@ -33,39 +35,21 @@ public class Login extends AbstractPageBean {
     }
 
     // </editor-fold>
+    
+    private User user;
 
-    private PasswordField passwordFieldLogin = new PasswordField();
-
-    public PasswordField getPasswordFieldLogin() {
-        return passwordFieldLogin;
+    public User getUser() {
+        return user;
     }
 
-    public void setPasswordFieldLogin(PasswordField pf) {
-        this.passwordFieldLogin = pf;
-    }
-    private TextField textFieldUsername = new TextField();
-
-    public TextField getTextFieldUsername() {
-        return textFieldUsername;
-    }
-
-    public void setTextFieldUsername(TextField tf) {
-        this.textFieldUsername = tf;
-    }
-    private Label labelResult = new Label();
-
-    public Label getLabelResult() {
-        return labelResult;
-    }
-
-    public void setLabelResult(Label l) {
-        this.labelResult = l;
+    public void setUser(User user) {
+        this.user = user;
     }
     
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public Login() {
+    public SAPUsers() {
     }
 
     /**
@@ -87,13 +71,15 @@ public class Login extends AbstractPageBean {
         // Perform application initialization that must complete
         // *before* managed components are initialized
         // TODO - add your own initialiation code here
+        SessionBean1 sessionBean1 = getSessionBean1();
+        user = (User)sessionBean1.getObjectToEdit();
         // <editor-fold defaultstate="collapsed" desc="Managed Component Initialization">
         // Initialize automatically managed components
         // *Note* - this logic should NOT be modified
         try {
             _init();
         } catch (Exception e) {
-            log("Page1 Initialization Failure", e);
+            log("SAPUsers Initialization Failure", e);
             throw e instanceof FacesException ? (FacesException) e: new FacesException(e);
         }
         
@@ -137,7 +123,25 @@ public class Login extends AbstractPageBean {
     @Override
     public void destroy() {
     }
-    
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected ApplicationBean1 getApplicationBean1() {
+        return (ApplicationBean1) getBean("ApplicationBean1");
+    }
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected LoginError getLoginError() {
+        return (LoginError) getBean("LoginError");
+    }
+
     /**
      * <p>Return a reference to the scoped data bean.</p>
      *
@@ -155,36 +159,6 @@ public class Login extends AbstractPageBean {
     protected RequestBean1 getRequestBean1() {
         return (RequestBean1) getBean("RequestBean1");
     }
-
-    /**
-     * <p>Return a reference to the scoped data bean.</p>
-     *
-     * @return reference to the scoped data bean
-     */
-    protected ApplicationBean1 getApplicationBean1() {
-        return (ApplicationBean1) getBean("ApplicationBean1");
-    }
-
-    public String button1_action() {
-        // TODO: Process the action. Return value is a navigation
-        // case name where null will return to the same page.
-        
-        if(passwordFieldLogin.getText() == null || textFieldUsername.getText() == null)
-        {
-            labelResult.setText("Login failed!");
-            return null;
-        }
-        String username = textFieldUsername.getText().toString();
-        String password = passwordFieldLogin.getText().toString();
-        boolean isSuccess = getApplicationBean1().getDataSourceFacade().getUserDSL().authenticateAdmin(username, password);
-        if(isSuccess)
-        {
-            getSessionBean1().setUsername(username);
-            return "caseFrontpage";
-        }
-        labelResult.setText("Login failed!");
-        return null;
-    }
-
+    
 }
 

@@ -15,11 +15,11 @@ import java.util.logging.Logger;
  *
  * @author dk021998
  */
-public class Usr {
+public class UserDSL {
 
     private MySQLConnector connection;
 
-    public Usr() {
+    public UserDSL() {
         connection = MySQLConnector.getInstance();
     }
 
@@ -37,19 +37,35 @@ public class Usr {
                 users.add(user);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Usr.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return users;
     }
 
-    public boolean removeUser(String username) {
-        String query = "DELETE FROM account WHERE username = '" + username + "';";
-        connection.executeUpdate(query);
-        return true;
+    public boolean removeUser(int id) {
+        String query = "DELETE FROM account WHERE id = '" + id + "';";
+        try {
+            connection.executeUpdate(query);
+            return true;
+        } catch(Exception ex) {
+            Logger.getLogger(UserDSL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
-    public boolean addUser(User user) {
-        String query = "SELECT id FROM account WHERE username ILIKE '" + user.getUsername() + "';";
+    public boolean removeUser(String username) {
+        String query = "DELETE FROM account WHERE username = '" + username + "';";
+        try {
+            connection.executeUpdate(query);
+            return true;
+        } catch(Exception ex) {
+            Logger.getLogger(UserDSL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean addUser(String username, String password, String accountType) {
+        String query = "SELECT id FROM account WHERE username ILIKE '" + username + "';";
         ResultSet resultset = null;
 
         resultset = connection.executeQuery(query);
@@ -57,10 +73,14 @@ public class Usr {
         if (connection.next(resultset)) {
             return false;
         } else {
-            query = "INSERT INTO account (username,password,accounttype) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + user.getAccountType() + "');";
+            query = "INSERT INTO account (username,password,accounttype) VALUES ('" + username + "','" + password + "','" + accountType + "');";
             connection.executeUpdate(query);
             return true;
         }
+    }
+    
+    public boolean addUser(User user) {
+        return addUser(user.getUsername(), user.getPassword(), user.getAccountType());
     }
 
     public boolean updateUser(int userId, User newUser) {
@@ -70,8 +90,20 @@ public class Usr {
     }
 
     public boolean authenticateUser(User user) {
-        System.out.println("Usr: " + user.getUsername() + "\t" + user.getPassword() + "\t" + user.getAccountType());
-        String query = "SELECT id FROM account WHERE username = '" + user.getUsername() + "' AND password = '" + user.getPassword() + "' AND accounttype = '" + user.getAccountType() + "';";
+        return authenticateUser(user.getUsername(), user.getPassword(), user.getAccountType());
+    }
+
+    public boolean authenticateUser(String username, String password) {
+        return authenticateUser(username, password, "user");
+    }
+
+    public boolean authenticateAdmin(String username, String password) {
+        return authenticateUser(username, password, "admin");
+    }
+    
+    public boolean authenticateUser(String username, String password, String accountType) {
+        System.out.println("Usr: " + username + "\t" + password + "\t" + accountType);
+        String query = "SELECT id FROM account WHERE username = '" + username + "' AND password = '" + password + "' AND accounttype = '" + accountType + "';";
         ResultSet userResult = connection.executeQuery(query);
         if(userResult == null)
             return false;
@@ -80,7 +112,7 @@ public class Usr {
         try {
             return userResult.last();
         } catch (SQLException ex) {
-            Logger.getLogger(Usr.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -93,7 +125,7 @@ public class Usr {
                 return new User(userResult.getString("username"), userResult.getString("accounttype"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Usr.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

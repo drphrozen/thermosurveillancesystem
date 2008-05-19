@@ -7,7 +7,7 @@
 package net2assignment1;
 
 import com.sun.rave.web.ui.appbase.AbstractSessionBean;
-import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
+import dk.iha.onk.group1.server.domainObjects.ReadingStation;
 import javax.faces.FacesException;
 
 /**
@@ -34,14 +34,14 @@ public class SessionBean1 extends AbstractSessionBean {
     }
     // </editor-fold>
     private String username = null;
-    private ReadingStationDTO readingStation = null;
+    private Object objectToEdit = null;
 
-    public ReadingStationDTO getReadingStation() {
-        return readingStation;
+    public Object getObjectToEdit() {
+        return objectToEdit;
     }
 
-    public void setReadingStation(ReadingStationDTO readingStation) {
-        this.readingStation = readingStation;
+    public void setObjectToEdit(Object object) {
+        this.objectToEdit = object;
     }
 
     /**

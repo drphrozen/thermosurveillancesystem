@@ -6,13 +6,17 @@
  
 package net2assignment1.sap;
 
-import com.sun.webui.jsf.component.Label;
+import com.sun.webui.jsf.component.DropDown;
 import com.sun.webui.jsf.component.Listbox;
+import com.sun.webui.jsf.component.PasswordField;
+import com.sun.webui.jsf.component.TextField;
 import com.sun.webui.jsf.model.DefaultOptionsList;
+import com.sun.webui.jsf.model.SingleSelectOptionsList;
 import net2assignment1.*;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import com.sun.webui.jsf.model.Option;
-import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
+import dk.iha.onk.group1.server.domainObjects.ReadingStation;
+import dk.iha.onk.group1.server.domainObjects.User;
 import javax.faces.FacesException;
 
 /**
@@ -34,15 +38,12 @@ public class SAPFrontpage extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
-    private Label labelUsername = new Label();
 
-    public Label getLabelUsername() {
-        return labelUsername;
-    }
+    // </editor-fold>
 
-    public void setLabelUsername(Label l) {
-        this.labelUsername = l;
-    }
+    private ReadingStation[] readingStations = new ReadingStation[0];
+    private User[] users = new User[0];
+    
     private DefaultOptionsList listboxReadingStationsDefaultOptions = new DefaultOptionsList();
 
     public DefaultOptionsList getListboxReadingStationsDefaultOptions() {
@@ -61,15 +62,70 @@ public class SAPFrontpage extends AbstractPageBean {
     public void setListboxReadingStations(Listbox l) {
         this.listboxReadingStations = l;
     }
+    private DefaultOptionsList listboxUsersDefaultOptions = new DefaultOptionsList();
 
-    // </editor-fold>
+    public DefaultOptionsList getListboxUsersDefaultOptions() {
+        return listboxUsersDefaultOptions;
+    }
 
-    private ReadingStationDTO[] rss = null;
+    public void setListboxUsersDefaultOptions(DefaultOptionsList dol) {
+        this.listboxUsersDefaultOptions = dol;
+    }
+    private Listbox listboxUsers = new Listbox();
+
+    public Listbox getListboxUsers() {
+        return listboxUsers;
+    }
+
+    public void setListboxUsers(Listbox l) {
+        this.listboxUsers = l;
+    }
+    private SingleSelectOptionsList dropDownAccountTypeDefaultOptions = new SingleSelectOptionsList();
+
+    public SingleSelectOptionsList getDropDownAccountTypeDefaultOptions() {
+        return dropDownAccountTypeDefaultOptions;
+    }
+
+    public void setDropDownAccountTypeDefaultOptions(SingleSelectOptionsList ssol) {
+        this.dropDownAccountTypeDefaultOptions = ssol;
+    }
+    private DropDown dropDownAccountType = new DropDown();
+
+    public DropDown getDropDownAccountType() {
+        return dropDownAccountType;
+    }
+
+    public void setDropDownAccountType(DropDown dd) {
+        this.dropDownAccountType = dd;
+    }
+    private TextField textFieldUsername = new TextField();
+
+    public TextField getTextFieldUsername() {
+        return textFieldUsername;
+    }
+
+    public void setTextFieldUsername(TextField tf) {
+        this.textFieldUsername = tf;
+    }
+    private PasswordField passwordFieldPassword = new PasswordField();
+
+    public PasswordField getPasswordFieldPassword() {
+        return passwordFieldPassword;
+    }
+
+    public void setPasswordFieldPassword(PasswordField pf) {
+        this.passwordFieldPassword = pf;
+    }
     
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public SAPFrontpage() {
+        Option[] accountTypes = new Option[] {
+            new Option("admin", "Administrator"),
+            new Option("user", "User")
+        };
+        dropDownAccountTypeDefaultOptions.setOptions(accountTypes);
     }
 
     /**
@@ -106,7 +162,7 @@ public class SAPFrontpage extends AbstractPageBean {
         // Perform application initialization that must complete
         // *after* managed components are initialized
         // TODO - add your own initialization code here
-        labelUsername.setText(getSessionBean1().getUsername());
+//        labelUsername.setText(getSessionBean1().getUsername());
     }
 
     /**
@@ -130,11 +186,17 @@ public class SAPFrontpage extends AbstractPageBean {
      */
     @Override
     public void prerender() {
-        rss = getApplicationBean1().getAdminFacade().getReadingStations();
-        Option[] options = new Option[rss.length];
-        for(int i=0; i<rss.length; i++)
-            options[i] = new Option(rss[i].getId(), rss[i].getName() + " [" + rss[i].getId() + "]");
-        listboxReadingStations.setItems(options);
+        users = getApplicationBean1().getDataSourceFacade().getUserDSL().getUsers().toArray(new User[0]);
+        Option[] userOptions = new Option[users.length];
+        for (int i = 0; i < userOptions.length; i++)
+            userOptions[i] = new Option(users[i].getId(), users[i].getUsername());
+        listboxUsers.setItems(userOptions);
+        
+        readingStations = getApplicationBean1().getDataSourceFacade().getReadingStationDSL().getReadingStations().toArray(new ReadingStation[0]);
+        Option[] readingStationOptions = new Option[readingStations.length];
+        for(int i=0; i<readingStations.length; i++)
+            readingStationOptions[i] = new Option(readingStations[i].getId(), readingStations[i].getName() + " [" + readingStations[i].getId() + "]");
+        listboxReadingStations.setItems(readingStationOptions);
     }
 
     /**
@@ -176,26 +238,47 @@ public class SAPFrontpage extends AbstractPageBean {
         return (SessionBean1) getBean("SessionBean1");
     }
 
-    public String buttonEdit_action() {
+    public String buttonEditReadingStation_action() {
         // TODO: Process the action. Return value is a navigation
         // case name where null will return to the same page.
-        ReadingStationDTO rs = null;
         int id = Integer.parseInt(listboxReadingStations.getValue().toString());
-        try {
-            rss = getApplicationBean1().getAdminFacade().getReadingStations();
-            for (ReadingStationDTO readingStationDTO : rss) {
-                if(readingStationDTO.getId() == id)
-                {
-                    rs = readingStationDTO;
-                    break;
-                }
-            }
-            getSessionBean1().setReadingStation(rs);
-            return "caseEdit";
-        } catch(Exception ex) {
-            ex.printStackTrace();
+        ReadingStation rs = getApplicationBean1().getDataSourceFacade().getReadingStationDSL().getReadingStationById(id);
+        if(rs == null)
             return null;
-        }
+        getSessionBean1().setObjectToEdit(rs);
+        return "caseEditReadingStation";
+    }
+
+    public String buttonEditUsers_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        int id = Integer.parseInt(listboxUsers.getValue().toString());
+        User user = getApplicationBean1().getDataSourceFacade().getUserDSL().getUser(id);
+        if(user == null)
+            return null;
+        getSessionBean1().setObjectToEdit(user);
+        return "caseEditUser";
+    }
+
+    public String tabUsers_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        return null;
+    }
+
+    public String buttonRemove_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        int id = Integer.parseInt(listboxUsers.getValue().toString());
+        getApplicationBean1().getDataSourceFacade().getUserDSL().removeUser(id);
+        return null;
+    }
+
+    public String buttonAdd_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        getApplicationBean1().getDataSourceFacade().getUserDSL().addUser(getTextFieldUsername().getText().toString(), getPasswordFieldPassword().getText().toString(), getDropDownAccountType().getSelected().toString());
+        return null;
     }
     
 }
