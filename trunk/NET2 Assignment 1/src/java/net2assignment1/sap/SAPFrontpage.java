@@ -7,8 +7,12 @@
 package net2assignment1.sap;
 
 import com.sun.webui.jsf.component.Label;
+import com.sun.webui.jsf.component.Listbox;
+import com.sun.webui.jsf.model.DefaultOptionsList;
 import net2assignment1.*;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
+import com.sun.webui.jsf.model.Option;
+import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import javax.faces.FacesException;
 
 /**
@@ -38,6 +42,24 @@ public class SAPFrontpage extends AbstractPageBean {
 
     public void setLabelUsername(Label l) {
         this.labelUsername = l;
+    }
+    private DefaultOptionsList listboxReadingStationsDefaultOptions = new DefaultOptionsList();
+
+    public DefaultOptionsList getListboxReadingStationsDefaultOptions() {
+        return listboxReadingStationsDefaultOptions;
+    }
+
+    public void setListboxReadingStationsDefaultOptions(DefaultOptionsList dol) {
+        this.listboxReadingStationsDefaultOptions = dol;
+    }
+    private Listbox listboxReadingStations = new Listbox();
+
+    public Listbox getListboxReadingStations() {
+        return listboxReadingStations;
+    }
+
+    public void setListboxReadingStations(Listbox l) {
+        this.listboxReadingStations = l;
     }
 
     // </editor-fold>
@@ -106,6 +128,11 @@ public class SAPFrontpage extends AbstractPageBean {
      */
     @Override
     public void prerender() {
+        ReadingStationDTO[] readingStations = getApplicationBean1().getAdminFacade().getReadingStations();
+        Option[] options = new Option[readingStations.length];
+        for(int i=0; i<readingStations.length; i++)
+            options[i] = new Option(readingStations[i], readingStations[i].getName() + " [" + readingStations[i].getId() + "]");
+        listboxReadingStations.setItems(options);
     }
 
     /**
@@ -145,6 +172,18 @@ public class SAPFrontpage extends AbstractPageBean {
      */
     protected SessionBean1 getSessionBean1() {
         return (SessionBean1) getBean("SessionBean1");
+    }
+
+    public String buttonEdit_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        try {
+            ReadingStationDTO rs = (ReadingStationDTO)listboxReadingStations.getValue();
+            getRequestBean1().setReadingStation(rs);
+            return "caseEdit";
+        } catch(Exception ex) {
+            return null;
+        }
     }
     
 }

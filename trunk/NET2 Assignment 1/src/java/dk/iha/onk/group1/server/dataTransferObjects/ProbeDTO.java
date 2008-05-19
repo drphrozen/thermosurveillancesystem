@@ -4,11 +4,13 @@
  */
 package dk.iha.onk.group1.server.dataTransferObjects;
 
+import java.io.Serializable;
+
 /**
  *
  * @author dk021998
  */
-public class ProbeDTO {
+public class ProbeDTO implements Serializable {
 
     private int id;
     private double data;

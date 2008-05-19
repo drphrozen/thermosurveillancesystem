@@ -1,6 +1,8 @@
 package dk.iha.onk.group1.server.dataTransferObjects;
 
-public class ReadingStationDTO {
+import java.io.Serializable;
+
+public class ReadingStationDTO implements Serializable {
 
     private String name;
     private ProbeDTO[] probes;

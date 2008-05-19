@@ -1,21 +1,18 @@
 /*
- * Page1.java
+ * SAPReadingStation.java
  *
- * Created on 13-05-2008, 17:46:32
+ * Created on 19-05-2008, 07:10:22
  */
  
-package net2assignment1;
+package net2assignment1.sap;
 
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import com.sun.webui.jsf.component.Label;
-import com.sun.webui.jsf.component.PasswordField;
-import com.sun.webui.jsf.component.TextField;
-import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
-import dk.iha.onk.group1.server.facades.AdminFacade;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import javax.faces.FacesException;
+import net2assignment1.ApplicationBean1;
+import net2assignment1.SessionBean1;
+import net2assignment1.RequestBean1;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -24,9 +21,9 @@ import javax.faces.FacesException;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  *
- * @author ESRA
+ * @author Esben
  */
-public class Login extends AbstractPageBean {
+public class SAPReadingStation extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
 
     /**
@@ -36,41 +33,31 @@ public class Login extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
+    private Label labelName = new Label();
+
+    public Label getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(Label l) {
+        this.labelName = l;
+    }
+    private Label labelID = new Label();
+
+    public Label getLabelID() {
+        return labelID;
+    }
+
+    public void setLabelID(Label l) {
+        this.labelID = l;
+    }
 
     // </editor-fold>
 
-    private PasswordField passwordFieldLogin = new PasswordField();
-
-    public PasswordField getPasswordFieldLogin() {
-        return passwordFieldLogin;
-    }
-
-    public void setPasswordFieldLogin(PasswordField pf) {
-        this.passwordFieldLogin = pf;
-    }
-    private TextField textFieldUsername = new TextField();
-
-    public TextField getTextFieldUsername() {
-        return textFieldUsername;
-    }
-
-    public void setTextFieldUsername(TextField tf) {
-        this.textFieldUsername = tf;
-    }
-    private Label labelResult = new Label();
-
-    public Label getLabelResult() {
-        return labelResult;
-    }
-
-    public void setLabelResult(Label l) {
-        this.labelResult = l;
-    }
-    
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public Login() {
+    public SAPReadingStation() {
     }
 
     /**
@@ -92,13 +79,14 @@ public class Login extends AbstractPageBean {
         // Perform application initialization that must complete
         // *before* managed components are initialized
         // TODO - add your own initialiation code here
+        
         // <editor-fold defaultstate="collapsed" desc="Managed Component Initialization">
         // Initialize automatically managed components
         // *Note* - this logic should NOT be modified
         try {
             _init();
         } catch (Exception e) {
-            log("Page1 Initialization Failure", e);
+            log("SAPReadingStation Initialization Failure", e);
             throw e instanceof FacesException ? (FacesException) e: new FacesException(e);
         }
         
@@ -129,6 +117,9 @@ public class Login extends AbstractPageBean {
      */
     @Override
     public void prerender() {
+        ReadingStationDTO rs = getRequestBean1().getReadingStation();
+        labelID.setText(rs.getId());
+        labelName.setText(rs.getName());
     }
 
     /**
@@ -142,7 +133,16 @@ public class Login extends AbstractPageBean {
     @Override
     public void destroy() {
     }
-    
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected ApplicationBean1 getApplicationBean1() {
+        return (ApplicationBean1) getBean("ApplicationBean1");
+    }
+
     /**
      * <p>Return a reference to the scoped data bean.</p>
      *
@@ -160,41 +160,6 @@ public class Login extends AbstractPageBean {
     protected RequestBean1 getRequestBean1() {
         return (RequestBean1) getBean("RequestBean1");
     }
-
-    /**
-     * <p>Return a reference to the scoped data bean.</p>
-     *
-     * @return reference to the scoped data bean
-     */
-    protected ApplicationBean1 getApplicationBean1() {
-        return (ApplicationBean1) getBean("ApplicationBean1");
-    }
-
-    public String button1_action() {
-        // TODO: Process the action. Return value is a navigation
-        // case name where null will return to the same page.
-        
-        if(passwordFieldLogin.getText() == null || textFieldUsername.getText() == null)
-            return null;
-        UserDTO user = new UserDTO();
-        user.setUsername(textFieldUsername.getText().toString());
-        user.setPassword(passwordFieldLogin.getText().toString());
-        user.setAccountType("admin");
-        try {
-            ApplicationBean1 app = getApplicationBean1();
-            AdminFacade admin = app.getAdminFacade();
-            boolean isSuccess = admin.login(user);
-            if(isSuccess)
-            {
-                getSessionBean1().setUsername(user.getUsername());
-                return "caseLogin";
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        labelResult.setText("Login failed!");
-        return null;
-    }
-
+    
 }
 

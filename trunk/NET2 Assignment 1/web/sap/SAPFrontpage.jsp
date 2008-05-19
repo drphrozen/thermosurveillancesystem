@@ -16,6 +16,10 @@
                     <webuijsf:form id="form1">
                         <webuijsf:label id="labelWelcome" style="left: 24px; top: 24px; position: absolute" text="Welcome, "/>
                         <webuijsf:label binding="#{sap$SAPFrontpage.labelUsername}" id="labelUsername" style="left: 24px; top: 48px; position: absolute"/>
+                        <webuijsf:listbox binding="#{sap$SAPFrontpage.listboxReadingStations}" id="listboxReadingStations"
+                            items="#{sap$SAPFrontpage.listboxReadingStationsDefaultOptions.options}" style="left: 24px; top: 96px; position: absolute"/>
+                        <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonEdit_action}" id="buttonEdit"
+                            style="position: absolute; left: 24px; top: 312px" text="Edit"/>
                     </webuijsf:form>
                 </webuijsf:body>
             </webuijsf:html>

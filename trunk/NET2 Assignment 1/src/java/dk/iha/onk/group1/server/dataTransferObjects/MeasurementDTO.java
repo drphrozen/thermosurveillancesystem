@@ -1,8 +1,9 @@
 package dk.iha.onk.group1.server.dataTransferObjects;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class MeasurementDTO {
+public class MeasurementDTO implements Serializable {
 
     private int probeId;
     private Calendar timestamp;
