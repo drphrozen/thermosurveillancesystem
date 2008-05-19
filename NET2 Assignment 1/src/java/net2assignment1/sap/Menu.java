@@ -7,6 +7,7 @@
 package net2assignment1.sap;
 
 import com.sun.rave.web.ui.appbase.AbstractFragmentBean;
+import java.util.Map;
 import javax.faces.FacesException;
 import net2assignment1.RequestBean1;
 import net2assignment1.ApplicationBean1;
@@ -51,7 +52,7 @@ public class Menu extends AbstractFragmentBean {
         // Perform application initialization that must complete
         // *before* managed components are initialized
         // TODO - add your own initialiation code here
-        
+        Map map = getRequestMap();
         
         // <editor-fold defaultstate="collapsed" desc="Visual-Web-managed Component Initialization">
         // Initialize automatically managed components
@@ -111,6 +112,7 @@ public class Menu extends AbstractFragmentBean {
     public String hyperlinkFrontpage_action() {
         // TODO: Process the action. Return value is a navigation
         // case name where null will return to the same page.
+        getRequestBean1().retrieveData("");
         return "caseFrontpage";
     }
 
@@ -118,8 +120,14 @@ public class Menu extends AbstractFragmentBean {
         // TODO: Process the action. Return value is a navigation
         // case name where null will return to the same page.
         getSessionBean1().setUsername(null);
-        getSessionBean1().setReadingStation(null);
+        getSessionBean1().setObjectToEdit(null);
         return "caseLogout";
+    }
+
+    public String hyperlinkUsers_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        return "caseUsers";
     }
 
 }

@@ -8,11 +8,11 @@ package dk.iha.onk.group1.server.dataSourceLayer;
  *
  * @author dk021998
  */
-public class Pb {
+public class ProbeDSL {
 
     private MySQLConnector connection;
 
-    public Pb() {
+    public ProbeDSL() {
         connection = MySQLConnector.getInstance();
     }
 

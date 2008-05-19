@@ -17,11 +17,11 @@ import java.util.logging.Logger;
  *
  * @author dk021998
  */
-public class Rs {
+public class ReadingStationDSL {
 
     private MySQLConnector connection;
 
-    public Rs() {
+    public ReadingStationDSL() {
         connection = MySQLConnector.getInstance();
     }
 
@@ -42,7 +42,7 @@ public class Rs {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
@@ -56,7 +56,7 @@ public class Rs {
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -80,7 +80,7 @@ public class Rs {
                 stations.add(new ReadingStation(stationsResult.getString("name"), prbs, stationsResult.getBoolean("enabled"), stationsResult.getInt("idReadingStation")));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return stations;
     }
@@ -101,7 +101,7 @@ public class Rs {
                 stations.add(new ReadingStation(stationsResult.getString("name"), prbs, stationsResult.getBoolean("enabled"), stationsResult.getInt("idReadingStation")));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return stations;
     }
@@ -118,15 +118,14 @@ public class Rs {
         return true;
     }
 
-    public ReadingStation getReadingStationById(ReadingStation station) {
-        String query = "SELECT * FROM readingstation WHERE idReadingStation = " + station.getId() + ";";
+    public ReadingStation getReadingStationById(int id) {
+        String query = "SELECT * FROM readingstation WHERE idReadingStation = " + id + ";";
         LinkedList<Probe> prbs;
         try {
             ResultSet stationSQL = connection.executeQuery(query);
 
             if (stationSQL.next()) {
-                station.setId(stationSQL.getInt("idReadingStation"));
-                station.setName(stationSQL.getString("name"));
+                ReadingStation station = new ReadingStation(stationSQL.getString("name"), new LinkedList<Probe>(), (stationSQL.getByte("enabled") == 1), stationSQL.getInt("idReadingStation"));
                 station.setEnabled((stationSQL.getByte("enabled") == 1) ? true : false);
 
                 prbs = new LinkedList<Probe>();
@@ -139,9 +138,35 @@ public class Rs {
                 return station;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+
+    public ReadingStation getReadingStationById(ReadingStation station) {
+        String query = "SELECT * FROM readingstation WHERE idReadingStation = " + station.getId() + ";";
+        LinkedList<Probe> prbs;
+        try {
+            ResultSet stationSQL = connection.executeQuery(query);
+            if (stationSQL.next()) {
+                station.setId(stationSQL.getInt("idReadingStation"));
+                station.setName(stationSQL.getString("name"));
+                station.setEnabled((stationSQL.getByte("enabled") == 1) ? true : false);
+                prbs = new LinkedList<Probe>();
+                query = "SELECT * FROM probe WHERE Readingstation_idReadingStation = " + station.getId() + ";";
+                ResultSet probesResult = connection.executeQuery(query);
+                while (probesResult.next()) {
+                    prbs.add(new Probe(probesResult.getInt("idProbe"), probesResult.getDouble("upperAlarm"), probesResult.getDouble("lowerAlarm"), probesResult.getString("units")));
+                }
+                station.setProbes(prbs);
+                return station;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
     }
 
     public ReadingStation getReadingStationByName(ReadingStation station) {
@@ -163,7 +188,7 @@ public class Rs {
                 return station;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -176,7 +201,7 @@ public class Rs {
                 return result.getString("name");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }
@@ -208,7 +233,7 @@ public class Rs {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Rs.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadingStationDSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }

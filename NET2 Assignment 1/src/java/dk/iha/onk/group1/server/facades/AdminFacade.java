@@ -85,4 +85,5 @@ public class AdminFacade {
     public ReadingStationDTO[] getReadingStations() {
         return rsMapper.getReadingStations();
     }
+
 }
