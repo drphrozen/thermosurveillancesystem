@@ -7,6 +7,7 @@
 package net2assignment1;
 
 import com.sun.rave.web.ui.appbase.AbstractRequestBean;
+import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import javax.faces.FacesException;
 
 /**
@@ -33,6 +34,15 @@ public class RequestBean1 extends AbstractRequestBean {
     private void _init() throws Exception {
     }
     // </editor-fold>
+    private ReadingStationDTO readingStation = null;
+
+    public ReadingStationDTO getReadingStation() {
+        return readingStation;
+    }
+
+    public void setReadingStation(ReadingStationDTO readingStation) {
+        this.readingStation = readingStation;
+    }
 
     /**
      * <p>Construct a new request data bean instance.</p>

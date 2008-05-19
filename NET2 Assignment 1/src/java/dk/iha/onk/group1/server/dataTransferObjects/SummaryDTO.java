@@ -1,10 +1,12 @@
 package dk.iha.onk.group1.server.dataTransferObjects;
 
+import java.io.Serializable;
+
 /**
  *
  * @author dk021998
  */
-public class SummaryDTO {
+public class SummaryDTO implements Serializable {
 
     private double periodHighestTemp;
     private double periodLowestTemp;

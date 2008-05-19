@@ -1,6 +1,8 @@
 package dk.iha.onk.group1.server.dataTransferObjects;
 
-public class UserDTO {
+import java.io.Serializable;
+
+public class UserDTO implements Serializable {
 
     private String username;
     private String password;

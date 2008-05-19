@@ -48,4 +48,16 @@
         <managed-bean-class>net2assignment1.LoginError</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>sap$SAPReadingStation</managed-bean-name>
+        <managed-bean-class>net2assignment1.sap.SAPReadingStation</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/sap/SAPFrontpage.jsp</from-view-id>
+        <navigation-case>
+            <from-outcome>caseEdit</from-outcome>
+            <to-view-id>/sap/SAPReadingStation.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>
