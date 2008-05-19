@@ -14,7 +14,8 @@
                 </webuijsf:head>
                 <webuijsf:body id="body1" style="-rave-layout: grid">
                     <webuijsf:form id="form1">
-                        <webuijsf:label id="label1" style="left: 24px; top: 24px; position: absolute" text="Welcome!"/>
+                        <webuijsf:label id="labelWelcome" style="left: 24px; top: 24px; position: absolute" text="Welcome, "/>
+                        <webuijsf:label binding="#{sap$SAPFrontpage.labelUsername}" id="labelUsername" style="left: 24px; top: 48px; position: absolute"/>
                     </webuijsf:form>
                 </webuijsf:body>
             </webuijsf:html>

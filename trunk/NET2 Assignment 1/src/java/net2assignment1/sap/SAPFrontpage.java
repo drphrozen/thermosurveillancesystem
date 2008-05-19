@@ -6,6 +6,7 @@
  
 package net2assignment1.sap;
 
+import com.sun.webui.jsf.component.Label;
 import net2assignment1.*;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import javax.faces.FacesException;
@@ -28,6 +29,15 @@ public class SAPFrontpage extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
+    }
+    private Label labelUsername = new Label();
+
+    public Label getLabelUsername() {
+        return labelUsername;
+    }
+
+    public void setLabelUsername(Label l) {
+        this.labelUsername = l;
     }
 
     // </editor-fold>
@@ -72,6 +82,7 @@ public class SAPFrontpage extends AbstractPageBean {
         // Perform application initialization that must complete
         // *after* managed components are initialized
         // TODO - add your own initialization code here
+        labelUsername.setText(getSessionBean1().getUsername());
     }
 
     /**

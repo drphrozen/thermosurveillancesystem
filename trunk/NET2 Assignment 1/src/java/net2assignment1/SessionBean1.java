@@ -33,7 +33,8 @@ public class SessionBean1 extends AbstractSessionBean {
     private void _init() throws Exception {
     }
     // </editor-fold>
-    private AdminFacade adminFacade;
+    private transient AdminFacade adminFacade;
+    private String username = null;
     
     /**
      * <p>Construct a new session data bean instance.</p>
@@ -129,6 +130,14 @@ public class SessionBean1 extends AbstractSessionBean {
     
     AdminFacade getAdminFacade() {
         return adminFacade;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }
