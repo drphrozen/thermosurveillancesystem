@@ -83,7 +83,7 @@ public class MySQLConnector {
         ResultSet result = null;
 
         try {
-            System.out.println("Connection: " + connection);
+            System.out.println("Query: " + query);
             PreparedStatement statement = connection.prepareStatement(query);
             result = statement.executeQuery();
         } catch (Exception ex) {

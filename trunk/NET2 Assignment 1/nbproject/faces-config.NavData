@@ -2,9 +2,8 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="sap/SAPFrontpage.jsp" x="233" y="284" zoom="false"/>
-        <Node id="sap/SAPReadingStation.jsp" x="175" y="437" zoom="true"/>
-        <Node id="LoginError.jsp" x="400" y="150" zoom="true"/>
+        <Node id="sap/SAPFrontpage.jsp" x="238" y="348" zoom="false"/>
+        <Node id="sap/SAPReadingStation.jsp" x="543" y="289" zoom="false"/>
         <Node id="Login.jsp" x="150" y="150" zoom="false"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

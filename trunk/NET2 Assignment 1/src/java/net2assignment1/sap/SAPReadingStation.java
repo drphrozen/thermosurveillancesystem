@@ -7,7 +7,12 @@
 package net2assignment1.sap;
 
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
+import com.sun.webui.jsf.component.Button;
+import com.sun.webui.jsf.component.Checkbox;
 import com.sun.webui.jsf.component.Label;
+import com.sun.webui.jsf.component.Table;
+import com.sun.webui.jsf.component.TextField;
+import dk.iha.onk.group1.server.dataTransferObjects.ProbeDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import javax.faces.FacesException;
 import net2assignment1.ApplicationBean1;
@@ -33,15 +38,6 @@ public class SAPReadingStation extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
-    private Label labelName = new Label();
-
-    public Label getLabelName() {
-        return labelName;
-    }
-
-    public void setLabelName(Label l) {
-        this.labelName = l;
-    }
     private Label labelID = new Label();
 
     public Label getLabelID() {
@@ -51,9 +47,55 @@ public class SAPReadingStation extends AbstractPageBean {
     public void setLabelID(Label l) {
         this.labelID = l;
     }
+    private Table tableProbes = new Table();
+
+    public Table getTableProbes() {
+        return tableProbes;
+    }
+
+    public void setTableProbes(Table t) {
+        this.tableProbes = t;
+    }
 
     // </editor-fold>
+    
+    private ProbeDTO[] probes = null;
 
+    public ProbeDTO[] getProbes() {
+        return probes;
+    }
+
+    public void setProbes(ProbeDTO[] probes) {
+        this.probes = probes;
+    }
+    private TextField textFieldName = new TextField();
+
+    public TextField getTextFieldName() {
+        return textFieldName;
+    }
+
+    public void setTextFieldName(TextField tf) {
+        this.textFieldName = tf;
+    }
+    private Button buttonUpdate = new Button();
+
+    public Button getButtonUpdate() {
+        return buttonUpdate;
+    }
+
+    public void setButtonUpdate(Button b) {
+        this.buttonUpdate = b;
+    }
+    private Checkbox checkboxEnabled = new Checkbox();
+
+    public Checkbox getCheckboxEnabled() {
+        return checkboxEnabled;
+    }
+
+    public void setCheckboxEnabled(Checkbox c) {
+        this.checkboxEnabled = c;
+    }
+    
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -79,6 +121,7 @@ public class SAPReadingStation extends AbstractPageBean {
         // Perform application initialization that must complete
         // *before* managed components are initialized
         // TODO - add your own initialiation code here
+        probes = getSessionBean1().getReadingStation().getProbes();
         
         // <editor-fold defaultstate="collapsed" desc="Managed Component Initialization">
         // Initialize automatically managed components
@@ -117,9 +160,14 @@ public class SAPReadingStation extends AbstractPageBean {
      */
     @Override
     public void prerender() {
-        ReadingStationDTO rs = getRequestBean1().getReadingStation();
-        labelID.setText(rs.getId());
-        labelName.setText(rs.getName());
+        if(getSessionBean1().getReadingStation() != null)
+        {
+            ReadingStationDTO rs = getSessionBean1().getReadingStation();
+            labelID.setText(rs.getId());
+            textFieldName.setText(rs.getName());
+            System.out.println("isEnabled: " + rs.isEnabled());
+            checkboxEnabled.setSelected(rs.isEnabled());
+        }
     }
 
     /**
@@ -159,6 +207,34 @@ public class SAPReadingStation extends AbstractPageBean {
      */
     protected RequestBean1 getRequestBean1() {
         return (RequestBean1) getBean("RequestBean1");
+    }
+
+    public String buttonBack_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        return "caseDoneEdit";
+    }
+
+    public String buttonUpdate_action() {
+        // TODO: Process the action. Return value is a navigation
+        // case name where null will return to the same page.
+        int id = getSessionBean1().getReadingStation().getId();
+        String name = textFieldName.getText().toString();
+        getApplicationBean1().getAdminFacade().setRSName(id, name);
+        System.out.println("isChecked: " + checkboxEnabled.isChecked());
+        if(checkboxEnabled.isChecked())
+            getApplicationBean1().getAdminFacade().enableRS(name);
+        else
+            getApplicationBean1().getAdminFacade().disableRS(name);
+        ReadingStationDTO[] rss = getApplicationBean1().getAdminFacade().getReadingStations();
+        for (ReadingStationDTO readingStationDTO : rss) {
+            if(readingStationDTO.getId() == id)
+            {
+                getSessionBean1().setReadingStation(readingStationDTO);
+                break;
+            }
+        }
+        return null;
     }
     
 }

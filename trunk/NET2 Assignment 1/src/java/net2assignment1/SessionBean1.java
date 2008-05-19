@@ -7,6 +7,7 @@
 package net2assignment1;
 
 import com.sun.rave.web.ui.appbase.AbstractSessionBean;
+import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import javax.faces.FacesException;
 
 /**
@@ -33,7 +34,16 @@ public class SessionBean1 extends AbstractSessionBean {
     }
     // </editor-fold>
     private String username = null;
-    
+    private ReadingStationDTO readingStation = null;
+
+    public ReadingStationDTO getReadingStation() {
+        return readingStation;
+    }
+
+    public void setReadingStation(ReadingStationDTO readingStation) {
+        this.readingStation = readingStation;
+    }
+
     /**
      * <p>Construct a new session data bean instance.</p>
      */

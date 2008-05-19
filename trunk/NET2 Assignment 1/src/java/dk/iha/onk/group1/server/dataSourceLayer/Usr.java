@@ -73,6 +73,8 @@ public class Usr {
         System.out.println("Usr: " + user.getUsername() + "\t" + user.getPassword() + "\t" + user.getAccountType());
         String query = "SELECT id FROM account WHERE username = '" + user.getUsername() + "' AND password = '" + user.getPassword() + "' AND accounttype = '" + user.getAccountType() + "';";
         ResultSet userResult = connection.executeQuery(query);
+        if(userResult == null)
+            return false;
         System.out.println("Query: " + query);
         System.out.println("Usr resultset: " + userResult);
         try {
