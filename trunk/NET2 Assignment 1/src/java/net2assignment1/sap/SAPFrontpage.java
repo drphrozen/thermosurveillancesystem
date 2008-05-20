@@ -277,7 +277,10 @@ public class SAPFrontpage extends AbstractPageBean {
     public String buttonAdd_action() {
         // TODO: Process the action. Return value is a navigation
         // case name where null will return to the same page.
-        getApplicationBean1().getDataSourceFacade().getUserDSL().addUser(getTextFieldUsername().getText().toString(), getPasswordFieldPassword().getText().toString(), getDropDownAccountType().getSelected().toString());
+        String username = (getTextFieldUsername().getText() != null ? getTextFieldUsername().getText().toString() : "");
+        String password = (getPasswordFieldPassword().getText() != null ? getPasswordFieldPassword().getText().toString() .toString() : "");
+        String accountType = getDropDownAccountType().getSelected().toString();
+        getApplicationBean1().getDataSourceFacade().getUserDSL().addUser(username, password, accountType);
         return null;
     }
     
