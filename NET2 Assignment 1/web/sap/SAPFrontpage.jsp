@@ -34,13 +34,11 @@
                                 <webuijsf:panelLayout id="layoutPanel2" style="height: 249px; position: relative; width: 621px; -rave-layout: grid">
                                     <webuijsf:listbox binding="#{sap$SAPFrontpage.listboxUsers}" id="listboxUsers"
                                         items="#{sap$SAPFrontpage.listboxUsersDefaultOptions.options}" style="position: absolute; left: 0px; top: 0px"/>
-                                    <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonEditUsers_action}" id="buttonEditUsers"
-                                        style="left: -1px; top: 216px; position: absolute" text="Edit"/>
                                     <webuijsf:textField binding="#{sap$SAPFrontpage.textFieldUsername}" id="textFieldUsername" style="left: 192px; top: 168px; position: absolute"/>
                                     <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonAdd_action}" id="buttonAdd"
                                         style="left: 191px; top: 216px; position: absolute" text="Add"/>
                                     <webuijsf:button actionExpression="#{sap$SAPFrontpage.buttonRemove_action}" id="buttonRemove"
-                                        style="left: 47px; top: 216px; position: absolute" text="Remove"/>
+                                        style="left: -1px; top: 216px; position: absolute" text="Remove"/>
                                     <webuijsf:passwordField binding="#{sap$SAPFrontpage.passwordFieldPassword}" id="passwordFieldPassword" style="left: 192px; top: 192px; position: absolute"/>
                                     <webuijsf:dropDown binding="#{sap$SAPFrontpage.dropDownAccountType}" id="dropDownAccountType"
                                         items="#{sap$SAPFrontpage.dropDownAccountTypeDefaultOptions.options}" style="left: 192px; top: 144px; position: absolute"/>
