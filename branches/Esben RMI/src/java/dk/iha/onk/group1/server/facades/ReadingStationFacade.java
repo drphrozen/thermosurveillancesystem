@@ -5,6 +5,7 @@ import dk.iha.onk.group1.server.MeasurementMapper;
 import dk.iha.onk.group1.server.ReadingStationMapper;
 import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
+import java.io.Serializable;
 import javax.jws.WebService;
 
 /**
@@ -12,13 +13,14 @@ import javax.jws.WebService;
  * @author ESRA
  */
 @WebService()
-public class ReadingStationFacade {
+public class ReadingStationFacade implements  ReadingStationInterface, Serializable {
+
+    public ReadingStationFacade() {
+        super();
+    }
 
     private ReadingStationMapper rsMapper;
     private MeasurementMapper measurementMapper;
-
-    public ReadingStationFacade() {
-    }
 
     public ReadingStationDTO login(ReadingStationDTO readingStation) {
         Authenticator auth = new Authenticator();

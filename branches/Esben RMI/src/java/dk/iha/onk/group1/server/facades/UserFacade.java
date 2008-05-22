@@ -16,7 +16,11 @@ import javax.jws.WebService;
  * @author ESRA
  */
 @WebService()
-public class UserFacade {
+public class UserFacade implements UserInterface {
+
+    public UserFacade() {
+        super();
+    }
 
     private SummaryMapper summaryMapper;
     private MeasurementMapper measurementMapper;

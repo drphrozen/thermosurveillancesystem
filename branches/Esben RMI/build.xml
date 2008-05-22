@@ -2,8 +2,8 @@
 <!-- You may freely edit this file. See commented blocks below for -->
 <!-- some examples of how to customize the build. -->
 <!-- (If you delete it and reopen the project it will be recreated.) -->
-<project name="NET2_Assignment_1" default="default" basedir=".">
-    <description>Builds, tests, and runs the project NET2 Assignment 1.</description>
+<project name="Esben_RMI" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Esben RMI.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
@@ -63,4 +63,8 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <target name="-post-compile">
+        <rmic base="${build.classes.dir}" includes="**/dk/iha/onk/group1/server/facades/*Facade.class"/>
+    </target>
 </project>

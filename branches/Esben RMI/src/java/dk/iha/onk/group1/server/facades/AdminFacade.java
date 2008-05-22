@@ -7,6 +7,7 @@ import dk.iha.onk.group1.server.UserMapper;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import javax.jws.WebService;
 
 /**
@@ -15,29 +16,16 @@ import javax.jws.WebService;
  */
 @WebService
 @HttpSessionScope
-public class AdminFacade {
+public class AdminFacade implements AdminInterface {
 
-//    @Resource
-//    private WebServiceContext wsContext;
+    public AdminFacade() {
+        super();
+    }
+
     private ReadingStationMapper rsMapper;
     private UserMapper userMapper;
 
-//    private HttpSession GetSession() {
-//        MessageContext mc = wsContext.getMessageContext();
-//        HttpSession session = ((javax.servlet.http.HttpServletRequest)mc.get(MessageContext.SERVLET_REQUEST)).getSession();
-//        // Get a session property "counter" from context
-//        if (session == null)
-//            throw new WebServiceException("No session in WebServiceContext");
-//        return session;
-//    }
-    
-    public AdminFacade() {
-//        HttpSession session = GetSession();
-//        rsMapper = (ReadingStationMapper)session.getAttribute("readingStationMapper");
-//        userMapper = (UserMapper)session.getAttribute("userMapper");
-    }
-    
-    public boolean login(UserDTO admin) throws IOException {
+    public boolean login(UserDTO admin) {
         Authenticator auth = new Authenticator();
         if (auth.authenticateAdmin(admin)) {
             rsMapper = new ReadingStationMapper();
