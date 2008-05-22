@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="sap/SAPFrontpage.jsp" x="148" y="-245" zoom="false"/>
+        <Node id="sap/SAPReadingStation.jsp" x="150" y="300" zoom="true"/>
+        <Node id="sap/SAPUsers.jsp" x="400" y="150" zoom="true"/>
+        <Node id="Login.jsp" x="650" y="150" zoom="false"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>
