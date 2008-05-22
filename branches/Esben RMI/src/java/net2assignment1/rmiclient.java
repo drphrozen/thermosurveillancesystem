@@ -4,9 +4,11 @@ import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
 import dk.iha.onk.group1.server.facades.AdminFacade;
 import dk.iha.onk.group1.server.facades.AdminInterface;
-import java.rmi.Naming;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.rmi.PortableRemoteObject;
 
 /**
  *
@@ -14,13 +16,18 @@ import java.util.logging.Logger;
  */
 public class rmiclient {
 
-    private static int PORT = 65432;
-    private static String HOST = "127.0.0.1";
+//    private static int PORT = 65432;
+//    private static String HOST = "127.0.0.1";
+    
 
     public static void main(String[] args) {
         try {
-            String path = "//" + HOST + ":" + Integer.toString(PORT);
-            AdminInterface adminInterface = (AdminInterface) Naming.lookup(path + "/" + AdminFacade.class.getSimpleName());
+            Context ic = new InitialContext();
+            ic.addToEnvironment("java.naming.factory.initial","com.sun.jndi.cosnaming.CNCtxFactory");
+            ic.addToEnvironment("java.naming.provider.url", "iiop://localhost:1050");
+//            String path = "//" + HOST + ":" + Integer.toString(PORT);
+            Object objref = ic.lookup(AdminFacade.class.getSimpleName());
+            AdminInterface adminInterface = (AdminInterface) PortableRemoteObject.narrow(objref, AdminInterface.class);
             UserDTO user = new UserDTO();
             user.setUsername("onk");
             user.setPassword("kaffekande");

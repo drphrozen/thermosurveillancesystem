@@ -7,11 +7,11 @@ package net2assignment1;
 import dk.iha.onk.group1.server.facades.AdminFacade;
 import dk.iha.onk.group1.server.facades.ReadingStationFacade;
 import dk.iha.onk.group1.server.facades.UserFacade;
-import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 /**
  *
@@ -19,22 +19,28 @@ import java.util.logging.Logger;
  */
 public class rmiserver {
 
-    private static AdminFacade adminFacade = new AdminFacade();
+    private static AdminFacade adminFacade;
     private static ReadingStationFacade readingStationFacade = new ReadingStationFacade();
     private static UserFacade userFacade = new UserFacade();
-    private static int PORT = 65432;
-    private static String HOST = "127.0.0.1";
+//    private static int PORT = 65432;
+//    private static String HOST = "127.0.0.1";
 
     public static void main(String[] args) {
         try {
-            String path = "//" + HOST + ":" + Integer.toString(PORT) + "/";
-            LocateRegistry.createRegistry(PORT);
-            UnicastRemoteObject.exportObject(adminFacade);
-            Naming.rebind(path + AdminFacade.class.getSimpleName(), adminFacade);
-            UnicastRemoteObject.exportObject(userFacade);
-            Naming.rebind(path + ReadingStationFacade.class.getSimpleName(), readingStationFacade);
-            UnicastRemoteObject.exportObject(readingStationFacade);
-            Naming.rebind(path + UserFacade.class.getSimpleName(), userFacade);
+            adminFacade = new AdminFacade();
+            Hashtable<String, Object> env = new Hashtable<String, Object>(2);
+            env.put("java.naming.factory.initial","com.sun.jndi.cosnaming.CNCtxFactory");
+            env.put("java.naming.provider.url", "iiop://localhost:1050");
+            Context ic = new InitialContext(env);
+//            String path = "//" + HOST + ":" + Integer.toString(PORT) + "/";
+//            LocateRegistry.createRegistry(PORT);
+//            UnicastRemoteObject.exportObject(adminFacade);
+            System.out.println("Bound: " + AdminFacade.class.getSimpleName());
+            ic.rebind(AdminFacade.class.getSimpleName(), adminFacade);
+//            UnicastRemoteObject.exportObject(userFacade);
+//            ic.bind(path + ReadingStationFacade.class.getSimpleName(), readingStationFacade);
+//            UnicastRemoteObject.exportObject(readingStationFacade);
+//            ic.bind(path + UserFacade.class.getSimpleName(), userFacade);
             System.out.println("All services successfully bound.");
         } catch (Exception ex) {
             Logger.getLogger(rmiserver.class.getName()).log(Level.SEVERE, null, ex);

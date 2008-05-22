@@ -6,9 +6,9 @@ import dk.iha.onk.group1.server.ReadingStationMapper;
 import dk.iha.onk.group1.server.UserMapper;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
-import java.io.IOException;
 import java.rmi.RemoteException;
 import javax.jws.WebService;
+import javax.rmi.PortableRemoteObject;
 
 /**
  *
@@ -16,9 +16,9 @@ import javax.jws.WebService;
  */
 @WebService
 @HttpSessionScope
-public class AdminFacade implements AdminInterface {
+public class AdminFacade extends PortableRemoteObject implements AdminInterface {
 
-    public AdminFacade() {
+    public AdminFacade() throws RemoteException {
         super();
     }
 
@@ -59,7 +59,8 @@ public class AdminFacade implements AdminInterface {
     }
 
     public boolean enableRS(String rsName) {
-        return rsMapper.enableReadingStation(rsName);
+        return true;
+        //return rsMapper.enableReadingStation(rsName);
     }
 
     public boolean disableRS(String rsName) {
