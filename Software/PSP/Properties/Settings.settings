@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PSP.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="PSP_TSSServer_UserFacadeService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://172.21.185.177:8080/axis/services/TSSUserService</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>
