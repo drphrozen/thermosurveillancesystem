@@ -4,11 +4,11 @@
     <service name="ReadingStationFacadeService">
       <implementation-class>dk.iha.onk.group1.server.facades.ReadingStationFacade</implementation-class>
     </service>
-    <service name="UserFacadeService">
-      <implementation-class>dk.iha.onk.group1.server.facades.UserFacade</implementation-class>
-    </service>
     <service name="AdminFacadeService">
       <implementation-class>dk.iha.onk.group1.server.facades.AdminFacade</implementation-class>
+    </service>
+    <service name="UserFacadeService">
+      <implementation-class>dk.iha.onk.group1.server.facades.UserFacade</implementation-class>
     </service>
   </services>
   <clients/>

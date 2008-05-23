@@ -64,12 +64,12 @@
         <load-on-startup>1</load-on-startup>
         </servlet>
     <servlet>
-        <servlet-name>UserFacadeService</servlet-name>
+        <servlet-name>AdminFacadeService</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
         </servlet>
     <servlet>
-        <servlet-name>AdminFacadeService</servlet-name>
+        <servlet-name>UserFacadeService</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
         </servlet>
@@ -90,12 +90,12 @@
         <url-pattern>/ReadingStationFacadeService</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserFacadeService</servlet-name>
-        <url-pattern>/UserFacadeService</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AdminFacadeService</servlet-name>
         <url-pattern>/AdminFacadeService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserFacadeService</servlet-name>
+        <url-pattern>/UserFacadeService</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
