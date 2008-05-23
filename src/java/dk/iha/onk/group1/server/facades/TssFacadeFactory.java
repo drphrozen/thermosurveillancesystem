@@ -11,5 +11,5 @@ import java.rmi.RemoteException;
 
 public interface TssFacadeFactory extends Remote
 {
-	TssFacade createFacade(String facadeName) throws RemoteException;
+	TssFacade createFacade(String facadeName,String username, String password) throws RemoteException;
 }

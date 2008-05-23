@@ -29,6 +29,15 @@ public class UserFacade extends UnicastRemoteObject implements UserInterface {
     private MeasurementMapper measurementMapper;
     private ReadingStationMapper stationMapper;
 
+	public boolean login(String username, String password)
+	{
+		UserDTO userDTO = new UserDTO();
+		userDTO.setAccountType("user");
+		userDTO.setUsername(username);
+		userDTO.setPassword(password);
+		return login(userDTO);
+	}
+		
     public boolean login(UserDTO user) {
         Authenticator auth = new Authenticator();
         if (auth.authenticateUser(user) || auth.authenticateAdmin(user) || user.getUsername().equals("a")) {

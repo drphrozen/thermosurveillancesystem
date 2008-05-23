@@ -21,13 +21,14 @@ public class TssFacadeFactoryImpl extends UnicastRemoteObject implements TssFaca
 		super();
 	}
 	
-	public TssFacade createFacade(String facadeName) throws RemoteException
+	public TssFacade createFacade(String facadeName,String username, String password) throws RemoteException
 	{
 		try
 		{
-			//Constructor contructor = Class.forName("dk.iha.onk.group1.server.facades." + facadeName).getConstructors()[0];
-			//TssFacade test = (TssFacade)contructor.newInstance(new Object[]{});
-			return (TssFacade) new AdminFacade();
+			Constructor contructor = Class.forName("dk.iha.onk.group1.server.facades." + facadeName).getConstructors()[0];
+			TssFacade facade = (TssFacade)contructor.newInstance(new Object[]{});
+			facade.login(username, password);
+			return facade;
 			
 		} catch (Exception ex)
 		{

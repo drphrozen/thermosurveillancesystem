@@ -24,6 +24,20 @@ public class ReadingStationFacade extends UnicastRemoteObject implements  Readin
 
     private ReadingStationMapper rsMapper;
     private MeasurementMapper measurementMapper;
+	
+	public boolean login(String username, String password)
+	{
+		Authenticator auth = new Authenticator();
+		ReadingStationDTO readingStation = new ReadingStationDTO();
+		readingStation.setName(username);
+        if (auth.authenticateReadingStation(readingStation)) 
+		{
+            rsMapper = new ReadingStationMapper();
+            measurementMapper = new MeasurementMapper();
+            return true;
+        }
+        return false;
+	}
 
     public ReadingStationDTO login(ReadingStationDTO readingStation) {
         Authenticator auth = new Authenticator();
