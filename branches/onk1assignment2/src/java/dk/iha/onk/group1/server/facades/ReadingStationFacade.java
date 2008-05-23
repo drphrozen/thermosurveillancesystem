@@ -6,6 +6,8 @@ import dk.iha.onk.group1.server.ReadingStationMapper;
 import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import javax.jws.WebService;
 
 /**
@@ -13,9 +15,9 @@ import javax.jws.WebService;
  * @author ESRA
  */
 @WebService()
-public class ReadingStationFacade implements  ReadingStationInterface, Serializable
+public class ReadingStationFacade extends UnicastRemoteObject implements  ReadingStationInterface, Serializable
 {
-    public ReadingStationFacade() 
+    public ReadingStationFacade() throws RemoteException
 	{
         super();
     }

@@ -14,16 +14,13 @@ public class TssBootstrappah
 	{
 		try 
 		{ 
-			TssFacadeFactoryImpl obj = new TssFacadeFactoryImpl();
+			TssFacadeFactoryImpl factory = new TssFacadeFactoryImpl();
 			
 			LocateRegistry.createRegistry(PORT);
 			System.out.println( "Registry created" );
-			
-		//	UnicastRemoteObject.exportObject(obj);
-
 			 
 			// Bind this object instance to the name "HelloServer" 
-			Naming.rebind("rmi://"+IP+":"+PORT+"/TssServer", obj); 
+			Naming.rebind("rmi://"+IP+":"+PORT+"/TssServer", factory); 
 			System.out.println("HelloServer bound in registry"); 
         }
 		catch (Exception e)

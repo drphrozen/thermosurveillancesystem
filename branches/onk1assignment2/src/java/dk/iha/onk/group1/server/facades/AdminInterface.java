@@ -7,14 +7,13 @@ package dk.iha.onk.group1.server.facades;
 
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
  *
  * @author Esben
  */
-public interface AdminInterface extends Remote {
+public interface AdminInterface extends TssFacade {
 
     boolean addUser(UserDTO user) throws RemoteException;
 
