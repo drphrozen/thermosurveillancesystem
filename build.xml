@@ -65,6 +65,6 @@
     -->
     
     <target name="-post-compile">
-        <rmic idl="true" iiop="true" base="${build.classes.dir}" includes="**/dk/iha/onk/group1/server/facades/*Facade.class"/>
+        <rmic idl="false" iiop="false" base="${build.classes.dir}" includes="**/dk/iha/onk/group1/server/facades/*Facade.class"/>
     </target>
 </project>

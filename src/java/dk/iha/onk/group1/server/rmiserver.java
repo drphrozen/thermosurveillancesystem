@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net2assignment1;
+package dk.iha.onk.group1.server;
 
 import dk.iha.onk.group1.server.facades.AdminFacade;
 import dk.iha.onk.group1.server.facades.ReadingStationFacade;
