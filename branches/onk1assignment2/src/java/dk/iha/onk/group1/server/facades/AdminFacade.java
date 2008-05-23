@@ -27,6 +27,15 @@ public class AdminFacade extends UnicastRemoteObject implements AdminInterface
     private ReadingStationMapper rsMapper;
     private UserMapper userMapper;
 
+	public boolean login(String username, String password)
+	{
+		UserDTO userDTO = new UserDTO();
+		userDTO.setAccountType("admin");
+		userDTO.setUsername(username);
+		userDTO.setPassword(password);
+		return login(userDTO);
+	}
+	
     public boolean login(UserDTO admin) {
         Authenticator auth = new Authenticator();
         if (auth.authenticateAdmin(admin)) {

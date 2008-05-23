@@ -9,4 +9,5 @@ import java.rmi.Remote;
 
 public interface TssFacade extends Remote
 {
+	boolean login(String username, String password);
 }
