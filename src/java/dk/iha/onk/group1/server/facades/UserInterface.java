@@ -17,7 +17,8 @@ import java.util.Calendar;
  *
  * @author Esben
  */
-public interface UserInterface extends Remote {
+public interface UserInterface extends TssFacade
+{
 
     SummaryDTO getHistoricalData(Calendar from, Calendar to) throws RemoteException;
 

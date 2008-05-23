@@ -13,7 +13,8 @@ import javax.jws.WebService;
  * @author ESRA
  */
 @WebService()
-public class ReadingStationFacade implements  ReadingStationInterface, Serializable {
+public class ReadingStationFacade implements  ReadingStationInterface, Serializable
+{
 
     public ReadingStationFacade() {
         super();
