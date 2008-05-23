@@ -16,9 +16,10 @@ import javax.rmi.PortableRemoteObject;
  */
 @WebService
 @HttpSessionScope
-public class AdminFacade extends PortableRemoteObject implements AdminInterface {
-
-    public AdminFacade() throws RemoteException {
+public class AdminFacade extends PortableRemoteObject implements AdminInterface
+{
+    public AdminFacade() throws RemoteException
+	{
         super();
     }
 
@@ -32,9 +33,6 @@ public class AdminFacade extends PortableRemoteObject implements AdminInterface 
             userMapper = new UserMapper();
             return true;
         }
-//        HttpSession session = GetSession();
-//        session.setAttribute("readingStationMapper", rsMapper);
-//        session.setAttribute("userMapper", userMapper);
         return false;
     }
 
@@ -59,8 +57,7 @@ public class AdminFacade extends PortableRemoteObject implements AdminInterface 
     }
 
     public boolean enableRS(String rsName) {
-        return true;
-        //return rsMapper.enableReadingStation(rsName);
+        return rsMapper.enableReadingStation(rsName);
     }
 
     public boolean disableRS(String rsName) {
