@@ -5,11 +5,10 @@
 
 package dk.iha.onk.group1.server.facades;
 
-/**
- *
- * @author dk021998
- */
-public interface TssFacadeFactory 
+import java.rmi.Remote;
+
+
+public interface TssFacadeFactory extends Remote
 {
 	TssFacade createFacade(String facadeName);
 }

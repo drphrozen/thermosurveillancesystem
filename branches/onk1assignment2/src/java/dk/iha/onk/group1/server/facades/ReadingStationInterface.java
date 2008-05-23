@@ -7,15 +7,13 @@ package dk.iha.onk.group1.server.facades;
 
 import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
-import java.io.Serializable;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
  *
  * @author Esben
  */
-public interface ReadingStationInterface extends TssFacade 
+public interface ReadingStationInterface extends TssFacade
 {
 
     void deliverAlarm(MeasurementDTO alarm) throws RemoteException;

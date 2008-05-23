@@ -15,8 +15,8 @@ import javax.jws.WebService;
 @WebService()
 public class ReadingStationFacade implements  ReadingStationInterface, Serializable
 {
-
-    public ReadingStationFacade() {
+    public ReadingStationFacade() 
+	{
         super();
     }
 
@@ -25,6 +25,7 @@ public class ReadingStationFacade implements  ReadingStationInterface, Serializa
 
     public ReadingStationDTO login(ReadingStationDTO readingStation) {
         Authenticator auth = new Authenticator();
+		
         if (auth.authenticateReadingStation(readingStation)) {
             rsMapper = new ReadingStationMapper();
             measurementMapper = new MeasurementMapper();

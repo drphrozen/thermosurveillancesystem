@@ -9,7 +9,6 @@ import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.SummaryDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 
