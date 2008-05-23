@@ -7,6 +7,7 @@ import dk.iha.onk.group1.server.UserMapper;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import javax.jws.WebService;
 import javax.rmi.PortableRemoteObject;
 
@@ -16,7 +17,7 @@ import javax.rmi.PortableRemoteObject;
  */
 @WebService
 @HttpSessionScope
-public class AdminFacade extends PortableRemoteObject implements AdminInterface
+public class AdminFacade extends UnicastRemoteObject implements AdminInterface
 {
     public AdminFacade() throws RemoteException
 	{

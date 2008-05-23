@@ -6,9 +6,10 @@
 package dk.iha.onk.group1.server.facades;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 
 public interface TssFacadeFactory extends Remote
 {
-	TssFacade createFacade(String facadeName);
+	TssFacade createFacade(String facadeName) throws RemoteException;
 }

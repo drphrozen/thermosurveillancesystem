@@ -8,6 +8,8 @@ import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.SummaryDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
 import javax.jws.WebService;
 
@@ -16,9 +18,10 @@ import javax.jws.WebService;
  * @author ESRA
  */
 @WebService()
-public class UserFacade implements UserInterface {
+public class UserFacade extends UnicastRemoteObject implements UserInterface {
 
-    public UserFacade() {
+    public UserFacade() throws RemoteException
+	{
         super();
     }
 
