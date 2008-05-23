@@ -1,4 +1,4 @@
-package net2assignment1;
+package dk.iha.onk.group1.server;
 
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;

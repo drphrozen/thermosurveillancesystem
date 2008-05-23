@@ -3,11 +3,14 @@
     <type>org.netbeans.modules.web.project</type>
     <configuration>
         <buildExtensions xmlns="http://www.netbeans.org/ns/ant-build-extender/1">
+            <extension file="jaxws-build.xml" id="jaxws">
+                <dependency dependsOn="wsgen-service-compile" target="-post-compile"/>
+            </extension>
             <extension file="rest-build.xml" id="rest.2"/>
         </buildExtensions>
         <creator-data xmlns="http://www.sun.com/creator/ns" jsf.current.theme="woodstock-theme-default" jsf.pagebean.package="net2assignment1" jsf.project.libraries.dir="lib" jsf.project.version="4.0" jsf.startPage="Login.jsp"/>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
-            <name>Esben RMI</name>
+            <name>onk1assignment2</name>
             <minimum-ant-version>1.6</minimum-ant-version>
             <web-module-libraries>
                 <library files="6">
