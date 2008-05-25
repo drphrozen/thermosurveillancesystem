@@ -37,7 +37,7 @@ public class UserFacade extends UnicastRemoteObject implements IUserFacade {
 		
     public boolean login(UserDTO user) {
         Authenticator auth = new Authenticator();
-        if (auth.authenticateUser(user) || auth.authenticateAdmin(user) || user.getUsername().equals("a")) {
+        if (auth.authenticateUser(user) || auth.authenticateAdmin(user)) {
             summaryMapper = new SummaryMapper();
             measurementMapper = new MeasurementMapper();
             stationMapper = new ReadingStationMapper();
@@ -45,6 +45,11 @@ public class UserFacade extends UnicastRemoteObject implements IUserFacade {
         }
         return false;
     }
+	
+	public boolean addAlarmListener()
+	{
+		return false;
+	}
 
     public ReadingStationDTO[] getReadingStations() {
         return stationMapper.getEnabledReadingStations();

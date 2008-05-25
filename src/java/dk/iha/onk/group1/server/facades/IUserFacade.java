@@ -30,5 +30,7 @@ public interface IUserFacade extends ITssFacade
     ReadingStationDTO[] getReadingStations() throws RemoteException;
 
     boolean login(UserDTO user) throws RemoteException;
+	
+	void update(MeasurementDTO alarm) throws RemoteException;
 
 }
