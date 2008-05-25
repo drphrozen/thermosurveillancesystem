@@ -13,12 +13,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
 import javax.jws.WebService;
 
-/**
- *
- * @author ESRA
- */
+
 @WebService()
-public class UserFacade extends UnicastRemoteObject implements UserInterface {
+public class UserFacade extends UnicastRemoteObject implements IUserFacade {
 
     public UserFacade() throws RemoteException
 	{

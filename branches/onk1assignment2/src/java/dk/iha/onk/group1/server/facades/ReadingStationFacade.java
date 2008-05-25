@@ -15,7 +15,7 @@ import javax.jws.WebService;
  * @author ESRA
  */
 @WebService()
-public class ReadingStationFacade extends UnicastRemoteObject implements  ReadingStationInterface, Serializable
+public class ReadingStationFacade extends UnicastRemoteObject implements  IReadingStationFacade, Serializable
 {
     public ReadingStationFacade() throws RemoteException
 	{

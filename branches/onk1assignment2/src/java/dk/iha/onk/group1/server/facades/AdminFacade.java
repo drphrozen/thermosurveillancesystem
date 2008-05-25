@@ -9,19 +9,15 @@ import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javax.jws.WebService;
-import javax.rmi.PortableRemoteObject;
 
-/**
- *
- * @author ESRA
- */
+
 @WebService
 @HttpSessionScope
-public class AdminFacade extends UnicastRemoteObject implements AdminInterface
+public class AdminFacade extends UnicastRemoteObject implements IAdminFacade
 {
     public AdminFacade() throws RemoteException
 	{
-        super();
+		super();
     }
 
     private ReadingStationMapper rsMapper;
