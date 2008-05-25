@@ -27,7 +27,8 @@ public class TssClient
 			{
 				System.out.println("User: "+ user.getUsername());
 			}
-
+			IUserFacade userFacade = (IUserFacade)obj.createFacade("UserFacade","user","");
+			
 		} 
 		catch (Exception e)
 		{ 
