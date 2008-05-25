@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
  *
  * @author Esben
  */
-public interface ReadingStationInterface extends TssFacade
+public interface IReadingStationFacade extends ITssFacade
 {
 
     void deliverAlarm(MeasurementDTO alarm) throws RemoteException;

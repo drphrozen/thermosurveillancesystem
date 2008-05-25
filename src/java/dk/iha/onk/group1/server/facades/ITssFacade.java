@@ -6,8 +6,9 @@
 package dk.iha.onk.group1.server.facades;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-public interface TssFacade extends Remote
+public interface ITssFacade extends Remote
 {
-	boolean login(String username, String password);
+	boolean login(String username, String password) throws RemoteException;
 }

@@ -20,8 +20,8 @@ import javax.naming.InitialContext;
 public class rmiiiopserver {
 
     private static AdminFacade adminFacade;
-    private static ReadingStationFacade readingStationFacade = new ReadingStationFacade();
-    private static UserFacade userFacade = new UserFacade();
+//    private static ReadingStationFacade readingStationFacade = new ReadingStationFacade();
+//    private static UserFacade userFacade = new UserFacade();
 //    private static int PORT = 65432;
 //    private static String HOST = "127.0.0.1";
 

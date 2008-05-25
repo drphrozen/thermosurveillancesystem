@@ -5,16 +5,16 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
 
-public class TssBootstrappah 
+public class TssServer 
 {
 	private static final int PORT = 1099;
 	private static final String IP = "172.21.186.14";
 	
-	public TssBootstrappah()
+	public TssServer()
 	{
 		try 
 		{ 
-			TssFacadeFactoryImpl factory = new TssFacadeFactoryImpl();
+			TssFacadeFactory factory = new TssFacadeFactory();
 			
 			LocateRegistry.createRegistry(PORT);
 			System.out.println( "Registry created" );
@@ -32,6 +32,6 @@ public class TssBootstrappah
 	
 	public static void main(String[] args)
 	{
-		new TssBootstrappah();
+		new TssServer();
 	}
 }

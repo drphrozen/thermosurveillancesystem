@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
  *
  * @author Esben
  */
-public interface AdminInterface extends TssFacade {
+public interface IAdminFacade extends ITssFacade {
 
     boolean addUser(UserDTO user) throws RemoteException;
 

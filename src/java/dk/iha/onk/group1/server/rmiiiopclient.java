@@ -3,7 +3,7 @@ package dk.iha.onk.group1.server;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
 import dk.iha.onk.group1.server.facades.AdminFacade;
-import dk.iha.onk.group1.server.facades.AdminInterface;
+import dk.iha.onk.group1.server.facades.IAdminFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -27,7 +27,7 @@ public class rmiiiopclient {
             ic.addToEnvironment("java.naming.provider.url", "iiop://localhost:1050");
 //            String path = "//" + HOST + ":" + Integer.toString(PORT);
             Object objref = ic.lookup(AdminFacade.class.getSimpleName());
-            AdminInterface adminInterface = (AdminInterface) PortableRemoteObject.narrow(objref, AdminInterface.class);
+            IAdminFacade adminInterface = (IAdminFacade) PortableRemoteObject.narrow(objref, IAdminFacade.class);
             UserDTO user = new UserDTO();
             user.setUsername("onk");
             user.setPassword("kaffekande");
