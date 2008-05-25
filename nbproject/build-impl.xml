@@ -352,7 +352,7 @@
             <fileset dir="${conf.dir}" includes="persistence.xml"/>
         </copy>
     </target>
-    <target depends="wsgen-service-compile" name="-post-compile">
+    <target depends="" name="-post-compile">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
     </target>

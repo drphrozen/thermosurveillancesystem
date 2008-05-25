@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package dk.iha.onk.group1.server;
+package dk.iha.onk.group1.client;
 
 import dk.iha.onk.group1.server.dataTransferObjects.UserDTO;
 import dk.iha.onk.group1.server.facades.*;
@@ -28,7 +28,9 @@ public class TssClient
 				System.out.println("User: "+ user.getUsername());
 			}
 			IUserFacade userFacade = (IUserFacade)obj.createFacade("UserFacade","user","");
-			
+			PSPObserver pspObserver = new PSPObserver();
+			System.out.println("Register PSP Observer");
+			userFacade.registerObserver(pspObserver);
 		} 
 		catch (Exception e)
 		{ 
