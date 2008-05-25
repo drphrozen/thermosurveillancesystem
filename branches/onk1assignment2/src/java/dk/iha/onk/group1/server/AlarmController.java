@@ -2,7 +2,6 @@
 package dk.iha.onk.group1.server;
 
 import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
-import dk.iha.onk.group1.server.facades.IUserFacade;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.util.Vector;
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class AlarmController
 {
-	private Vector<IUserFacade> pspObservers = new Vector<IUserFacade>();
+	private Vector<IPSPObserver> pspObservers = new Vector<IPSPObserver>();
 	private static AlarmController alarmController = new AlarmController();
 	private AlarmController(){}
 
@@ -23,22 +22,24 @@ public class AlarmController
 		return alarmController;
 	}
 	
-	public void addObserver(IUserFacade o)
+	public void addObserver(IPSPObserver o)
 	{
+		System.out.println("Register PSP Observer (" + o.toString() + ")");
 		pspObservers.add(o);
 	}
 
-	public void deleteObserver(IUserFacade o)
+	public void deleteObserver(IPSPObserver o)
 	{
 		pspObservers.remove(o);
 	}
 	
 	public void raiseAlarm(MeasurementDTO m) {
-		for (IUserFacade user : pspObservers)
+		for (IPSPObserver psp : pspObservers)
 		{
 			try
 			{
-				user.update(m);
+				System.out.println("Send alarm to " + psp.toString());
+				psp.update(m);
 			} catch (NoSuchObjectException ex) {
 				// TODO: Should unregister IPSPObserver
 				Logger.getLogger(AlarmController.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,6 +5,7 @@
 
 package dk.iha.onk.group1.server.facades;
 
+import dk.iha.onk.group1.server.IPSPObserver;
 import dk.iha.onk.group1.server.dataTransferObjects.MeasurementDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.ReadingStationDTO;
 import dk.iha.onk.group1.server.dataTransferObjects.SummaryDTO;
@@ -31,6 +32,6 @@ public interface IUserFacade extends ITssFacade
 
     boolean login(UserDTO user) throws RemoteException;
 	
-	void update(MeasurementDTO alarm) throws RemoteException;
+	void registerObserver(IPSPObserver o) throws RemoteException;
 
 }

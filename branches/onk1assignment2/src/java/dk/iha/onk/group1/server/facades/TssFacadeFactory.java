@@ -26,8 +26,6 @@ public class TssFacadeFactory extends UnicastRemoteObject implements ITssFacadeF
 			Constructor contructor = Class.forName("dk.iha.onk.group1.server.facades."+facadeName).getConstructors()[0];
 			ITssFacade facade = (ITssFacade)contructor.newInstance(new Object[]{});
 			facade.login(username, password);
-			if(facadeName.equals("UserFacade"))
-				AlarmController.getInstance().addObserver(facade);
 			return facade;
 			
 		} catch (Exception ex)

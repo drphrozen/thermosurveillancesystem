@@ -1,6 +1,8 @@
 package dk.iha.onk.group1.server.facades;
 
+import dk.iha.onk.group1.server.AlarmController;
 import dk.iha.onk.group1.server.Authenticator;
+import dk.iha.onk.group1.server.IPSPObserver;
 import dk.iha.onk.group1.server.MeasurementMapper;
 import dk.iha.onk.group1.server.ReadingStationMapper;
 import dk.iha.onk.group1.server.SummaryMapper;
@@ -17,11 +19,17 @@ import javax.jws.WebService;
 @WebService()
 public class UserFacade extends UnicastRemoteObject implements IUserFacade {
 
+	public void registerObserver(IPSPObserver o) throws RemoteException
+	{
+		alarmController.addObserver(o);
+	}
+
     public UserFacade() throws RemoteException
 	{
         super();
     }
 
+	private AlarmController alarmController;
     private SummaryMapper summaryMapper;
     private MeasurementMapper measurementMapper;
     private ReadingStationMapper stationMapper;
@@ -41,6 +49,7 @@ public class UserFacade extends UnicastRemoteObject implements IUserFacade {
             summaryMapper = new SummaryMapper();
             measurementMapper = new MeasurementMapper();
             stationMapper = new ReadingStationMapper();
+			alarmController = AlarmController.getInstance();
             return true;
         }
         return false;
