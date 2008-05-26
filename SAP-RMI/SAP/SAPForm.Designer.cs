@@ -36,6 +36,7 @@ namespace SAP
             this.textBoxLoginUsername = new System.Windows.Forms.TextBox();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.tabPageReadingStations = new System.Windows.Forms.TabPage();
+            this.propertyGridReadingStation = new System.Windows.Forms.PropertyGrid();
             this.buttonRefreshReadingStations = new System.Windows.Forms.Button();
             this.listBoxReadingStations = new System.Windows.Forms.ListBox();
             this.tabPageUsers = new System.Windows.Forms.TabPage();
@@ -45,11 +46,12 @@ namespace SAP
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.propertyGridUsers = new System.Windows.Forms.PropertyGrid();
             this.buttonRefreshUsers = new System.Windows.Forms.Button();
             this.listBoxUsers = new System.Windows.Forms.ListBox();
             this.listBoxLog = new System.Windows.Forms.ListBox();
-            this.propertyGridReadingStation = new System.Windows.Forms.PropertyGrid();
-            this.propertyGridUsers = new System.Windows.Forms.PropertyGrid();
+            this.labelURL = new System.Windows.Forms.Label();
+            this.textBoxURL = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
             this.tabPageLogin.SuspendLayout();
             this.tabPageReadingStations.SuspendLayout();
@@ -72,6 +74,8 @@ namespace SAP
             // 
             // tabPageLogin
             // 
+            this.tabPageLogin.Controls.Add(this.labelURL);
+            this.tabPageLogin.Controls.Add(this.textBoxURL);
             this.tabPageLogin.Controls.Add(this.label2);
             this.tabPageLogin.Controls.Add(this.label1);
             this.tabPageLogin.Controls.Add(this.textBoxLoginPassword);
@@ -142,6 +146,16 @@ namespace SAP
             this.tabPageReadingStations.TabIndex = 1;
             this.tabPageReadingStations.Text = "Reading stations";
             this.tabPageReadingStations.UseVisualStyleBackColor = true;
+            // 
+            // propertyGridReadingStation
+            // 
+            this.propertyGridReadingStation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.propertyGridReadingStation.Location = new System.Drawing.Point(465, 35);
+            this.propertyGridReadingStation.Name = "propertyGridReadingStation";
+            this.propertyGridReadingStation.Size = new System.Drawing.Size(289, 324);
+            this.propertyGridReadingStation.TabIndex = 2;
+            this.propertyGridReadingStation.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridReadingStations_PropertyValueChanged);
             // 
             // buttonRefreshReadingStations
             // 
@@ -244,6 +258,16 @@ namespace SAP
             this.textBoxPassword.TabIndex = 10;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
+            // propertyGridUsers
+            // 
+            this.propertyGridUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.propertyGridUsers.Location = new System.Drawing.Point(465, 35);
+            this.propertyGridUsers.Name = "propertyGridUsers";
+            this.propertyGridUsers.Size = new System.Drawing.Size(289, 295);
+            this.propertyGridUsers.TabIndex = 8;
+            this.propertyGridUsers.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridUsers_PropertyValueChanged);
+            // 
             // buttonRefreshUsers
             // 
             this.buttonRefreshUsers.Location = new System.Drawing.Point(6, 6);
@@ -279,25 +303,23 @@ namespace SAP
             this.listBoxLog.Size = new System.Drawing.Size(768, 121);
             this.listBoxLog.TabIndex = 0;
             // 
-            // propertyGridReadingStation
+            // labelURL
             // 
-            this.propertyGridReadingStation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.propertyGridReadingStation.Location = new System.Drawing.Point(465, 35);
-            this.propertyGridReadingStation.Name = "propertyGridReadingStation";
-            this.propertyGridReadingStation.Size = new System.Drawing.Size(289, 324);
-            this.propertyGridReadingStation.TabIndex = 2;
-            this.propertyGridReadingStation.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridReadingStations_PropertyValueChanged);
+            this.labelURL.AutoSize = true;
+            this.labelURL.Location = new System.Drawing.Point(6, 37);
+            this.labelURL.Name = "labelURL";
+            this.labelURL.Size = new System.Drawing.Size(29, 13);
+            this.labelURL.TabIndex = 6;
+            this.labelURL.Text = "URL";
             // 
-            // propertyGridUsers
+            // textBoxURL
             // 
-            this.propertyGridUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.propertyGridUsers.Location = new System.Drawing.Point(465, 35);
-            this.propertyGridUsers.Name = "propertyGridUsers";
-            this.propertyGridUsers.Size = new System.Drawing.Size(289, 295);
-            this.propertyGridUsers.TabIndex = 8;
-            this.propertyGridUsers.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridUsers_PropertyValueChanged);
+            this.textBoxURL.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::SAP.Properties.Settings.Default, "serverIP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxURL.Location = new System.Drawing.Point(67, 34);
+            this.textBoxURL.Name = "textBoxURL";
+            this.textBoxURL.Size = new System.Drawing.Size(265, 20);
+            this.textBoxURL.TabIndex = 5;
+            this.textBoxURL.Text = global::SAP.Properties.Settings.Default.serverIP;
             // 
             // SAPForm
             // 
@@ -311,6 +333,7 @@ namespace SAP
             this.Text = "SAP";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.SAPForm_Shown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SAPForm_FormClosing);
             this.tabControl.ResumeLayout(false);
             this.tabPageLogin.ResumeLayout(false);
             this.tabPageLogin.PerformLayout();
@@ -345,6 +368,8 @@ namespace SAP
         private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.CheckBox checkBoxIsAdmin;
+        private System.Windows.Forms.Label labelURL;
+        private System.Windows.Forms.TextBox textBoxURL;
 
 
     }
