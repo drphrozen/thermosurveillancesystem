@@ -21,13 +21,13 @@ public class TssServer
 			LocateRegistry.createRegistry(PORT);
 			System.out.println( "Registry created" );
 			 
-			// Bind this object instance to the name "HelloServer" 
+			// Bind this object instance to the name "TssServer" 
 			Naming.rebind("rmi://"+IP+":"+PORT+"/TssServer", factory); 
-			System.out.println("HelloServer bound in registry"); 
+			System.out.println("TssServer bound in registry"); 
         }
 		catch (Exception e)
 		{ 
-			System.out.println("HelloServer err: " + e.getMessage()); 
+			System.out.println("TssServer err: " + e.getMessage()); 
 			e.printStackTrace(); 
         } 
 	}
