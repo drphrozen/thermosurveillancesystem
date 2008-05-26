@@ -75,7 +75,8 @@ public class MySQLConnector {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(MySQLConnector.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("SQLException: " + ex.getMessage());
+            //Logger.getLogger(MySQLConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
