@@ -208,7 +208,7 @@ namespace PSP
 
 			labelStationName.Text = station.Name;
 			labelProbeId.Text = probe.Id.ToString();
-			labelCurrentTemperatur.Text = probe.Data.ToString() + " " + probe.Units;
+			labelCurrentTemperatur.Text = string.Format("{0:0.0}", probe.Data) + " " + probe.Units;
 			if (probe.UpperAlarmRaised())
 			{
 				labelUpperAlarm.ForeColor = Color.Red;
@@ -357,15 +357,34 @@ namespace PSP
 					{
 						TreeNode innerNode = outerNode.Nodes[i];
 
-						//Station station = (Station)probe.Parent.Tag;
 						Probe probe = (Probe)innerNode.Tag;
 
 						if (probe.Id == dto.getProbeId())
 						{
-							probe.Data = dto.getValue();
-							probe.LowerAlarm = dto.getLowerAlarm();
-							probe.UpperAlarm = dto.getUpperAlarm();
-							outerNode.Nodes[i] = probe.GetAsTreeNode();
+							Probe p = new Probe();
+							p.Data = dto.getValue();
+							p.Id = probe.Id;
+							p.LowerAlarm = dto.getLowerAlarm();
+							p.Units = probe.Units;
+							p.UpperAlarm = dto.getUpperAlarm();
+
+							List<TreeNode> nodes = new List<TreeNode>(outerNode.Nodes.Count);
+
+							foreach (TreeNode tn in outerNode.Nodes)
+							{
+								if (((Probe)tn.Tag).Id == dto.getProbeId())
+								{
+									nodes.Add(p.GetAsTreeNode());
+								}
+								else
+								{
+									nodes.Add(tn);
+								}
+							}
+
+							outerNode.Nodes.Clear();
+							outerNode.Nodes.AddRange(nodes.ToArray());
+
 							treeViewStations.Invalidate();
 						}
 					}

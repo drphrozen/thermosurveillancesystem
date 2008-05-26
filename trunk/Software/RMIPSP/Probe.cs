@@ -47,6 +47,9 @@ namespace PSP
 			set { units = value; }
 		}
 
+		public Probe()
+		{ }
+
 		public Probe(ProbeDTO probe)
 		{
 			id = probe.getId();
@@ -75,7 +78,7 @@ namespace PSP
 		{
 			TreeNode node = new TreeNode();
 			node.Name = id.ToString();
-			node.Text = id.ToString() + " - " + data.ToString() + " " + units;
+			node.Text = id.ToString() + " - " + string.Format("{0:0.0}", data) + " " + units;
 			node.Tag = this;
 			if (AlarmRaised())
 			{

@@ -27,7 +27,10 @@ namespace ReadingStation
 		Color panelOnColor = Color.Green;
 
 		Thread alarmDeliveranceThread;
-		List<MeasurementDTO> alarmDtos = new List<MeasurementDTO>();
+		Queue<MeasurementDTO> alarmDtos = new Queue<MeasurementDTO>();
+
+		Thread measurementDeliveranceThread;
+		Queue<MeasurementDTO[]> measurementDtoArrays = new Queue<MeasurementDTO[]>();
 
 		public MainForm()
 		{
@@ -64,7 +67,7 @@ namespace ReadingStation
 
 				deliverTimer.Tick += DeliverSamples;
 				deliverTimer.Enabled = false;
-				buttonSetSampleInterval_Click(null, null);
+				//buttonSetSampleInterval_Click(null, null);
 
 				System.Diagnostics.Debug.WriteLine("Connected :)");
 			}
@@ -74,19 +77,25 @@ namespace ReadingStation
 			}
 
 			alarmDeliveranceThread = new Thread(DeliverAlarms);
+			alarmDeliveranceThread.Start();
+			measurementDeliveranceThread = new Thread(DeliverMeasurements);
+			measurementDeliveranceThread.Start();
 		}
 
 		private void TakeSample(object sender, EventArgs e)
 		{
 			System.Diagnostics.Debug.Write("Sampling...");
+
+			labelDisplay.Text = "";
 			foreach (IProbe probe in probes)
 			{
-				System.Diagnostics.Debug.WriteLine(probe.GetType().ToString());
 				probe.TakeSample();
+				labelDisplay.Text += string.Format("{0:0.0}", probe.GetValue()) + probe.GetUnits() + "\n";
 				if (probe.AlarmRaised())
 				{
 					System.Diagnostics.Debug.WriteLine("Alarm for probe: " + probe.Id);
-					stationService.deliverAlarm(probe.GetAsMeasurementDTO());
+					//stationService.deliverAlarm(probe.GetAsMeasurementDTO());
+					SendAlarm(probe.GetAsMeasurementDTO());
 				}
 			}
 			System.Diagnostics.Debug.WriteLine("Done :)");
@@ -101,23 +110,15 @@ namespace ReadingStation
 
 			dto.setName(textBoxStationName.Text);
 
-			labelDisplay.Text = "";
+			//			labelDisplay.Text = "";
 			foreach (IProbe probe in probes)
 			{
 				measurements.Add(probe.GetAsMeasurementDTO());
-				labelDisplay.Text += string.Format("{0:0.0}", probe.GetValue()) + probe.GetUnits() + "\n";
+				//				labelDisplay.Text += string.Format("{0:0.0}", probe.GetValue()) + probe.GetUnits() + "\n";
 				System.Diagnostics.Debug.WriteLine(probe.Id.ToString());
 			}
 
-			try
-			{
-				stationService.deliverMeasurements(measurements.ToArray());
-				System.Diagnostics.Debug.WriteLine("Done :)");
-			}
-			catch
-			{
-				System.Diagnostics.Debug.Write("*BANG*");
-			}
+			SendMeasurements(measurements.ToArray());
 
 			panel1.BackColor = panelOnColor;
 			blinkTimer.Interval = 500;
@@ -136,20 +137,93 @@ namespace ReadingStation
 			if (int.TryParse(textBoxSampleInterval.Text, out interval))
 			{
 				deliverTimer.Interval = interval * 1000;
+				deliverTimer.Enabled = true;
 			}
 		}
 
+		#region Alarm thread
+		private void SendAlarm(MeasurementDTO dto)
+		{
+			lock (alarmDtos)
+			{
+				alarmDtos.Enqueue(dto);
+				System.Diagnostics.Debug.WriteLine("Alarm added to queue");
+			}
+		}
 		private void DeliverAlarms()
 		{
-			while (true)
-			{
-				lock (alarmDtos)
-				{
+			bool run = true;
 
-					//		System.Diagnostics.Debug.WriteLine("Alarm for probe: " + probe.Id);
-					//		stationService.deliverAlarm(probe.GetAsMeasurementDTO());
+			while (run)
+			{
+				try
+				{
+					lock (alarmDtos)
+					{
+						if (alarmDtos.Count > 0)
+						{
+
+							lock (stationService)
+							{
+								stationService.deliverAlarm(alarmDtos.Dequeue());
+							}
+							System.Diagnostics.Debug.WriteLine("Alarm sent from queue");
+						}
+					}
+					Thread.Sleep(1);
+				}
+				catch
+				{
+					run = false;
 				}
 			}
+		}
+		#endregion
+
+		#region Measurement thread
+		private void SendMeasurements(MeasurementDTO[] dtos)
+		{
+			lock (measurementDtoArrays)
+			{
+				measurementDtoArrays.Enqueue(dtos);
+				System.Diagnostics.Debug.WriteLine("Measurements added to queue");
+			}
+		}
+		private void DeliverMeasurements()
+		{
+			bool run = true;
+
+			while (run)
+			{
+				try
+				{
+					lock (measurementDtoArrays)
+					{
+						if (measurementDtoArrays.Count > 0)
+						{
+							lock (stationService)
+							{
+								stationService.deliverMeasurements(measurementDtoArrays.Dequeue());
+							}
+							System.Diagnostics.Debug.WriteLine("Measurements sent from queue");
+						}
+					}
+					Thread.Sleep(1);
+				}
+				catch
+				{
+					run = false;
+				}
+			}
+		}
+		#endregion
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			alarmDeliveranceThread.Abort();
+			measurementDeliveranceThread.Abort();
+			alarmDeliveranceThread.Join();
+			measurementDeliveranceThread.Join();
 		}
 	}
 }
