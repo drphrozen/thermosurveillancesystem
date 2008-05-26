@@ -43,8 +43,6 @@ namespace SAP
                         service.loginCompleted -= new loginCompletedEventHandler(service_loginCompleted);
                     log("Connecting..");
                     service = new AdminFacadeService();
-                    //log("Setting up cookies..");
-                    //service.CookieContainer = new CookieContainer();
 
                     User user = new User();
                     user.Username = textBoxLoginUsername.Text;
@@ -54,7 +52,7 @@ namespace SAP
 
                     log("Logging in..");
                     service.loginCompleted += new loginCompletedEventHandler(service_loginCompleted);
-                    service.loginAsync(userdto);
+                    service.loginAsync(userdto, textBoxURL.Text);
                 }
                 catch (Exception ex)
                 {
@@ -375,6 +373,11 @@ namespace SAP
                     log("Could not update " + user.Username + ": " + ex.Message + "!");
                 }
             }
+        }
+
+        private void SAPForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -12,11 +12,11 @@ namespace SAP.AdminFacade
         private IAdminFacade adminFacade = null;
         public event loginCompletedEventHandler loginCompleted;
 
-        public void loginAsync(UserDTO user)
+        public void loginAsync(UserDTO user, String ip)
         {
             try
             {
-                ITssFacadeFactory factory = (ITssFacadeFactory)java.rmi.Naming.lookup("rmi://172.21.186.14:1099/TssServer");
+                ITssFacadeFactory factory = (ITssFacadeFactory)java.rmi.Naming.lookup("rmi://" + ip + ":1099/TssServer");
                 adminFacade = (IAdminFacade)factory.createFacade("AdminFacade", user.getUsername(), user.getPassword());
                 if(adminFacade == null)
                     loginCompleted(this, new loginCompletedEventArgs(new Exception("Username or password is incorrect!"), false));
