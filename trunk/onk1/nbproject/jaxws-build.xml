@@ -14,25 +14,25 @@
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </taskdef>
     </target>
+    <target name="wsgen-AdminFacadeService" depends="wsgen-init">
+        <wsgen fork="true" xendorsed="true" sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service/resources/" destdir="${build.generated.dir}/wsgen/binaries" keep="true" genwsdl="true" sei="dk.iha.onk.group1.server.facades.ws.AdminFacadeService">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+            <jvmarg value="-Djava.endorsed.dirs=${jaxws.endorsed.dir}"/>
+        </wsgen>
+    </target>
     <target name="wsgen-ReadingStationFacadeService" depends="wsgen-init">
-        <wsgen fork="true" xendorsed="true" sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service/resources/" destdir="${build.generated.dir}/wsgen/binaries" keep="true" genwsdl="true" sei="dk.iha.onk.group1.server.facades.ws.ReadingStationFacade">
+        <wsgen fork="true" xendorsed="true" sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service/resources/" destdir="${build.generated.dir}/wsgen/binaries" keep="true" genwsdl="true" sei="dk.iha.onk.group1.server.facades.ws.ReadingStationFacadeService">
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
             <jvmarg value="-Djava.endorsed.dirs=${jaxws.endorsed.dir}"/>
         </wsgen>
     </target>
     <target name="wsgen-UserFacadeService" depends="wsgen-init">
-        <wsgen fork="true" xendorsed="true" sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service/resources/" destdir="${build.generated.dir}/wsgen/binaries" keep="true" genwsdl="true" sei="dk.iha.onk.group1.server.facades.ws.UserFacade">
+        <wsgen fork="true" xendorsed="true" sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service/resources/" destdir="${build.generated.dir}/wsgen/binaries" keep="true" genwsdl="true" sei="dk.iha.onk.group1.server.facades.ws.UserFacadeService">
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
             <jvmarg value="-Djava.endorsed.dirs=${jaxws.endorsed.dir}"/>
         </wsgen>
     </target>
-    <target name="wsgen-AdminFacadeService" depends="wsgen-init">
-        <wsgen fork="true" xendorsed="true" sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service/resources/" destdir="${build.generated.dir}/wsgen/binaries" keep="true" genwsdl="true" sei="dk.iha.onk.group1.server.facades.ws.AdminFacade">
-            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-            <jvmarg value="-Djava.endorsed.dirs=${jaxws.endorsed.dir}"/>
-        </wsgen>
-    </target>
-    <target name="wsgen-service-compile" depends="wsgen-ReadingStationFacadeService, wsgen-UserFacadeService, wsgen-AdminFacadeService">
+    <target name="wsgen-service-compile" depends="wsgen-AdminFacadeService, wsgen-ReadingStationFacadeService, wsgen-UserFacadeService">
         <webproject2:javac srcdir="${build.generated.dir}/wsgen/service" classpath="${j2ee.platform.wsimport.classpath}:${javac.classpath}" destdir="${build.classes.dir}"/>
     </target>
 </project>

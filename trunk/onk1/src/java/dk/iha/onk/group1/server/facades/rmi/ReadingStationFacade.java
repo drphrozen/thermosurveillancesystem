@@ -18,31 +18,28 @@ public class ReadingStationFacade extends UnicastRemoteObject implements IReadin
 
     private ReadingStationMapper rsMapper;
     private MeasurementMapper measurementMapper;
-	private AlarmController alarmController;
+    private AlarmController alarmController;
 
-	public ReadingStationFacade() throws RemoteException
-	{
-		super();
-	}
-	
-	public boolean login(String username, String password) throws RemoteException
-	{
-		Authenticator auth = new Authenticator();
-		ReadingStationDTO readingStation = new ReadingStationDTO();
-		readingStation.setName(username);
-        if (auth.authenticateReadingStation(readingStation)) 
-		{
+    public ReadingStationFacade() throws RemoteException {
+        super();
+    }
+
+    public boolean login(String username, String password) throws RemoteException {
+        Authenticator auth = new Authenticator();
+        ReadingStationDTO readingStation = new ReadingStationDTO();
+        readingStation.setName(username);
+        if (auth.authenticateReadingStation(readingStation)) {
             rsMapper = new ReadingStationMapper();
             measurementMapper = new MeasurementMapper();
-			alarmController = AlarmController.getInstance();
+            alarmController = AlarmController.getInstance();
             return true;
         }
         return false;
-	}
+    }
 
     public ReadingStationDTO login(ReadingStationDTO readingStation) throws RemoteException {
         Authenticator auth = new Authenticator();
-		
+
         if (auth.authenticateReadingStation(readingStation)) {
             rsMapper = new ReadingStationMapper();
             measurementMapper = new MeasurementMapper();
@@ -56,7 +53,7 @@ public class ReadingStationFacade extends UnicastRemoteObject implements IReadin
     }
 
     public void deliverAlarm(MeasurementDTO alarm) throws RemoteException {
-		new Thread(new DeliverAlarm(measurementMapper, alarmController, alarm)).start();
+        new Thread(new DeliverAlarm(measurementMapper, alarmController, alarm)).start();
     }
 
     public ReadingStationDTO getStatus(ReadingStationDTO rs) throws RemoteException {
